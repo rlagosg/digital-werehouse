@@ -20,7 +20,8 @@ export const FolderCard = ({ folder }: Props ) => {
   const levelDown = true;
 
   return (
-    <div className="rounded-sm border border-stroke bg-white px-7.5 py-4 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className="rounded-2xl bg-white px-7.5 py-4 shadow-default dark:border-strokedark dark:bg-boxdark
+    relative z-20 transition-all duration-700 hover:scale-105">
 
       <div className="mt-2 flex items-end justify-between"> 
 
