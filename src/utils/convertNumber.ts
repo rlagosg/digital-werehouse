@@ -1,0 +1,1 @@
+export const convertNumber = (valor?: string) => valor ? parseInt(valor) : -1;
