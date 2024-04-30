@@ -1,23 +1,27 @@
-import { Folder } from "@/interfaces";
 
+import { Voucher } from "@/interfaces";
+
+import { convertDateToCalendar } from '@/utils/convertDate';
+import { BsFiletypePdf } from "react-icons/bs";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
-import { FcOpenedFolder } from "react-icons/fc";
 import { LuCalendarDays } from "react-icons/lu";
-import { converNumberToMonth, convertDateToMyFormat } from '../../utils/convertDate';
 
 interface Props {
-  folder: Folder;
+  voucher: Voucher;
 }
 
-export const FolderCard = ({ folder }: Props ) => {
+export const VoucherCard = ({ voucher }: Props ) => {
 
     const { 
-        firstVoucher, lastVoucher, month, number,
-        observations, scanEntryDate, scanExitDate, year
-    } = folder;
+        bank, check, checkDate, checkValue, document,
+        folder, isNull
+    } = voucher ;
+
+    const { observations, pages } = document;
 
   const levelUp = true;
   const levelDown = true;
+  const date = new Date();
 
   return (
     <div className="rounded-2xl bg-white px-7.5 py-4 shadow-default dark:border-strokedark dark:bg-boxdark
@@ -29,12 +33,12 @@ export const FolderCard = ({ folder }: Props ) => {
         <div className="flex items-center">
           <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-meta-2 dark:bg-meta-4">
             <div className="fill-primary dark:fill-white">
-              <FcOpenedFolder size={ 25 } />
+              <BsFiletypePdf   size={ 25 } />
             </div>          
           </div>
 
           <div className="text-title-md font-bold text-black dark:text-white ml-2">
-            {number}
+            CK{check}
           </div>
         </div>
 
@@ -42,26 +46,29 @@ export const FolderCard = ({ folder }: Props ) => {
           className={` gap-1 text-sm font-medium`}
         >
           <div className="flex items-center ">
-            { convertDateToMyFormat(scanEntryDate) }
+            { convertDateToCalendar(date) }
             <FaArrowDown className="text-meta-5" size={12}/>
           </div>
 
           <div className="flex items-center">
-            { convertDateToMyFormat(scanExitDate) }
+            { convertDateToCalendar(date) }
             <FaArrowUp className="text-meta-3" size={12}/>
           </div>
         </span>
         
-      </div> 
+      </div>
+
+      <span className="flex items-center gap-1 text-sm mt-2">{ observations }</span> 
 
       <div className="mt-4 flex items-end justify-between">
         
         {/* Rango */}
         <div>
           <h4 className="text-title-sm font-bold text-black dark:text-white">
-            { firstVoucher + ' - ' + lastVoucher }
+            { checkValue } 
+            <span className="text-sm font-medium ml-1">Lps.</span>
           </h4>
-          <span className="text-sm font-medium">Rango</span>
+          <span className="text-sm font-medium">Valor</span>
         </div>
 
         {/* Fecha */}
@@ -70,7 +77,7 @@ export const FolderCard = ({ folder }: Props ) => {
             levelUp && "text-meta-3"
           } ${levelDown && "text-meta-5"} `}
         >
-          { converNumberToMonth( month ) + ' '+ year }
+          { convertDateToCalendar(date) }
 
           <div className="text-cyan-600 dark:text-cyan-300">
           <LuCalendarDays />

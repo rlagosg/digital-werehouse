@@ -1,15 +1,16 @@
-import { Folder } from "@/interfaces";
+'use client'
+import { Voucher } from '@/interfaces/vouchers.interfaces';
 import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
-import { FolderCard } from './folder-card';
+import { VoucherCard } from "./VoucherCard";
 
-export const HoverEffect = ({
+export const VoucherGrid = ({
   items,
   className,
 }: {
-  items: Folder[];
+  items: Voucher[];
   className?: string;
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -24,8 +25,8 @@ export const HoverEffect = ({
     >
       {items.map((item, idx) => (
         <Link
-          href={ `/folder/${item.number}` }
-          key={ item.number }
+          href={ `/voucher/${item.check}` }
+          key={ item.check }
           className="relative group  block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -47,11 +48,9 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <FolderCard key={ item.number } folder={ item } />
+          <VoucherCard key={ item.check } voucher={item } />
         </Link>
       ))}
     </div>
   );
 };
-
-

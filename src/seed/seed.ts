@@ -1,8 +1,48 @@
-import { Folder } from "@/interfaces";
+import { Bank, Folder, Voucher } from "@/interfaces";
 
 interface SeedData {
     folders: Folder[],
+    banks: Bank[],
+    vouchers: Voucher[]
 }
+
+const seedDocuments = [
+    {
+        scanEntryDate: new Date(),
+        pages: 10,
+        observations: 'MARLON LAGUNA SALGADO',
+        scanExitDate: new Date(), 
+    },
+]
+
+const seedBanks : Bank[] =  [
+    {
+        name:"ac lobortis",
+        account:'5',
+        internalAccount:'11'
+    },
+    {
+        name:"at velit",
+        account:'3',
+        internalAccount:'2'
+    },
+        
+    {
+        name:"lacus morbi sem",
+        account:'12',
+        internalAccount:'2'
+    },
+    {
+        name:"magna vestibulum aliquet",
+        account:'3',
+        internalAccount:'12'
+    },
+    {
+        name:"nulla neque",
+        account:'1',
+        internalAccount:'10'
+    }
+]
 
 export const initialData: SeedData = {
     folders: [
@@ -205,6 +245,72 @@ export const initialData: SeedData = {
             lastVoucher  : 66422,
             observations : '',
             scanExitDate : new Date(),
+        },
+    ],
+    banks: seedBanks,
+    vouchers: [
+        {
+            document: seedDocuments[0],
+            folder: 135,
+            bank: seedBanks[0],
+            check : 66334,
+            checkDate : new Date(),
+            checkValue : 24431.72,
+            isNull : false,
+        },
+        {
+            document: seedDocuments[0],
+            folder: 135,
+            bank: seedBanks[0],
+            check : 66335,
+            checkDate : new Date(),
+            checkValue : 5682,
+            isNull : false,
+        },
+        {
+            document: seedDocuments[0],
+            folder: 135,
+            bank: seedBanks[2],
+            check : 66336,
+            checkDate : new Date(),
+            checkValue : 3172,
+            isNull : false,
+        },
+        {
+            document: seedDocuments[0],
+            folder: 135,
+            bank: seedBanks[3],
+            check : 66337,
+            checkDate : new Date(),
+            checkValue : 4317,
+            isNull : false,
+        },
+        {
+            document: seedDocuments[0],
+            folder: 136,
+            bank: seedBanks[0],
+            check : 66358,
+            checkDate : new Date(),
+            checkValue : 24431,
+            isNull : false,
+        },
+        {
+            document: seedDocuments[0],
+            folder: 136,
+            bank: seedBanks[1],
+            check : 66359,
+            checkDate : new Date(),
+            checkValue : 1002,
+            isNull : false,
+        },
+        {
+            document: seedDocuments[0],
+            folder: 136,
+            bank: seedBanks[2],
+            check : 66360,
+            checkDate : new Date(),
+            checkValue : 2431.72,
+            isNull : false,
         },
     ]
 }
