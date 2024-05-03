@@ -1,0 +1,43 @@
+tengo esta base de datos:
+Banks:
+PK id
+name
+account
+internalAccount
+
+DocumentPDF:
+PK id
+pdfPath
+
+ScanDetails:
+PK id
+startScanDate
+observations
+endScanDate
+
+Documents:
+PK id
+FK scanDetails
+description
+pages
+FK documentPDF
+
+Folders:
+PK id
+FK scanDetails
+number
+moth
+year
+firstVoucher
+lastVoucher
+
+Vouchers
+PK id
+FK document
+FK folder
+FK bank
+check
+checkDate
+checkValue
+isNull
+nullDate

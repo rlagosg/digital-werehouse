@@ -1,19 +1,18 @@
 export interface Folder {
-    scanEntryDate : Date;
+    scanDetails   : ScanDetails;
     number        : string;
     year          : number;
     month         : number;
     firstVoucher  : number;
     lastVoucher   : number;
-    observations  : string;
-    scanExitDate  : Date;
 }
 
 export interface Document{
-    scanEntryDate : Date;
+    description   : string;
     pages         : number;
-    observations  : string;
-    scanExitDate  : Date;
+    pdfPath       : string;
+    documentType  : 'voucher';
+    scanDetails   : ScanDetails;
 }
 
 export interface Bank{
@@ -25,11 +24,18 @@ export interface Bank{
 export interface Voucher {
     //id : number;
     document      : Document;
-    folder        : number;
-    bank          : Bank;
-    check         : number;
     checkDate     : Date;
+    check         : number;
+    bank          : Bank;
     checkValue    : number;
+    beneficiary   : string;
+    folder        : number;
     isNull        : boolean;
     nullDate?     : Date;
+}
+
+export interface ScanDetails {
+    scanEntryDate : Date;
+    scanExitDate  : Date;
+    observations  : string;
 }

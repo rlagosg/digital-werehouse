@@ -2,7 +2,7 @@ import Link from "next/link";
 interface BreadcrumbProps {
   pageName: string;
 }
-const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
+export const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
   // Componente para indicar la ruta en la que se encuentra
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -24,4 +24,4 @@ const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
   );
 };
 
-export default Breadcrumb;
+

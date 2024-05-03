@@ -1,3 +1,6 @@
+import { PDFViewer, VoucherDetails } from "@/components";
+import { initialData } from "@/seed/seed";
+import { convertNumber } from "@/utils/convertNumber";
 import { Metadata } from "next";
 
 interface Props{
@@ -13,11 +16,27 @@ export const metadata: Metadata = {
 
 export default async function VoucherPage({ params } : Props) {
     
-    const { check } = params;    
+    const { check } = params;
+    const voucher = initialData.vouchers.find(voucher => voucher.check === convertNumber(check));
+
+    const pathPDF = voucher?.document.pdfPath;
+    
     return (
-      <>      
-          <h1>CK {check}</h1>
-      </>
+      <div className="mb-20 grid grid-cols-1 md:grid-cols-5 gap-3">
+        
+          {
+            voucher && (<VoucherDetails voucher={voucher}/>)
+          }
+
+          <div className="col-span-1 md:col-span-3">
+              {
+                pathPDF && (
+                  <PDFViewer pdfPath={pathPDF}/>
+                )
+              }          
+          </div>
+        
+      </div>
     );
   }
   

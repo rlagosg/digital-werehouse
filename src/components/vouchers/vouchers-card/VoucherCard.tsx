@@ -13,15 +13,11 @@ interface Props {
 export const VoucherCard = ({ voucher }: Props ) => {
 
     const { 
-        bank, check, checkDate, checkValue, document,
+        bank, check, checkDate, checkValue, document, beneficiary,
         folder, isNull
     } = voucher ;
 
-    const { observations, pages } = document;
-
-  const levelUp = true;
-  const levelDown = true;
-  const date = new Date();
+    const { scanEntryDate, scanExitDate } = document.scanDetails;
 
   return (
     <div className="rounded-2xl bg-white px-7.5 py-4 shadow-default dark:border-strokedark dark:bg-boxdark
@@ -46,19 +42,19 @@ export const VoucherCard = ({ voucher }: Props ) => {
           className={` gap-1 text-sm font-medium`}
         >
           <div className="flex items-center ">
-            { convertDateToCalendar(date) }
+            { convertDateToCalendar(scanEntryDate) }
             <FaArrowDown className="text-meta-5" size={12}/>
           </div>
 
           <div className="flex items-center">
-            { convertDateToCalendar(date) }
+            { convertDateToCalendar(scanExitDate) }
             <FaArrowUp className="text-meta-3" size={12}/>
           </div>
         </span>
         
       </div>
 
-      <span className="flex items-center gap-1 text-sm mt-2">{ observations }</span> 
+      <span className="flex items-center gap-1 text-sm mt-2">{ beneficiary }</span> 
 
       <div className="mt-4 flex items-end justify-between">
         
@@ -73,11 +69,9 @@ export const VoucherCard = ({ voucher }: Props ) => {
 
         {/* Fecha */}
         <span
-          className={`flex items-center gap-1 text-sm font-medium text-red${
-            levelUp && "text-meta-3"
-          } ${levelDown && "text-meta-5"} `}
+          className={`flex items-center gap-1 text-sm font-medium text-meta-5`}
         >
-          { convertDateToCalendar(date) }
+          { convertDateToCalendar(checkDate) }
 
           <div className="text-cyan-600 dark:text-cyan-300">
           <LuCalendarDays />

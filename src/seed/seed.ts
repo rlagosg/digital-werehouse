@@ -1,4 +1,4 @@
-import { Bank, Folder, Voucher } from "@/interfaces";
+import { Bank, Document, Folder, Voucher } from "@/interfaces";
 
 interface SeedData {
     folders: Folder[],
@@ -6,251 +6,224 @@ interface SeedData {
     vouchers: Voucher[]
 }
 
-const seedDocuments = [
+const seedScanDetails = [
     {
         scanEntryDate: new Date(),
-        pages: 10,
-        observations: 'MARLON LAGUNA SALGADO',
+        observations: 'Ninguna',
         scanExitDate: new Date(), 
     },
 ]
 
+const desc = 'Quis proident nulla magna et minim excepteur aliqua voluptate officia laboris. Veniam nisi laboris amet velit duis cupidatat labore excepteur sit consequat. Sint velit nisi laborum tempor velit consequat voluptate qui laborum esse irure anim fugiat.'
+
+const seedDocuments: Document[] = [
+    {
+        description: desc,
+        pages: 141,
+        pdfPath: 'CK66407',
+        documentType: 'voucher',
+        scanDetails: seedScanDetails[0],
+    },
+]
+
+
 const seedBanks : Bank[] =  [
     {
-        name:"ac lobortis",
-        account:'5',
-        internalAccount:'11'
+        name:"BAC CREDOMATIC",
+        account:'0005611510065',
+        internalAccount:'00056115100611'
     },
     {
-        name:"at velit",
-        account:'3',
-        internalAccount:'2'
+        name:"OCCIDENTE velit",
+        account:'0005611510063',
+        internalAccount:'0005611510062'
     },
         
     {
-        name:"lacus morbi sem",
-        account:'12',
-        internalAccount:'2'
+        name:"ATLANTIDA morbi sem",
+        account:'00056115100612',
+        internalAccount:'0005611510062'
     },
     {
-        name:"magna vestibulum aliquet",
-        account:'3',
-        internalAccount:'12'
+        name:"DAVIVIENDA vestibulum aliquet",
+        account:'0005611510063',
+        internalAccount:'00056115100612'
     },
     {
-        name:"nulla neque",
-        account:'1',
-        internalAccount:'10'
+        name:"LAFISE",
+        account:'0005611510061',
+        internalAccount:'00056115100610'
     }
 ]
 
 export const initialData: SeedData = {
     folders: [
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '134.1',
             month  : 11,
             year   : 2022,
             firstVoucher : 66318,
             lastVoucher  : 66333,
-            observations : 'El CK66318 y CK66319 no se adjuntaron ya que estos pertencen al mes de octubre del 2022',
-            scanExitDate : new Date(),
         },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '135',
             month  : 11,
             year   : 2022,
             firstVoucher : 66334,
             lastVoucher  : 66357,
-            observations : '',
-            scanExitDate : new Date(),
         },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '136',
             month  : 11,
             year   : 2022,
             firstVoucher : 66358,
             lastVoucher  : 66366,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '137',
             month  : 11,
             year   : 2022,
             firstVoucher : 66367,
             lastVoucher  : 66399,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '138',
             month  : 11,
             year   : 2022,
             firstVoucher : 66400,
             lastVoucher  : 66422,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '139',
             month  : 11,
             year   : 2022,
             firstVoucher : 66358,
             lastVoucher  : 66366,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '140',
             month  : 11,
             year   : 2022,
             firstVoucher : 66367,
             lastVoucher  : 66399,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '141',
             month  : 11,
             year   : 2022,
             firstVoucher : 66400,
             lastVoucher  : 66422,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '142',
             month  : 11,
             year   : 2022,
             firstVoucher : 66358,
             lastVoucher  : 66366,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '143',
             month  : 11,
             year   : 2022,
             firstVoucher : 66367,
             lastVoucher  : 66399,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '144',
             month  : 11,
             year   : 2022,
             firstVoucher : 66400,
             lastVoucher  : 66422,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '145',
             month  : 11,
             year   : 2022,
             firstVoucher : 66358,
             lastVoucher  : 66366,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '146',
             month  : 11,
             year   : 2022,
             firstVoucher : 66367,
             lastVoucher  : 66399,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '147',
             month  : 11,
             year   : 2022,
             firstVoucher : 66400,
             lastVoucher  : 66422,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '148',
             month  : 11,
             year   : 2022,
             firstVoucher : 66358,
             lastVoucher  : 66366,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '149',
             month  : 11,
             year   : 2022,
             firstVoucher : 66367,
             lastVoucher  : 66399,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '150',
             month  : 11,
             year   : 2022,
             firstVoucher : 66400,
             lastVoucher  : 66422,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '151',
             month  : 11,
             year   : 2022,
             firstVoucher : 66358,
             lastVoucher  : 66366,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '152',
             month  : 11,
             year   : 2022,
             firstVoucher : 66367,
             lastVoucher  : 66399,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
         {
-            scanEntryDate: new Date(),
+            scanDetails: seedScanDetails[0],
             number : '153',
             month  : 11,
             year   : 2022,
             firstVoucher : 66400,
             lastVoucher  : 66422,
-            observations : '',
-            scanExitDate : new Date(),
-        },
+                                },
     ],
     banks: seedBanks,
     vouchers: [
         {
             document: seedDocuments[0],
+            beneficiary: 'SEGURIDAD PRIVADA MEJIA TROCHEZ S. DE R.',
             folder: 135,
             bank: seedBanks[0],
             check : 66334,
@@ -260,6 +233,7 @@ export const initialData: SeedData = {
         },
         {
             document: seedDocuments[0],
+            beneficiary: 'SEGURIDAD PRIVADA MEJIA TROCHEZ S. DE R.',
             folder: 135,
             bank: seedBanks[0],
             check : 66335,
@@ -269,6 +243,7 @@ export const initialData: SeedData = {
         },
         {
             document: seedDocuments[0],
+            beneficiary: 'SEGURIDAD PRIVADA MEJIA TROCHEZ S. DE R.',
             folder: 135,
             bank: seedBanks[2],
             check : 66336,
@@ -278,6 +253,7 @@ export const initialData: SeedData = {
         },
         {
             document: seedDocuments[0],
+            beneficiary: 'SEGURIDAD PRIVADA MEJIA TROCHEZ S. DE R.',
             folder: 135,
             bank: seedBanks[3],
             check : 66337,
@@ -287,6 +263,7 @@ export const initialData: SeedData = {
         },
         {
             document: seedDocuments[0],
+            beneficiary: 'SEGURIDAD PRIVADA MEJIA TROCHEZ S. DE R.',
             folder: 136,
             bank: seedBanks[0],
             check : 66358,
@@ -296,6 +273,7 @@ export const initialData: SeedData = {
         },
         {
             document: seedDocuments[0],
+            beneficiary: 'SEGURIDAD PRIVADA MEJIA TROCHEZ S. DE R.',
             folder: 136,
             bank: seedBanks[1],
             check : 66359,
@@ -305,6 +283,7 @@ export const initialData: SeedData = {
         },
         {
             document: seedDocuments[0],
+            beneficiary: 'SEGURIDAD PRIVADA MEJIA TROCHEZ S. DE R.',
             folder: 136,
             bank: seedBanks[2],
             check : 66360,

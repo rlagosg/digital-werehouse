@@ -12,9 +12,10 @@ interface Props {
 export const FolderCard = ({ folder }: Props ) => {
 
     const { 
-        firstVoucher, lastVoucher, month, number,
-        observations, scanEntryDate, scanExitDate, year
+        firstVoucher, lastVoucher, month, number, year, scanDetails
     } = folder;
+
+    const { observations, scanEntryDate, scanExitDate } = scanDetails
 
   const levelUp = true;
   const levelDown = true;
