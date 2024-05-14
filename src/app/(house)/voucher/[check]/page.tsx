@@ -22,19 +22,17 @@ export default async function VoucherPage({ params } : Props) {
     const pathPDF = voucher?.document.pdfPath;
     
     return (
-      <div className="mb-20 grid grid-cols-1 md:grid-cols-5 gap-3">
+      <div className="mb-20 grid grid-cols-1 md:grid-cols-5 gap-3">        
+        { voucher && (<VoucherDetails voucher={voucher}/>) }
         
-          {
-            voucher && (<VoucherDetails voucher={voucher}/>)
-          }
-
-          <div className="col-span-1 md:col-span-3">
-              {
-                pathPDF && (
-                  <PDFViewer pdfPath={pathPDF}/>
-                )
-              }          
+        <div className="col-span-1 md:col-span-3 flex ml-3 items-start justify-center">
+          <div
+            className="bg-white  dark:bg-meta-4 shadow-md rounded-lg overflow-hidden"
+            style={{ width: 'calc(100vw - 30px)' }}
+          >
+            {pathPDF && <PDFViewer pdfPath={pathPDF} />}
           </div>
+        </div>
         
       </div>
     );

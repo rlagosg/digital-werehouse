@@ -1,7 +1,7 @@
 import { PrincipalTitle, VoucherItemCard } from '@/components';
 import { Voucher } from "@/interfaces";
 import { convertDateToMyFormat, format } from "@/utils";
-import { BsFiletypePdf, BsPersonVcard } from 'react-icons/bs';
+import { BsPersonVcard } from 'react-icons/bs';
 
 interface Props {
     voucher: Voucher
@@ -51,12 +51,9 @@ export const VoucherDetails = ({ voucher }: Props) => {
                 </div>
 
             </div>
-                {/* Observaciones */ }
-            <h3 className="font-bold text-sm">Concepto</h3>
-                <p className="font-light dark:text-white"> { voucher ? description : 'Ninguna' } </p>
 
             {/* Linia Divisora */}
-            <div className="w-full h-px bg-gray-300 my-10" />
+            <div className="w-full h-px bg-gray-300 my-3" />
 
             {/* Datos de Scaneo */}
             <PrincipalTitle title='Datos de Digitalización'/>
@@ -65,7 +62,6 @@ export const VoucherDetails = ({ voucher }: Props) => {
                 <div className="mt-3 grid grid-cols-2 gap-5 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-6">
                     <VoucherItemCard nameItem='Fecha de Entrada' value={voucher ? convertDateToMyFormat( scanEntryDate ) : null} icon={FaArrowDown}/>
                     <VoucherItemCard nameItem='Fecha de Salida' value={voucher ? convertDateToMyFormat( scanExitDate ) : null} icon={FaArrowUp}/>
-                    <VoucherItemCard nameItem='Paginas' value={voucher ? pages.toString() : null} icon={BsFiletypePdf}/>
                 </div>
             </div>
 

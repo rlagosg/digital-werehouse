@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  //background-color: #525659;
+  font-family:
+    Segoe UI,
+    Tahoma,
+    sans-serif;
+}
+
+.Example input,
+.Example button {
+  font: inherit;
+}
+
+.header-pdf {
+  background-color: #FFFFFF;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  color: white;
+}
+
+.header-pdf-darck {
+  background-color: #24303F;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  color: white;
+}
+
+.header-pdf-h1 {
+  font-size: inherit;
+  margin: 0;
+}
+
