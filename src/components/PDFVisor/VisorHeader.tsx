@@ -1,12 +1,12 @@
-import Link from "next/link";
 import { BsFiletypePdf } from 'react-icons/bs';
 
 interface Props{
-    pages: number | undefined
+    pages: number | undefined;
+    handleViewFullPDF: () => void;
 }
 
-export const VisorHeader = ({ pages }:Props) => {
-
+export const VisorHeader = ({ pages, handleViewFullPDF }:Props) => {
+      
     return(
         <div 
             className={ 'relative flex flex-grow !flex-row items-center rounded-lg shadow-3 border-[1px] bg-white dark:border-strokedark dark:bg-boxdark'}
@@ -20,15 +20,14 @@ export const VisorHeader = ({ pages }:Props) => {
                 </div> 
 
                 <div className="h-auto ml-4 w-auto ">
-                    <h4 className="text-base sm:text-lg font-bold text-black dark:text-white">141</h4>
+                    <h4 className="text-base sm:text-lg font-bold text-black dark:text-white">{pages}</h4>
                 </div>       
-                    <p className="font-dm text-sm font-medium ">&nbsp; Paginas</p>                
-
+                <p className="font-dm text-sm font-medium ">&nbsp; Paginas</p>                
             </div>
             
-            <Link href = {''} className="ml-auto hover:underline">
-                <h1 className='ml-auto mr-5 text-sm font-semibold dark:text-white'>ver completo</h1>
-            </Link>
+        <button onClick={handleViewFullPDF} className="ml-auto mr-5 text-sm font-semibold dark:text-white hover:underline">
+                ver completo
+        </button>
 
       </div>
     )

@@ -1,14 +1,14 @@
 'use client';
 
-import { useResizeObserver } from '@wojtekmaj/react-hooks';
-import { useCallback, useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import type { PDFDocumentProxy } from 'pdfjs-dist';
 import { Document, Page, pdfjs } from 'react-pdf';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-
 import './Sample.css';
 
-import type { PDFDocumentProxy } from 'pdfjs-dist';
+import { useFetchPDF } from '@/hooks';
 import { VisorHeader } from './VisorHeader';
 
 interface Props {
@@ -20,41 +20,33 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-
-const resizeObserverOptions = {};
-
-type PDFFile = string | File | null;
-
 export const PDFViewer = ( { pdfPath }: Props) => {
   
-  const [file, setFile] = useState<PDFFile>('/documents/CK66407.pdf');
+  const { PDF, loading, error, fetchPDF } = useFetchPDF();  
   const [numPages, setNumPages] = useState<number>();
-  const [containerRef, setContainerRef] = useState<HTMLElement | null>(null);
-  const [containerWidth, setContainerWidth] = useState<number>();
-   
 
-  const onResize = useCallback<ResizeObserverCallback>((entries) => {
-    const [entry] = entries;
-    if (entry) {
-      setContainerWidth(entry.contentRect.width);
-    }
-  }, []);
-
-  useResizeObserver(containerRef, resizeObserverOptions, onResize);
-
-  function onDocumentLoadSuccess({ numPages: nextNumPages }: PDFDocumentProxy): void {
+  const onDocumentLoadSuccess = ({ numPages: nextNumPages }: PDFDocumentProxy): void => {
     setNumPages(nextNumPages);
   }
 
+  useEffect(() => {
+    fetchPDF('CK66407.pdf');
+  }, [fetchPDF, 'CK66407.pdf']);
+
   return (
+    <>
     <div>
-       <VisorHeader pages={ numPages }/>
-      <div className="flex items-center justify-center w-full h-full mt-1"
-      >        
-          <Document file={file} onLoadSuccess={onDocumentLoadSuccess} >
+      { !error && <VisorHeader pages={numPages} handleViewFullPDF={() => PDF && window.open(URL.createObjectURL(PDF), '_blank')} />}
+      <div className="flex items-center justify-center w-full h-full mt-1">
+        {loading && <p>Loading...</p>}
+        {error && <p>{error}</p>}
+        {PDF && (
+          <Document file={PDF} onLoadSuccess={onDocumentLoadSuccess}>
             <Page pageNumber={1} />
           </Document>
+        )}
       </div>
     </div>
+  </>
   );
 }
