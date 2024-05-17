@@ -12,7 +12,8 @@ import { useFetchPDF } from '@/hooks';
 import { VisorHeader } from './VisorHeader';
 
 interface Props {
-    pdfPath: string
+  folder: string;
+  pdfPath: string;
 }
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
@@ -20,18 +21,18 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-export const PDFViewer = ( { pdfPath }: Props) => {
+export const PDFViewer = ( { folder, pdfPath }: Props) => {
   
   const { PDF, loading, error, fetchPDF } = useFetchPDF();  
   const [numPages, setNumPages] = useState<number>();
 
+  useEffect(() => {
+    fetchPDF(folder, pdfPath);
+  }, [fetchPDF, pdfPath]);
+
   const onDocumentLoadSuccess = ({ numPages: nextNumPages }: PDFDocumentProxy): void => {
     setNumPages(nextNumPages);
   }
-
-  useEffect(() => {
-    fetchPDF('CK66407.pdf');
-  }, [fetchPDF, 'CK66407.pdf']);
 
   return (
     <>

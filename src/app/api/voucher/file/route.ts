@@ -4,13 +4,19 @@ import * as path from 'path';
 
 export async function GET(req: Request) {
     const { searchParams } = new URL(req.url || '', process.env.LOCAL_HOST);
+
     const pdfName = searchParams.get('pdfName');
+    const folderName = searchParams.get('folderName');
   
     if (!pdfName) {
       return NextResponse.json({ ok: 'El parámetro "pdfName" es obligatorio.' }, { status: 400 });
     }
 
-    const pdfPath = path.join('C:\\DGT\\', pdfName);
+    if (!folderName) {
+      return NextResponse.json({ ok: 'El parámetro "folderName" es obligatorio.' }, { status: 400 });
+    }
+
+    const pdfPath = path.join('C:\\DGT\\Vouchers\\', folderName,'\\',pdfName);
   
     try {
       // Intenta leer el PDF desde el disco duro

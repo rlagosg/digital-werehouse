@@ -20,6 +20,7 @@ export default async function VoucherPage({ params } : Props) {
     const voucher = initialData.vouchers.find(voucher => voucher.check === convertNumber(check));
 
     const pathPDF = voucher?.document.pdfPath;
+    const folder = voucher?.folder.toString()!;
     
     return (
       <div className="mb-20 grid grid-cols-1 md:grid-cols-5 gap-3">        
@@ -30,7 +31,7 @@ export default async function VoucherPage({ params } : Props) {
             className="bg-white  dark:bg-meta-4 shadow-md rounded-lg overflow-hidden"
             style={{ width: 'calc(100vw - 30px)' }}
           >
-            {pathPDF && <PDFViewer pdfPath={pathPDF} />}
+            {pathPDF && <PDFViewer folder={folder} pdfPath={pathPDF} />}
           </div>
         </div>
         

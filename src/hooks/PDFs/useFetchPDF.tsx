@@ -5,12 +5,12 @@ export const useFetchPDF = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPDF = useCallback(async (pdfName: string) => {
+  const fetchPDF = useCallback(async (folderName: string, pdfName: string) => {
     setLoading(true);
     setError(null);
     
     try {
-      const response = await fetch(`/api/voucher/file/?pdfName=${encodeURIComponent(pdfName)}`);
+      const response = await fetch(`/api/voucher/file/?folderName=${encodeURIComponent(folderName)}&pdfName=${encodeURIComponent(pdfName)}`);
 
       if (!response.ok) {
         throw new Error('Error fetching PDF: ' + response.statusText);
