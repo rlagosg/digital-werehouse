@@ -1,4 +1,4 @@
-import { Folder } from "@/interfaces";
+import { VoucherFolder } from "@/interfaces";
 
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 import { FcOpenedFolder } from "react-icons/fc";
@@ -6,13 +6,13 @@ import { LuCalendarDays } from "react-icons/lu";
 import { converNumberToMonth, convertDateToMyFormat } from '../../utils/convertDate';
 
 interface Props {
-  folder: Folder;
+  folder: VoucherFolder;
 }
 
 export const FolderCard = ({ folder }: Props ) => {
 
     const { 
-        firstVoucher, lastVoucher, month, number, year, scanDetails
+        firstVoucher, lastVoucher, month, name, year, scanDetails
     } = folder;
 
     const { observations, scanEntryDate, scanExitDate } = scanDetails
@@ -35,7 +35,7 @@ export const FolderCard = ({ folder }: Props ) => {
           </div>
 
           <div className="text-title-md font-bold text-black dark:text-white ml-2">
-            {number}
+            {name}
           </div>
         </div>
 

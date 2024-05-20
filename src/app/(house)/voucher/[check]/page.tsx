@@ -20,7 +20,7 @@ export default async function VoucherPage({ params } : Props) {
     const voucher = initialData.vouchers.find(voucher => voucher.check === convertNumber(check));
 
     const pathPDF = voucher?.document.pdfPath;
-    const folder = voucher?.folder.toString()!;
+    const folder = voucher?.folder.name!;
     
     return (
       <div className="mb-20 grid grid-cols-1 md:grid-cols-5 gap-3">        

@@ -22,7 +22,6 @@ export const VoucherDetails = ({ voucher }: Props) => {
 
     return(
     <>
-        
         <div className="col-span-1 md:col-span-2 px-5">
 
             {/* Datos del Propietario */}
@@ -31,7 +30,7 @@ export const VoucherDetails = ({ voucher }: Props) => {
             <div className="flex flex-col pt-4 mb-10">
                 
                 <div className="mt-3 grid grid-cols-2 gap-5 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-6">
-                    <VoucherItemCard nameItem='Cheke' value={voucher ? voucher.check.toString() : null} 
+                    <VoucherItemCard nameItem='Cheke' value={voucher ? check.toString() : null} 
                     icon={ FaMoneyCheck  }/>                   
                     <VoucherItemCard nameItem='Fecha' value={voucher ? convertDateToMyFormat( checkDate ) : null} icon={ LuCalendarDays }/>
                 </div>
@@ -42,7 +41,7 @@ export const VoucherDetails = ({ voucher }: Props) => {
 
                 <div className="mt-3 grid grid-cols-2 gap-5 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-6">
                     <VoucherItemCard nameItem='Valor' value={voucher ? format(checkValue) : null} icon={GrMoney }/>
-                    <VoucherItemCard nameItem='Archivador' value={voucher ? folder.toString() : null} icon={ FaRegFolderOpen }/>
+                    <VoucherItemCard nameItem='Archivador' value={voucher ? folder.name : null} icon={ FaRegFolderOpen }/>
                     {/* <VoucherItemCard nameItem='Fecha' value={voucher ? convertDateToMyFormat( checkDate ) : null} icon={ AiTwotoneFileExcel  }/> */}
                 </div>               
 
@@ -51,6 +50,9 @@ export const VoucherDetails = ({ voucher }: Props) => {
                 </div>
 
             </div>
+            {/* Observaciones */ }
+            <h3 className="font-bold text-sm">Observaciones</h3>
+                <p className="font-light dark:text-white"> { voucher ? description : 'Ninguna' } </p>
 
             {/* Linia Divisora */}
             <div className="w-full h-px bg-gray-300 my-3" />

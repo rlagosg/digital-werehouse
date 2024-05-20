@@ -1,11 +1,10 @@
 import { VoucherGrid } from "@/components/vouchers/vouchers-card/VocherGrid";
 import { initialData } from '@/seed/seed';
-import { convertNumber } from "@/utils/convertNumber";
 import { Metadata } from "next";
 
 interface Props{
     params: {
-        number: string
+        name: string
     }
 }
 
@@ -16,10 +15,9 @@ export const metadata: Metadata = {
 
 export default async function FolderPage({ params } : Props) {
     
-    const { number } = params;
-    const folder = convertNumber(number);
+    const { name } = params;
 
-    const vouchers = initialData.vouchers.filter(voucher => voucher.folder === folder);
+    const vouchers = initialData.vouchers.filter(voucher => voucher.folder.name === name);
     
     return (
       <>      

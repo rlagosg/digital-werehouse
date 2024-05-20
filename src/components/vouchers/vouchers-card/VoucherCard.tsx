@@ -1,5 +1,6 @@
 
 import { Voucher } from "@/interfaces";
+import { format } from "@/utils";
 
 import { convertDateToCalendar } from '@/utils/convertDate';
 import { BsFiletypePdf } from "react-icons/bs";
@@ -61,8 +62,8 @@ export const VoucherCard = ({ voucher }: Props ) => {
         {/* Rango */}
         <div>
           <h4 className="text-title-sm font-bold text-black dark:text-white">
-            { checkValue } 
-            <span className="text-sm font-medium ml-1">Lps.</span>
+            { format(checkValue) } 
+            {/* <span className="text-sm font-medium ml-1">Lps.</span> */}
           </h4>
           <span className="text-sm font-medium">Valor</span>
         </div>
@@ -72,7 +73,6 @@ export const VoucherCard = ({ voucher }: Props ) => {
           className={`flex items-center gap-1 text-sm font-medium text-meta-5`}
         >
           { convertDateToCalendar(checkDate) }
-
           <div className="text-cyan-600 dark:text-cyan-300">
           <LuCalendarDays />
           </div>

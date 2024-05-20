@@ -1,18 +1,36 @@
-export interface Folder {
-    scanDetails   : ScanDetails;
-    number        : string;
-    year          : number;
-    month         : number;
-    firstVoucher  : number;
-    lastVoucher   : number;
+export type FoldersTypes = 'voucher'
+
+export interface Folder_insert{
+    scanDetails  : ScanDetails;
+    name         : string;
+    description  : string;
+    year         : number;
+    folderType   : FoldersTypes;
+}
+
+export interface VoucherFolder_insert {
+    folder       : Folder_insert;
+    month        : number;
+    firstVoucher : number;
+    lastVoucher  : number;
+}
+
+export interface VoucherFolder {
+    scanDetails  : ScanDetails;
+    name         : string;
+    description  : string;
+    year         : number;
+    month        : number;
+    firstVoucher : number;
+    lastVoucher  : number;
 }
 
 export interface Document{
+    scanDetails   : ScanDetails;
     description   : string;
     pages         : number;
     pdfPath       : string;
-    documentType  : 'voucher';
-    scanDetails   : ScanDetails;
+    documentType  : FoldersTypes;
 }
 
 export interface Bank{
@@ -22,14 +40,14 @@ export interface Bank{
 }
 
 export interface Voucher {
-    //id : number;
+    folder        : VoucherFolder;
     document      : Document;
-    checkDate     : Date;
-    check         : number;
     bank          : Bank;
+    check         : number;
+    checkDate     : Date;
     checkValue    : number;
     beneficiary   : string;
-    folder        : number;
+    proyects      : string;
     isNull        : boolean;
     nullDate?     : Date;
 }

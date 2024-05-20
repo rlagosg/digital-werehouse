@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default async function Home() {
 
-  const folders = initialData.folders;
+  const folders = initialData.voucherFolders;
 
   return (
     <>      

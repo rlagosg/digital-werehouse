@@ -1,4 +1,4 @@
-import { Folder } from "@/interfaces";
+import { VoucherFolder } from "@/interfaces";
 import { cn } from "@/utils/cn";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -9,7 +9,7 @@ export const HoverEffect = ({
   items,
   className,
 }: {
-  items: Folder[];
+  items: VoucherFolder[];
   className?: string;
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -24,8 +24,8 @@ export const HoverEffect = ({
     >
       {items.map((item, idx) => (
         <Link
-          href={ `/folder/${item.number}` }
-          key={ item.number }
+          href={ `/folder/${item.name}` }
+          key={ item.name }
           className="relative group  block p-2 h-full w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
@@ -47,7 +47,7 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <FolderCard key={ item.number } folder={ item } />
+          <FolderCard key={ item.name } folder={ item } />
         </Link>
       ))}
     </div>
