@@ -1,5 +1,4 @@
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import DefaultLayout from "@/components/Layouts/DefaultLayout";
+import { Breadcrumb } from "@/components/ui/Breadcrumbs/Breadcrumb";
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
 
 const Profile = () => {
   return (
-    <DefaultLayout>
+    <>
       <div className="mx-auto max-w-242.5">
         <Breadcrumb pageName="Profile" />
 
@@ -309,7 +308,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-    </DefaultLayout>
+    </>
   );
 };
 

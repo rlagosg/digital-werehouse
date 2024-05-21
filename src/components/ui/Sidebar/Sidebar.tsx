@@ -4,6 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
+
+
+
+import { DarkModeSwitcher } from "../Header/DarkModeSwitcher";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 
 interface SidebarProps {
@@ -11,7 +15,7 @@ interface SidebarProps {
   setSidebarOpen: (arg: boolean) => void;
 }
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const pathname = usePathname();
 
   const trigger = useRef<any>(null);
@@ -243,7 +247,9 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </Link>
               </li>
               {/* <!-- Menu Item Profile --> */}
-
+              <li className="flex self-start ml-3">
+              <DarkModeSwitcher /> 
+              </li>
 
             </ul>
           </div>
@@ -255,4 +261,3 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   );
 };
 
-export default Sidebar;

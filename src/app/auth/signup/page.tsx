@@ -1,4 +1,4 @@
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import Breadcrumb from "@/components/ui/Breadcrumbs/Breadcrumb";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";

@@ -1,4 +1,4 @@
-import { Bank, Document, Folder_insert, Voucher, VoucherFolder, VoucherFolder_insert } from "@/interfaces";
+import { Bank, Document, Voucher, VoucherFolder } from "../interfaces/vouchers.interfaces";
 
 interface SeedData {
     voucherFolders: VoucherFolder[],
@@ -52,61 +52,24 @@ const seedBanks : Bank[] =  [
     {
         name:"BAC CREDOMATIC",
         account:'0005611510065',
-        internalAccount:'00056115100611'
+        internalAccount:'7'
     },
     {
         name:"OCCIDENTE velit",
         account:'0005611510063',
-        internalAccount:'0005611510062'
+        internalAccount:'8'
     },
         
     {
         name:"ATLANTIDA morbi sem",
         account:'00056115100612',
-        internalAccount:'0005611510062'
-    },
-    {
-        name:"DAVIVIENDA vestibulum aliquet",
-        account:'0005611510063',
-        internalAccount:'00056115100612'
+        internalAccount:'9'
     },
     {
         name:"LAFISE",
         account:'0005611510061',
-        internalAccount:'00056115100610'
+        internalAccount:'10'
     }
-]
-
-const seedFolder_Insert : Folder_insert[] = [
-    {
-        scanDetails  : seedScanDetails[0],
-        name         : '139',
-        description  : desc,
-        year         : 2022,
-        folderType   : 'voucher'
-    },
-    {
-        scanDetails  : seedScanDetails[0],
-        name         : '140',
-        description  : desc,
-        year         : 2022,
-        folderType   : 'voucher'
-    }
-]
-
-const seedVoucherFolder_Insert: VoucherFolder_insert[] = [
-    {
-        folder: seedFolder_Insert[0],
-        month  : 11,
-        firstVoucher : 66423,
-        lastVoucher  : 66431,
-    },
-    {
-        folder: seedFolder_Insert[1],
-        month  : 11,
-        firstVoucher : 66432,
-        lastVoucher  : 66433,
-    },
 ]
 
 const voucherFolders : VoucherFolder[] = [

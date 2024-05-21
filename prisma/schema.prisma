@@ -19,63 +19,65 @@ model ScanDetails {
   scanExitDate   DateTime
   observations   String
 
-  Folder   Folder[]
-  Document Document[]
+  Folder   Folders[]
+  Document Documents[]
 }
 
-model Folder {
+model Folders {
   id            String @id @default(uuid())
   name          String @unique
-  description   String
+  description   String?
   year          Int
   folderType    FoldersTypes
 
   scanDetails   ScanDetails  @relation(fields: [scanDetailsId], references: [id])
   scanDetailsId String
 
-  VoucherFolder VoucherFolder[]
+  VoucherFolder VoucherFolders[]
 }
 
-model VoucherFolder {
+model VoucherFolders {
   id           String @id @default(uuid())
-  folder       Folder @relation(fields: [folderId], references: [id])
+  folder       Folders @relation(fields: [folderId], references: [id])
   folderId     String
   month        Int
   firstVoucher Int
   lastVoucher  Int
 
-  Voucher Voucher[]
+  Voucher Vouchers[]
 }
 
-model Document {
+model Documents {
   id            String @id @default(uuid())
-  scanDetails   ScanDetails?  @relation(fields: [scanDetailsId], references: [id])
+  scanDetails   ScanDetails @relation(fields: [scanDetailsId], references: [id])
   scanDetailsId String
-  description   String
+  description   String?
   pages         Int
   pdfPath       String
   documentType  FoldersTypes
 
-  Voucher Voucher[]
+  Voucher Vouchers[]
 }
 
-model Bank {
+model Banks {
   id              String @id @default(uuid())
   name            String
   account         String
-  internalAccount String
+  internalAccount String?
 
-  Voucher Voucher[]
+  Voucher Vouchers[]
 }
 
-model Voucher {
+model Vouchers {
   id            String        @id @default(uuid())
   check         Int
-  folder        VoucherFolder @relation(fields: [folderId], references: [id])
+
+  folder        VoucherFolders @relation(fields: [folderId], references: [id])
   folderId      String
-  document      Document      @relation(fields: [documentId], references: [id])
+  document      Documents      @relation(fields: [documentId], references: [id])
   documentId    String
-  bank          Bank          @relation(fields: [bankId], references: [id])
+  bank          Banks         @relation(fields: [bankId], references: [id])
+  
   bankId        String
   checkDate     DateTime
   checkValue    Float

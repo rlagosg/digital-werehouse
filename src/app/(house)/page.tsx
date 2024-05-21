@@ -1,4 +1,5 @@
-import FolderGrid from "@/components/Dashboard/FolderGrid";
+
+import { FolderGrid, SearchInput } from "@/components";
 import { initialData } from "@/seed/seed";
 import { Metadata } from "next";
 
@@ -13,6 +14,7 @@ export default async function Home() {
 
   return (
     <>      
+        <SearchInput />
         <FolderGrid folders={folders}/>
     </>
   );

@@ -1,20 +1,5 @@
 export type FoldersTypes = 'voucher'
 
-export interface Folder_insert{
-    scanDetails  : ScanDetails;
-    name         : string;
-    description  : string;
-    year         : number;
-    folderType   : FoldersTypes;
-}
-
-export interface VoucherFolder_insert {
-    folder       : Folder_insert;
-    month        : number;
-    firstVoucher : number;
-    lastVoucher  : number;
-}
-
 export interface VoucherFolder {
     scanDetails  : ScanDetails;
     name         : string;

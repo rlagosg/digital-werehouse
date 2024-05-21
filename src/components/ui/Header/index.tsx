@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import DarkModeSwitcher from "./DarkModeSwitcher";
+import { DarkModeSwitcher } from "./DarkModeSwitcher";
 
-const Header = (props: {
+export const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
@@ -112,4 +112,3 @@ const Header = (props: {
   );
 };
 
-export default Header;
