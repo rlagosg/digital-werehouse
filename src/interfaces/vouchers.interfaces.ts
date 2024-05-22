@@ -1,6 +1,7 @@
 export type FoldersTypes = 'voucher'
 
 export interface VoucherFolder {
+    id           : string;
     scanDetails  : ScanDetails;
     name         : string;
     description  : string;
@@ -11,6 +12,7 @@ export interface VoucherFolder {
 }
 
 export interface Document{
+    id            : string;
     scanDetails   : ScanDetails;
     description   : string;
     pages         : number;
@@ -19,12 +21,14 @@ export interface Document{
 }
 
 export interface Bank{
+    id              : string;
     name            : string;
     account         : string;
     internalAccount : string;
 }
 
 export interface Voucher {
+    id            : string;
     folder        : VoucherFolder;
     document      : Document;
     bank          : Bank;
@@ -38,6 +42,7 @@ export interface Voucher {
 }
 
 export interface ScanDetails {
+    id            : string;
     scanEntryDate : Date;
     scanExitDate  : Date;
     observations  : string;

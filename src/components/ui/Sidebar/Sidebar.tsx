@@ -247,9 +247,9 @@ export const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 </Link>
               </li>
               {/* <!-- Menu Item Profile --> */}
-              <li className="flex self-start ml-3">
+              <div className="flex self-start ml-3">
               <DarkModeSwitcher /> 
-              </li>
+              </div>
 
             </ul>
           </div>

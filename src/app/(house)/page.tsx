@@ -1,6 +1,7 @@
 
-import { FolderGrid, SearchInput } from "@/components";
-import { initialData } from "@/seed/seed";
+import { getPaginatedVoucherFolders } from "@/actions";
+import { FolderGrid, SearchDropInput } from "@/components";
+import { convertNumber } from "@/utils/convertNumber";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,13 +9,35 @@ export const metadata: Metadata = {
   description: "Almacen digital Alcadia Municipal de Comayagua",
 };
 
-export default async function Home() {
+interface Props {
+  searchParams: {
+    folder? : string;
+    year?   : string;
+  }
+}
 
-  const folders = initialData.voucherFolders;
+export default async function Home({ searchParams }:Props) {
+
+  const year = convertNumber(searchParams.year);
+  const folder    = searchParams.folder ?? '';
+  const { folders } = await getPaginatedVoucherFolders({ folder, year })
+
+  //let folders = [...initialData.voucherFolders];
+
+ /*  for (let x = 0; x < 7; x++) {
+    folders.push(...initialData.voucherFolders)
+  } */
+
+  const listSearch: { [key: string]: string }[] = [
+    { key: 'folder', value: 'Archivador'    },
+    { key: 'month',    value: 'Mes'       },
+    { key: 'year',     value: 'Año'        },
+    { key: 'range',    value: 'Rango' },
+  ];
 
   return (
     <>      
-        <SearchInput />
+        <SearchDropInput dropList={listSearch}/>
         <FolderGrid folders={folders}/>
     </>
   );

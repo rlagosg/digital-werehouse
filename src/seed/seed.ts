@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Bank, Document, Voucher, VoucherFolder } from "../interfaces/vouchers.interfaces";
 
 interface SeedData {
@@ -8,9 +9,10 @@ interface SeedData {
 
 const seedScanDetails = [
     {
-        scanEntryDate: new Date(),
-        observations: 'Ninguna',
-        scanExitDate: new Date(), 
+        id            : uuidv4(),
+        scanEntryDate : new Date(),
+        observations  : 'Ninguna',
+        scanExitDate  : new Date(), 
     },
 ]
 
@@ -18,6 +20,7 @@ const desc = 'Quis proident nulla magna et minim excepteur aliqua voluptate offi
 
 const seedDocuments: Document[] = [
     {
+        id: uuidv4(),
         description: desc,
         pages: 2,
         pdfPath: 'CK66407.pdf',
@@ -25,6 +28,7 @@ const seedDocuments: Document[] = [
         scanDetails: seedScanDetails[0],
     },
     {
+        id: uuidv4(),
         description: desc,
         pages: 27,
         pdfPath: 'CK66423.pdf',
@@ -32,6 +36,7 @@ const seedDocuments: Document[] = [
         scanDetails: seedScanDetails[0],
     },
     {
+        id: uuidv4(),
         description: desc,
         pages: 157,
         pdfPath: 'CK66432.pdf',
@@ -39,6 +44,7 @@ const seedDocuments: Document[] = [
         scanDetails: seedScanDetails[0],
     },
     {
+        id: uuidv4(),
         description: desc,
         pages: 383,
         pdfPath: 'CK66433.pdf',
@@ -50,22 +56,26 @@ const seedDocuments: Document[] = [
 
 const seedBanks : Bank[] =  [
     {
+        id: uuidv4(),
         name:"BAC CREDOMATIC",
         account:'0005611510065',
         internalAccount:'7'
     },
     {
+        id: uuidv4(),
         name:"OCCIDENTE velit",
         account:'0005611510063',
         internalAccount:'8'
     },
         
     {
+        id: uuidv4(),
         name:"ATLANTIDA morbi sem",
         account:'00056115100612',
         internalAccount:'9'
     },
     {
+        id: uuidv4(),
         name:"LAFISE",
         account:'0005611510061',
         internalAccount:'10'
@@ -74,6 +84,7 @@ const seedBanks : Bank[] =  [
 
 const voucherFolders : VoucherFolder[] = [
     {
+        id           : uuidv4(),
         scanDetails  : seedScanDetails[0],
         name         : '139',
         description  : desc,
@@ -83,6 +94,7 @@ const voucherFolders : VoucherFolder[] = [
         lastVoucher  : 66431,
     },
     {
+        id           : uuidv4(),
         scanDetails  : seedScanDetails[0],
         name         : '140',
         description  : desc,
@@ -99,6 +111,7 @@ export const initialData: SeedData = {
     banks: seedBanks,
     vouchers: [
         {
+            id: uuidv4(),
             document: seedDocuments[0],
             folder: voucherFolders[0],
             bank: seedBanks[0],
@@ -110,6 +123,7 @@ export const initialData: SeedData = {
             isNull : false,
         },
         {
+            id: uuidv4(),
             document: seedDocuments[1],
             folder: voucherFolders[0],
             bank: seedBanks[1],
@@ -122,6 +136,7 @@ export const initialData: SeedData = {
             nullDate : new Date(),
         },
         {
+            id: uuidv4(),
             document: seedDocuments[2],
             folder: voucherFolders[1],
             bank: seedBanks[2],
@@ -134,6 +149,7 @@ export const initialData: SeedData = {
             nullDate : new Date(),
         },
         {
+            id: uuidv4(),
             document: seedDocuments[3],
             folder: voucherFolders[1],
             bank: seedBanks[3],
