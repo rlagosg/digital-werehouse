@@ -29,10 +29,11 @@ export default async function Home({ searchParams }:Props) {
   } */
 
   const listSearch: { [key: string]: string }[] = [
-    { key: 'folder', value: 'Archivador'    },
-    { key: 'month',    value: 'Mes'       },
-    { key: 'year',     value: 'Año'        },
-    { key: 'range',    value: 'Rango' },
+    { key: 'folder',       value: 'Archivador'},
+    { key: 'year',         value: 'Año'},
+    { key: 'month',        value: 'Mes'},
+    { key: 'range',        value: 'Rango de Voucher'},
+    { key: 'dateRange',    value: 'Rango de Fechas'},
   ];
 
   return (

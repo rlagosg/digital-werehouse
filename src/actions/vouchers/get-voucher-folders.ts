@@ -12,7 +12,7 @@ interface PaginationOptions {
     year?     : number;
 }
 
-type itemsSearch = 'folder' | 'year' | 'none'
+type ItemsSearch = 'folder' | 'year' | 'none'
 
 export const getPaginatedVoucherFolders = async ({
     page    = 1,
@@ -24,7 +24,7 @@ export const getPaginatedVoucherFolders = async ({
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;
 
-    const itemSelectd: itemsSearch =
+    const itemSelectd: ItemsSearch =
             folder !== '' ? 'folder' :
             year    >= 0 ? 'year'    : 'none';
 
@@ -43,44 +43,66 @@ export const getPaginatedVoucherFolders = async ({
 
         let isLoading = true;
 
-        const buildQuery = (field: itemsSearch, value: any, condition: any = { [field]: value } ) => {
-
-            const where = condition ?? { [field]: value }
-            const order = field === 'folder'
-                ? { }//[field]: { firstNames: 'asc' }}
-                : { [field]: 'asc' };
-
-            return {
-                where,
-                take,
-                skip: (page - 1) * take,
-                include: {
-                    folder: {
-                        include: {
-                            scanDetails: true
-                        }
-                    }
-                },
-                orderBy: order
-            };
-
-            isLoading = true;
-        };
+  
 
         let folders:any = [];
         let listFoldersWithSearchTerm: [{registre: number}];
 
-        folders = await prisma.voucherFolders.findMany({
-            take: take,
-            skip: (page - 1) * take,
-            include: {
-                folder: {
+
+
+        switch (itemSelectd) {
+            case "year":
+                folders = await prisma.voucherFolders.findMany({
+                    take: take,
+                    skip: (page - 1) * take,
+                    where: {
+                        folder: {
+                            year: year
+                        }
+                    },
                     include: {
-                        scanDetails: true
+                        folder: {
+                            include: {
+                                scanDetails: true
+                            },
+                        }
                     }
-                }
-            }
-        })
+                })
+                break;
+
+                case "folder":
+                    folders = await prisma.voucherFolders.findMany({
+                        take: take,
+                        skip: (page - 1) * take,
+                        where: {
+                            folder: {
+                                name: folder
+                            }
+                        },
+                        include: {
+                            folder: {
+                                include: {
+                                    scanDetails: true
+                                },
+                            }
+                        }
+                    })
+                    break;
+        
+            default:
+                folders = await prisma.voucherFolders.findMany({
+                    take: take,
+                    skip: (page - 1) * take,
+                    include: {
+                        folder: {
+                            include: {
+                                scanDetails: true
+                            },
+                        }
+                    }
+                })
+                break;
+        }
 
         const foldersData: VoucherFolder[] = folders.map(ProcessVoucherFolder);
         if(foldersData)  isLoading = false;

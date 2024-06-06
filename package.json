@@ -12,6 +12,7 @@
   "dependencies": {
     "@prisma/client": "^5.14.0",
     "@wojtekmaj/react-hooks": "^1.20.0",
+    "antd": "^5.18.0",
     "apexcharts": "^3.45.2",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.10",

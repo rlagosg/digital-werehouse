@@ -7,6 +7,13 @@ interface Props{
     dropList:  { [key: string]: string }[];
 }
 
+import { Col, DatePicker, Input, Row, Select } from 'antd';
+import { SearchMothInput } from './SearchMothInput';
+import { SearchYearInput } from './SearchYearInput';
+
+const { Option } = Select;
+const { RangePicker } = DatePicker;
+
 export const SearchDropInput = ({ dropList }:Props) => {
 
   const [selectedOption, setSelectedOption] = useState(dropList[0].value);
@@ -22,11 +29,97 @@ export const SearchDropInput = ({ dropList }:Props) => {
     router.push(url + searchTerm);
   }
 
+  //----------------------------------------
+
+  const [searchField, setSearchField] = useState<string>(''); 
+  const [searchValue, setSearchValue] = useState<any>(''); 
+
+  const handleFieldChange = (value: string) => {
+    setSearchField(value);
+    setSearchValue('');
+  };
+
+  const handleSearch = () => {
+    console.log('Buscar por', searchField, 'con valor', searchValue);
+  };
+
+  const renderSearchInput = () => {
+    switch (searchField) {
+      case 'year':
+      case 'month':
+      case 'firstVoucher':
+      case 'lastVoucher':
+        return (
+          <Input
+            type="number"
+            value={searchValue}
+            onChange={(e) => setSearchValue(Number(e.target.value))}
+            placeholder={`Ingrese ${searchField}`}
+            className="text-base text-gray-700 flex-grow outline-none px-2 focus ml-5" 
+            
+          />
+        );
+      case 'voucherRange':
+        return (
+          <Row gutter={16}>
+            <Col span={12}>
+              <Input
+                type="number"
+                placeholder="Mínimo"
+                value={searchValue[0]}
+                onChange={(e) => setSearchValue([Number(e.target.value), searchValue[1]])}
+              />
+            </Col>
+            <Col span={12}>
+              <Input
+                type="number"
+                placeholder="Máximo"
+                value={searchValue[1]}
+                onChange={(e) => setSearchValue([searchValue[0], Number(e.target.value)])}
+              />
+            </Col>
+          </Row>
+        );
+      case 'dateRange':
+        return (
+          <RangePicker
+            style={{ width: '100%' }}
+            onChange={(dates) => setSearchValue(dates)}
+          />
+        );
+      default:
+        return (
+          <Input
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            placeholder={`Ingrese ${searchField}`}
+          />
+        );
+    }
+  };
+  //-----------------------------------------
+
+
   return (
     <>
       <div className="relative mb-5 flex items-center">
         <div className="flex items-center bg-white rounded-lg overflow-hidden px-4 py-5 justify-between w-full shadow-md border-[1px] relative">
-          <button className="absolute left-0 top-1/2 -translate-y-1/2 ml-4">
+          
+          {/* Menú desplegable */}
+          <div>
+            <select
+                  id="Com"
+                  className="text-base bg-white text-gray-800 outline-none border-2 px-3 py-2 rounded-lg  border-pink-200 hover:border-pink-300 cursor-pointer"
+                  value={selectedOption}
+                  onChange={(e) => setSelectedOption(e.target.value)}
+                  >
+                  {dropList.map((item) => (
+                    <option key={item.key} value={item.value}>{item.value}</option>
+                  ))}
+              </select>
+          </div>
+
+          <button className="absolute left-0 top-1/2 -translate-y-1/2 ml-48">
             <svg
               className="fill-body hover:fill-primary dark:fill-bodydark dark:hover:fill-primary"
               width="20"
@@ -57,21 +150,11 @@ export const SearchDropInput = ({ dropList }:Props) => {
             className="text-base text-gray-700 flex-grow outline-none px-2 focus ml-5" type="text"
             />
 
+            {/* {renderSearchInput()} */}
+            
+
           {/* Boton de Busqueda */}
           <div className="absolute inset-y-0 right-0 flex items-center">
-
-              {/* Menú desplegable */}
-              <select
-                  id="Com"
-                  className="text-base bg-white text-gray-800 outline-none border-2 px-3 py-2 rounded-lg  border-pink-200 hover:border-pink-300 cursor-pointer"
-                  value={selectedOption}
-                  onChange={(e) => setSelectedOption(e.target.value)}
-                  >
-                  {dropList.map((item) => (
-                    <option key={item.key} value={item.value}>{item.value}</option>
-                  ))}
-              </select>
-
             <button
                 onClick={ onSearchTerm }
                 className="middle none center mr-3 rounded-lg border border-pink-500 py-3 px-6 font-sans text-xs font-bold uppercase text-pink-800 transition-all hover:opacity-75 focus:ring focus:ring-pink-200 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
@@ -84,6 +167,41 @@ export const SearchDropInput = ({ dropList }:Props) => {
 
         </div>
       </div>
+
+      <>
+      <div className='flex bg-'>
+        <SearchYearInput />
+        <SearchMothInput />
+      </div>
+ {/*      <div>
+      <Form layout="vertical">
+        <Form.Item label="Seleccione un campo de búsqueda">
+          <Select
+            defaultValue=""
+            style={{ width: '100%' }}
+            onChange={handleFieldChange}
+          >
+            <Option value="">Selecciona un campo</Option>
+            <Option value="name">Archivador</Option>
+            <Option value="year">Año</Option>
+            <Option value="month">Mes</Option>
+            <Option value="firstVoucher">Primer Voucher</Option>
+            <Option value="lastVoucher">Último Voucher</Option>
+            <Option value="voucherRange">Rango de Voucher</Option>
+            <Option value="dateRange">Rango de Fechas</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item label={`Ingrese ${searchField}`}>
+          {renderSearchInput()}
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" onClick={handleSearch} block>
+            Buscar
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>  */}      
+      </>
     </>
   );
 };
