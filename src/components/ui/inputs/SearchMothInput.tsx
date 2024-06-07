@@ -1,5 +1,5 @@
 
-import { Form, Select } from 'antd';
+import { Select } from 'antd';
 import { useState } from 'react';
 
 export const SearchMothInput = () => {
@@ -32,27 +32,32 @@ export const SearchMothInput = () => {
     
   };
 
+  return (
+    <div className='flex mr-5'>
+        <div 
+            id="dropdown-button" 
+            className="dropdown-button flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+        >
+            Mes
+        </div>
 
-    return(
-        <>
-        <div className='flex'>
-        <div id="dropdown-button" className="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" >Mes </div>
-            <Form layout="vertical" style={{width: 170, height: 25}}>
-                <Form.Item>
+        <div className="relative w-full">
+            <div className="text-sm text-gray-900 rounded-e-lg border border-red-300  h-full" style={{borderLeft: 'none'}}>            
                 <Select
                     defaultValue=""
-                    style={{ height: 42 }}
+                    style={{ minWidth: 168}}
                     onChange={handleFieldChange}
+                    className="custom-select h-full"
                 >
-                    <Option value="">Selecciona un mes</Option>
-                    {
-                        months.map(month => <Option key={month.value} value={month.value}>{month.month}</Option>)
-                    }
-
+                    <Option value="">filtro por mes</Option>
+                    {months.map(month => (
+                        <Option key={month.value} value={month.value}>
+                            {month.month}
+                        </Option>
+                    ))}
                 </Select>
-                </Form.Item>
-            </Form>
-        </div> 
-        </>
-    )
+            </div>            
+        </div>
+    </div>
+  );
 }

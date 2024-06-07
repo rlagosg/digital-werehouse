@@ -8,7 +8,9 @@ interface Props{
 }
 
 import { Col, DatePicker, Input, Row, Select } from 'antd';
+import { SearchDateRangeInput } from './SearchDateRangeInput';
 import { SearchMothInput } from './SearchMothInput';
+import { SearchRangeInput } from './SearchRangeInput';
 import { SearchYearInput } from './SearchYearInput';
 
 const { Option } = Select;
@@ -169,9 +171,11 @@ export const SearchDropInput = ({ dropList }:Props) => {
       </div>
 
       <>
-      <div className='flex bg-'>
+      <div className='flex bg-re max-h-8 mb-8'>
         <SearchYearInput />
         <SearchMothInput />
+        <SearchRangeInput />
+        <SearchDateRangeInput />
       </div>
  {/*      <div>
       <Form layout="vertical">
