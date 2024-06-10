@@ -1,6 +1,6 @@
 
 import { getPaginatedVoucherFolders } from "@/actions";
-import { FolderGrid, SearchDropInput } from "@/components";
+import { FolderGrid, SearchInput } from "@/components";
 import { convertNumber } from "@/utils/convertNumber";
 import { Metadata } from "next";
 
@@ -28,17 +28,9 @@ export default async function Home({ searchParams }:Props) {
     folders.push(...initialData.voucherFolders)
   } */
 
-  const listSearch: { [key: string]: string }[] = [
-    { key: 'folder',       value: 'Archivador'},
-    { key: 'year',         value: 'Año'},
-    { key: 'month',        value: 'Mes'},
-    { key: 'range',        value: 'Rango de Voucher'},
-    { key: 'dateRange',    value: 'Rango de Fechas'},
-  ];
-
   return (
     <>      
-        <SearchDropInput dropList={listSearch}/>
+        <SearchInput />
         <FolderGrid folders={folders}/>
     </>
   );
