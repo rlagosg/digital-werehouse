@@ -11,16 +11,27 @@ export const metadata: Metadata = {
 
 interface Props {
   searchParams: {
-    folder? : string;
-    year?   : string;
+    folder?     : string;
+    startYear?  : string;
+    endYear?    : string;
+    startMonth? : string;
+    endMonth?   : string;
+    startRange? : string;
+    endRange?   : string;
   }
 }
 
 export default async function Home({ searchParams }:Props) {
 
-  const year = convertNumber(searchParams.year);
+  const startYear  = convertNumber(searchParams.startYear);
+  const endYear    = convertNumber(searchParams.endYear);
+  const startMonth = convertNumber(searchParams.startMonth);
+  const endMonth   = convertNumber(searchParams.endMonth);
+  const startRange = convertNumber(searchParams.startRange);
+  const endRange   = convertNumber(searchParams.endRange);
+
   const folder    = searchParams.folder ?? '';
-  const { folders } = await getPaginatedVoucherFolders({ folder, year })
+  const { folders } = await getPaginatedVoucherFolders({ folder, startYear, endYear })
 
   //let folders = [...initialData.voucherFolders];
 
@@ -30,7 +41,7 @@ export default async function Home({ searchParams }:Props) {
 
   return (
     <>      
-        <SearchInput />
+        <SearchInput termSearch="folder"/>
         <FolderGrid folders={folders}/>
     </>
   );

@@ -7,18 +7,23 @@ import { SearchRangeInput } from './SearchRangeInput';
 import { SearchRangeMothInput } from './SearchRangeMonthInput';
 import { SearchRangeYearInput } from './SearchRangeYearInput';
 
-export const SearchInput = () => {
+interface Props{
+  termSearch?: string
+}
+
+export const SearchInput = ({ termSearch = 'search' }:Props) => {
 
   //const [selectedOption, setSelectedOption] = useState('usuario');
   const [searchTerm, setSearchTerm] = useState('');
+  const [searching, setSearching] = useState('');
   const pathname = usePathname();
   const router = useRouter()
 
-  const url = pathname + '/?search=';
+  const url = pathname + `/?${termSearch}=`;
 
   const onSearchTerm = () => {
-    router.push(url + searchTerm);
-    //console.log(url + searchTerm);
+    setSearching(url + searchTerm);
+    router.push(searching);
   }
 
   return (
@@ -55,7 +60,7 @@ export const SearchInput = () => {
       
       <div className="flex flex-col md:flex-row bg-re max-h-8 mb-30 md:mb-8 ">
         <div className="flex-1 flex md:mr-4 mb-2 md:mb-0">
-          <SearchRangeYearInput />
+          <SearchRangeYearInput pathName={searching}/>
         </div>
         <div className="flex-1 flex md:mr-4 mb-2 md:mb-0">
           <SearchRangeMothInput />

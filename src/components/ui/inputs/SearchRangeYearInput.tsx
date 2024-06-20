@@ -1,14 +1,22 @@
 import { Input } from "antd";
+import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { TittleInput } from "./title/TittleInput";
 
+interface Props {
+  pathName: string
+}
 
-export const SearchRangeYearInput = ( ) => {
+export const SearchRangeYearInput = ({ pathName }:Props) => {
 
     const [searchValue, setSearchValue] = useState<any>(''); 
-
-    const onchangue = () => {
-      console.log(searchValue);
+    const router = useRouter()
+    
+    const onChangeStartYear = ( year: number = -1 ) => {
+      router.push(pathName + '&startYear=' + year);
+    }
+    const onChangeEndYear = ( year: number = -1 ) => {
+      //router.push(pathName + '&endYearYear=' + year);
     }
 
     return(
@@ -23,7 +31,7 @@ export const SearchRangeYearInput = ( ) => {
                   type="number"
                   placeholder="desde"                  
                   value={searchValue[0]}
-                  onChange={(e) => { setSearchValue([Number(e.target.value), searchValue[1]]); onchangue(); }}
+                  onChange={(e) => { onChangeStartYear(Number(e.target.value)) }}
                   min={0}
                   className="h-full w-full bg-white dark:bg-boxdark dark:drop-shadow-none text-black dark:text-white"
                   style={{ borderRadius: '0', borderBottomLeftRadius: '0', minWidth: '84px'}}
@@ -32,7 +40,7 @@ export const SearchRangeYearInput = ( ) => {
                   type="number"
                   placeholder="hasta"
                   value={searchValue[1]}
-                  onChange={(e) => { setSearchValue([searchValue[0], Number(e.target.value)]); onchangue(); }}
+                  onChange={(e) => { onChangeEndYear(Number(e.target.value)) }}
                   min={0}
                   className="text-sm text-gray-900 rounded-e-lg border border-red-300 w-full h-full bg-white dark:bg-boxdark dark:drop-shadow-none text-black dark:text-white"
                   style={{ borderTopRightRadius: '0.375rem', borderBottomRightRadius: '0.375rem', minWidth: '84px', borderBottomLeftRadius: '0', borderTopLeftRadius: '0' }}
