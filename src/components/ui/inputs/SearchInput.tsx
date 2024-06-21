@@ -1,29 +1,28 @@
 'use client'
 
+import { useSaveInputsFolders } from '@/storage';
 import { usePathname, useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { IconSearch } from '../Icons/IconSearch';
 import { SearchRangeInput } from './SearchRangeInput';
 import { SearchRangeMothInput } from './SearchRangeMonthInput';
 import { SearchRangeYearInput } from './SearchRangeYearInput';
 
-interface Props{
-  termSearch?: string
-}
 
-export const SearchInput = ({ termSearch = 'search' }:Props) => {
+export const SearchInput = () => {
 
-  //const [selectedOption, setSelectedOption] = useState('usuario');
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searching, setSearching] = useState('');
+  const { setFolder, buildUrl, folder, resetOptions } = useSaveInputsFolders();
   const pathname = usePathname();
   const router = useRouter()
 
-  const url = pathname + `/?${termSearch}=`;
+  useEffect(() => {
+    //resetOptions();
+    //router.push(pathname);
+  }, [])
+  
 
   const onSearchTerm = () => {
-    setSearching(url + searchTerm);
-    router.push(searching);
+    router.push(buildUrl(pathname));
   }
 
   return (
@@ -32,9 +31,9 @@ export const SearchInput = ({ termSearch = 'search' }:Props) => {
         <div className="flex items-center bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none rounded-lg overflow-hidden px-4 py-5 justify-between w-full shadow-md border-[1px] relative">
           <IconSearch className='absolute left-0 top-1/2 -translate-y-1/2 ml-4'/>
           <input
-            value={searchTerm}
+            value={folder}
             placeholder="Busca archivador"
-            onChange={(e) => setSearchTerm(e.target.value)}
+            onChange={(e) => setFolder(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' ? onSearchTerm() : null}
             className="no-spinners text-base text-gray-700 flex-grow outline-none px-2 focus ml-5 bg-transparent font-medium focus:outline-none xl:w-125" type="number"
             maxLength={20}
@@ -60,7 +59,7 @@ export const SearchInput = ({ termSearch = 'search' }:Props) => {
       
       <div className="flex flex-col md:flex-row bg-re max-h-8 mb-30 md:mb-8 ">
         <div className="flex-1 flex md:mr-4 mb-2 md:mb-0">
-          <SearchRangeYearInput pathName={searching}/>
+          <SearchRangeYearInput/>
         </div>
         <div className="flex-1 flex md:mr-4 mb-2 md:mb-0">
           <SearchRangeMothInput />

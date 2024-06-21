@@ -1,8 +1,20 @@
+import { useSaveInputsFolders } from "@/storage";
 import { Select } from "antd";
-import { useState } from "react";
 import { TittleInput } from "./title/TittleInput";
 
+type range = 'desde' | 'hasta';
+
 export const SearchRangeMothInput = ( ) => {
+
+  const { setStartMonth, setEndMonth,  startMonth, endMonth } = useSaveInputsFolders();    
+  
+    const onChangeStartMonth = (month: string) => {
+      setStartMonth(Number(month));
+    };
+  
+    const onChangeEndMonth = (month: string) => {
+      setEndMonth(Number(month));      
+    };
 
   const months: { value: number, month: string }[] = [
     { value: 1,  month: 'Enero' },
@@ -17,26 +29,13 @@ export const SearchRangeMothInput = ( ) => {
     { value: 10, month: 'Octubre' },
     { value: 11, month: 'Noviembre' },
     { value: 12, month: 'Diciembre' },
-]
+  ]
 
-const [searchField, setSearchField] = useState<string>(''); 
-const [searchValue, setSearchValue] = useState<any>(''); 
+  const findMonth = (month: number = 0, defaultText: string) => {
+    return month === 0 ? defaultText : months.find(m => m.value === month)?.month || defaultText;
+  };
 
-const [selectedOption, setSelectedOption] = useState();
-const { Option } = Select;
-
-const handleFieldChange = (value: string) => {
-setSearchField(value);
-setSearchValue('');
-console.log(value);
-
-};
-
-    
-
-    const onchangue = () => {
-      console.log(searchValue);
-    }
+  const { Option } = Select;  
 
     return(
         <div className="w-full">
@@ -46,12 +45,12 @@ console.log(value);
             <div style={{borderLeft: 'none'}} className="relative w-full text-sm text-gray-900 rounded-e-lg border border-red-300 ">
               <div className="flex w-full h-full">
               <Select
-                    defaultValue=""
+                     defaultValue={findMonth(startMonth, "desde")}
                     style={{ minWidth: '84px'}}
-                    onChange={handleFieldChange}
+                    onChange={onChangeStartMonth}
                     className="custom-select-between h-full w-full"
                 >
-                    <Option value="">desde</Option>
+                    <Option value={0}>desde</Option>
                     {months.map(month => (
                         <Option key={month.value} value={month.value}>
                             {month.month}
@@ -59,9 +58,9 @@ console.log(value);
                     ))}
                 </Select>
                 <Select
-                    defaultValue=""
+                    defaultValue={findMonth(endMonth, "hasta")}
                     style={{ minWidth: '84px'}}
-                    onChange={handleFieldChange}
+                    onChange={onChangeEndMonth}
                     className="custom-select h-full w-full"
                 >
                     <Option value="">hasta</Option>

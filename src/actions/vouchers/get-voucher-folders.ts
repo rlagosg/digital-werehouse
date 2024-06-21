@@ -6,7 +6,7 @@ import { Prisma } from "@prisma/client";
 import { ProcessQueryVoucherFolder } from "./process-query-folders";
 
 
-interface PaginationOptions {
+export interface FolderPaginationOptions {
     page?       : number;
     take?       : number;
     folder?     : string;
@@ -29,7 +29,7 @@ export const getPaginatedVoucherFolders = async ({
     endMonth     = -1,
     startRange   = -1,
     endRange     = -1,
-  }: PaginationOptions) => {
+  }: FolderPaginationOptions) => {
 
     if (isNaN(Number(page))) page = 1;
     if (page < 1) page = 1;

@@ -23,6 +23,7 @@ interface Props {
 
 export default async function Home({ searchParams }:Props) {
 
+  const folder    = searchParams.folder ?? '';
   const startYear  = convertNumber(searchParams.startYear);
   const endYear    = convertNumber(searchParams.endYear);
   const startMonth = convertNumber(searchParams.startMonth);
@@ -30,7 +31,6 @@ export default async function Home({ searchParams }:Props) {
   const startRange = convertNumber(searchParams.startRange);
   const endRange   = convertNumber(searchParams.endRange);
 
-  const folder    = searchParams.folder ?? '';
   const { folders } = await getPaginatedVoucherFolders({ folder, startYear, endYear })
 
   //let folders = [...initialData.voucherFolders];
@@ -41,7 +41,7 @@ export default async function Home({ searchParams }:Props) {
 
   return (
     <>      
-        <SearchInput termSearch="folder"/>
+        <SearchInput/>
         <FolderGrid folders={folders}/>
     </>
   );

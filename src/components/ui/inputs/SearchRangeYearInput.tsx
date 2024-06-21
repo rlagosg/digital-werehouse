@@ -1,23 +1,20 @@
+
+import { useSaveInputsFolders } from "@/storage";
 import { Input } from "antd";
-import { useRouter } from 'next/navigation';
-import { useState } from "react";
 import { TittleInput } from "./title/TittleInput";
 
-interface Props {
-  pathName: string
-}
 
-export const SearchRangeYearInput = ({ pathName }:Props) => {
+export const SearchRangeYearInput = () => {
 
-    const [searchValue, setSearchValue] = useState<any>(''); 
-    const router = useRouter()
-    
-    const onChangeStartYear = ( year: number = -1 ) => {
-      router.push(pathName + '&startYear=' + year);
-    }
-    const onChangeEndYear = ( year: number = -1 ) => {
-      //router.push(pathName + '&endYearYear=' + year);
-    }
+    const { setStartYear, setEndYear,  startYear, endYear } = useSaveInputsFolders();    
+  
+    const onChangeStartYear = (year: number = 0) => {
+      setStartYear(year);
+    };
+  
+    const onChangeEndYear = (year: number = 0) => {
+      setEndYear(year);      
+    };
 
     return(
         <div className="w-full">
@@ -30,7 +27,7 @@ export const SearchRangeYearInput = ({ pathName }:Props) => {
                 <Input
                   type="number"
                   placeholder="desde"                  
-                  value={searchValue[0]}
+                  value={startYear}
                   onChange={(e) => { onChangeStartYear(Number(e.target.value)) }}
                   min={0}
                   className="h-full w-full bg-white dark:bg-boxdark dark:drop-shadow-none text-black dark:text-white"
@@ -39,7 +36,7 @@ export const SearchRangeYearInput = ({ pathName }:Props) => {
                 <Input
                   type="number"
                   placeholder="hasta"
-                  value={searchValue[1]}
+                  value={endYear}
                   onChange={(e) => { onChangeEndYear(Number(e.target.value)) }}
                   min={0}
                   className="text-sm text-gray-900 rounded-e-lg border border-red-300 w-full h-full bg-white dark:bg-boxdark dark:drop-shadow-none text-black dark:text-white"
