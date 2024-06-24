@@ -73,16 +73,3 @@ export const SearchInput = () => {
     </>
   );
 };
-
-
-{/* Menú desplegable */}
-{/* <select
-    id="Com"
-    className="text-base bg-white text-gray-800 outline-none border-2 px-10 py-2 rounded-lg  border-pink-200 hover:border-pink-300 cursor-pointer"
-    value={selectedOption}
-    onChange={(e) => setSelectedOption(e.target.value)}
->
-    <option value="correo">correo</option>
-    <option value="nombre">nombre</option>
-    <option value="usuario">usuario</option>
-</select> */}

@@ -8,14 +8,6 @@ export const SearchRangeYearInput = () => {
 
     const { setStartYear, setEndYear,  startYear, endYear } = useSaveInputsFolders();    
   
-    const onChangeStartYear = (year: number = 0) => {
-      setStartYear(year);
-    };
-  
-    const onChangeEndYear = (year: number = 0) => {
-      setEndYear(year);      
-    };
-
     return(
         <div className="w-full">
         <form className="h-full ">
@@ -28,7 +20,7 @@ export const SearchRangeYearInput = () => {
                   type="number"
                   placeholder="desde"                  
                   value={startYear}
-                  onChange={(e) => { onChangeStartYear(Number(e.target.value)) }}
+                  onChange={(e) => { setStartYear(Number(e.target.value)) }}
                   min={0}
                   className="h-full w-full bg-white dark:bg-boxdark dark:drop-shadow-none text-black dark:text-white"
                   style={{ borderRadius: '0', borderBottomLeftRadius: '0', minWidth: '84px'}}
@@ -37,7 +29,7 @@ export const SearchRangeYearInput = () => {
                   type="number"
                   placeholder="hasta"
                   value={endYear}
-                  onChange={(e) => { onChangeEndYear(Number(e.target.value)) }}
+                  onChange={(e) => { setEndYear(Number(e.target.value)) }}
                   min={0}
                   className="text-sm text-gray-900 rounded-e-lg border border-red-300 w-full h-full bg-white dark:bg-boxdark dark:drop-shadow-none text-black dark:text-white"
                   style={{ borderTopRightRadius: '0.375rem', borderBottomRightRadius: '0.375rem', minWidth: '84px', borderBottomLeftRadius: '0', borderTopLeftRadius: '0' }}

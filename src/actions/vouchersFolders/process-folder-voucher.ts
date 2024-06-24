@@ -1,13 +1,5 @@
 import { VoucherFolder } from "@/interfaces";
 
-export interface VoucherFolderData {
-    id:           string;
-    folderId:     string;
-    month:        number;
-    firstVoucher: number;
-    lastVoucher:  number;
-    folder:       FolderData;
-}
 
 export interface FolderData {
     id:            string;
@@ -17,6 +9,15 @@ export interface FolderData {
     folderType:    string;
     scanDetailsId: string;
     scanDetails:   ScanDetailsData;
+    VoucherFolder: VoucherFolderData[];
+}
+
+export interface VoucherFolderData {
+    id:           string;
+    folderId:     string;
+    month:        number;
+    firstVoucher: number;
+    lastVoucher:  number;
 }
 
 export interface ScanDetailsData {
@@ -26,10 +27,10 @@ export interface ScanDetailsData {
     observations:  string;
 }
 
-export const ProcessVoucherFolder = ( folderVoucher : VoucherFolderData ) : VoucherFolder => {
+export const ProcessVoucherFolder = ( folderVoucher : FolderData ) : VoucherFolder => {
     
-    const { id, folder, month, firstVoucher, lastVoucher } = folderVoucher;
-    const { name, description, year, scanDetails } = folder;
+    const { name, description, year, scanDetails, VoucherFolder } = folderVoucher;
+    const { id, month, firstVoucher, lastVoucher } = VoucherFolder[0];
 
     return{
         id,

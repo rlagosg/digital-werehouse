@@ -1,2 +1,2 @@
-export * from "./vouchers/get-voucher-folders";
+export * from "./vouchersFolders/get-voucher-folders";
 

@@ -1,6 +1,6 @@
 
 import { getPaginatedVoucherFolders } from "@/actions";
-import { FolderGrid, SearchInput } from "@/components";
+import { FolderGrid, Pagination, SearchInput } from "@/components";
 import { convertNumber } from "@/utils/convertNumber";
 import { Metadata } from "next";
 
@@ -23,15 +23,19 @@ interface Props {
 
 export default async function Home({ searchParams }:Props) {
 
-  const folder    = searchParams.folder ?? '';
-  const startYear  = convertNumber(searchParams.startYear);
-  const endYear    = convertNumber(searchParams.endYear);
-  const startMonth = convertNumber(searchParams.startMonth);
-  const endMonth   = convertNumber(searchParams.endMonth);
-  const startRange = convertNumber(searchParams.startRange);
-  const endRange   = convertNumber(searchParams.endRange);
+const { folder = '', startYear, endYear, startMonth, endMonth, startRange, endRange } = searchParams;
 
-  const { folders } = await getPaginatedVoucherFolders({ folder, startYear, endYear })
+const convertedParams = {
+  folder,
+  startYear : convertNumber(startYear),
+  endYear   : convertNumber(endYear),
+  startMonth: convertNumber(startMonth),
+  endMonth  : convertNumber(endMonth),
+  startRange: convertNumber(startRange),
+  endRange  : convertNumber(endRange),
+};
+
+const { folders, totalPages } = await getPaginatedVoucherFolders(convertedParams);
 
   //let folders = [...initialData.voucherFolders];
 
@@ -40,9 +44,12 @@ export default async function Home({ searchParams }:Props) {
   } */
 
   return (
-    <>      
+    <>  
+      <div className="fadeIn">
         <SearchInput/>
         <FolderGrid folders={folders}/>
+        <Pagination totalPages={totalPages} />
+      </div> 
     </>
   );
 }
