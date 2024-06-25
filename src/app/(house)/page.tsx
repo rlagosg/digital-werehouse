@@ -1,6 +1,6 @@
 
 import { getPaginatedVoucherFolders } from "@/actions";
-import { FolderGrid, Pagination, SearchInput } from "@/components";
+import { Breadcrumb, FolderGrid, Pagination, SearchInput } from "@/components";
 import { convertNumber } from "@/utils/convertNumber";
 import { Metadata } from "next";
 
@@ -45,11 +45,16 @@ const { folders, totalPages } = await getPaginatedVoucherFolders(convertedParams
 
   return (
     <>  
-      <div className="fadeIn">
-        <SearchInput/>
-        <FolderGrid folders={folders}/>
+    <div className="flex flex-col min-h-[256px] fadeIn ">
+      <div className="flex-grow overflow-y-auto min-h-[765px]"> {/* Contenido principal con al menos 765px de altura */}
+        <Breadcrumb pageName="Archivadores"/>
+        <SearchInput />
+        <FolderGrid folders={folders} />
+      </div>
+      <div className="mt-4"> {/* Paginación con margen superior ajustado */}
         <Pagination totalPages={totalPages} />
-      </div> 
+      </div>
+    </div> 
     </>
   );
 }

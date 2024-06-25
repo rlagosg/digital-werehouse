@@ -52,7 +52,7 @@ export const Pagination = ({ totalPages }: Props) => {
 
 
   return (
-    <div className="flex text-center justify-center mt-10 mb-32">
+    <div className="flex text-center justify-center mt-4">
 
       <nav aria-label="Page navigation example">
 
@@ -72,11 +72,11 @@ export const Pagination = ({ totalPages }: Props) => {
               <li key={ page } className="page-item">
                 <Link
                   className={clsx(
-                    'ml-1 page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded',
+                    'ml-1 page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded bg-white dark:border-strokedark dark:bg-boxdark',
                     'text-gray-800 hover:text-gray-100 focus:shadow-none',
                     {
-                      'bg-gray-800 shadow-sm text-white hover:text-white hover:bg-gray-700': page === currentPage,
-                      'bg-white hover:bg-gray-500': page !== currentPage,
+                      'bg-gray-800 shadow-sm hover:text-cyan-950 text-black dark:text-white hover:bg-gray-700': page === currentPage,
+                      'bg-meta-2 dark:bg-meta-4': page !== currentPage,
                     }
                   )}
                   href={ createPageUrl( page ) }
@@ -89,9 +89,6 @@ export const Pagination = ({ totalPages }: Props) => {
 
           }
 
-
-          
-
           <li className="page-item">
             <Link
               className="page-link relative block py-1.5 px-3 border-0 bg-transparent outline-none transition-all duration-300 rounded text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
@@ -100,6 +97,7 @@ export const Pagination = ({ totalPages }: Props) => {
               <IoChevronForwardOutline size={30} />
             </Link>
           </li>
+
         </ul>
       </nav>
     </div>
