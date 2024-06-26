@@ -27,19 +27,28 @@ export interface ScanDetailsData {
     observations:  string;
 }
 
-export const ProcessVoucherFolder = ( folderVoucher : FolderData ) : VoucherFolder => {
-    
-    const { name, description, year, scanDetails, VoucherFolder } = folderVoucher;
-    const { id, month, firstVoucher, lastVoucher } = VoucherFolder[0];
+export const ProcessVoucherFolder = ( folderVoucher : FolderData ) : VoucherFolder | null => {
 
-    return{
-        id,
-        name,
-        description,
-        year,
-        month,
-        firstVoucher,
-        lastVoucher,
-        scanDetails
+    try {
+        
+        const { name, description, year, scanDetails, VoucherFolder } = folderVoucher;
+        if (!VoucherFolder || VoucherFolder.length === 0) return null;
+        const { id, month, firstVoucher, lastVoucher } = VoucherFolder[0];
+
+        return{
+            id,
+            name,
+            description,
+            year,
+            month,
+            firstVoucher,
+            lastVoucher,
+            scanDetails
+        }
+
+    } catch (error) {
+        throw new Error('Error en la conversion de los documentos: ' + error)
     }
+    
+    
 }

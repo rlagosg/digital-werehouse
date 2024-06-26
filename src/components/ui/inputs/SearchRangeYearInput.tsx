@@ -1,13 +1,16 @@
 
-import { useSaveInputsFolders } from "@/storage";
 import { Input } from "antd";
 import { TittleInput } from "./title/TittleInput";
 
+interface Props {
+  startYear: number | undefined;
+  setStartYear: (endYear: number) => void;
+  endYear: number | undefined;
+  setEndYear: (endYear: number) => void;
+}
 
-export const SearchRangeYearInput = () => {
-
-    const { setStartYear, setEndYear,  startYear, endYear } = useSaveInputsFolders();    
-  
+export const SearchRangeYearInput = ({endYear, setEndYear, startYear, setStartYear}:Props) => {
+       
     return(
         <div className="w-full">
         <form className="h-full ">

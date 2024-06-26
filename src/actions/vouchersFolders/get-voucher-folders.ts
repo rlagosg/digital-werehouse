@@ -58,7 +58,10 @@ export const getPaginatedVoucherFolders = async ({
 
         //console.log(JSON.stringify(folders, null, 2));
             
-        const foldersData: VoucherFolder[] = folders.map(ProcessVoucherFolder);
+        const foldersData: VoucherFolder[] = folders
+            .map(ProcessVoucherFolder)
+            .filter((folder:any): folder is VoucherFolder => folder !== null);
+
         if(foldersData)  isLoading = false;
 
         // Obtener el total de paginas

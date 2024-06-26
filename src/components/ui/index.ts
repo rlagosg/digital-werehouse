@@ -9,3 +9,4 @@ export * from './inputs/SearchDropInput';
 export * from './inputs/SearchInput';
 export * from './pagination/Pagination';
 
+export * from './inputs';

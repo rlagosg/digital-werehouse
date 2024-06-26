@@ -1,11 +1,16 @@
-import { useSaveInputsFolders } from "@/storage";
 import { findMonth, months } from "@/utils";
 import { Select } from "antd";
 import { TittleInput } from "./title/TittleInput";
 
-export const SearchRangeMothInput = ( ) => {
+interface Props {
+  startMonth    : number | undefined;
+  setStartMonth : (startMonth: number) => void
+  endMonth      : number | undefined;
+  setEndMonth   : (startMonth: number) => void
+}
 
-  const { setStartMonth, setEndMonth,  startMonth, endMonth } = useSaveInputsFolders();    
+
+export const SearchRangeMothInput = ( { setStartMonth, setEndMonth,  startMonth, endMonth } : Props ) => {
 
   const { Option } = Select;  
 

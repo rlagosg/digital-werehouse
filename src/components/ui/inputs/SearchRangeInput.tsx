@@ -1,11 +1,14 @@
-import { useSaveInputsFolders } from "@/storage";
 import { Input } from "antd";
 import { TittleInput } from "./title/TittleInput";
 
+interface Props{
+  startRange   : number | undefined
+  endRange     : number | undefined
+  setStartRange: (startRange: number) => void;
+  setEndRange  : (startRange: number) => void;
+}
 
-export const SearchRangeInput = ( ) => {
-
-  const { setStartRange, setEndRange, startRange, endRange } = useSaveInputsFolders();    
+export const SearchRangeInput = ({setStartRange, setEndRange, startRange, endRange}:Props) => {
   
   return(
       <div className="w-full">

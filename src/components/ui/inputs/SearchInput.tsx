@@ -1,28 +1,23 @@
 'use client'
 
-import { useSaveInputsFolders } from '@/storage';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
 import { IconSearch } from '../Icons/IconSearch';
-import { SearchRangeInput } from './SearchRangeInput';
-import { SearchRangeMothInput } from './SearchRangeMonthInput';
-import { SearchRangeYearInput } from './SearchRangeYearInput';
 
+interface Props {
+  textInput?: string;
+  value     : string;
+  onChange  : (value: string) => void;
+  onSearch  : (basePath: string) => string;
+}
 
-export const SearchInput = () => {
+export const SearchInput = ({textInput = 'Busca', value, onChange, onSearch}:Props) => {
 
-  const { setFolder, buildUrl, folder, resetOptions } = useSaveInputsFolders();
-  const pathname = usePathname();
-  const router = useRouter()
-
-  useEffect(() => {
-    //resetOptions();
-    //router.push(pathname);
-  }, [])
   
+  const pathname = usePathname();
+  const router = useRouter(); 
 
   const onSearchTerm = () => {
-    router.push(buildUrl(pathname));
+    router.push(onSearch(pathname));
   }
 
   return (
@@ -31,9 +26,9 @@ export const SearchInput = () => {
         <div className="flex items-center bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none rounded-lg overflow-hidden px-4 py-5 justify-between w-full shadow-md border-[1px] relative">
           <IconSearch className='absolute left-0 top-1/2 -translate-y-1/2 ml-4'/>
           <input
-            value={folder}
-            placeholder="Busca archivador"
-            onChange={(e) => setFolder(e.target.value)}
+            value={value}
+            placeholder={`${textInput}`}
+            onChange={(e) => onChange(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' ? onSearchTerm() : null}
             className="no-spinners text-base text-gray-700 flex-grow outline-none px-2 focus ml-5 bg-transparent font-medium focus:outline-none xl:w-125" type="number"
             maxLength={20}
@@ -55,21 +50,6 @@ export const SearchInput = () => {
 
         </div>
       </div>
-      <>
-      
-      <div className="flex flex-col md:flex-row bg-re max-h-8 mb-30 md:mb-8 ">
-        <div className="flex-1 flex md:mr-4 mb-2 md:mb-0">
-          <SearchRangeYearInput/>
-        </div>
-        <div className="flex-1 flex md:mr-4 mb-2 md:mb-0">
-          <SearchRangeMothInput />
-        </div>
-        <div className="flex-1 flex mb-2 md:mb-0">
-          <SearchRangeInput />
-        </div>
-      </div>   
-      
-      </>
     </>
   );
 };
