@@ -82,6 +82,7 @@ model Vouchers {
   checkDate     DateTime
   checkValue    Float
   beneficiary   String
+  description   String?
   proyects      String
   isNull        Boolean
   nullDate      DateTime?

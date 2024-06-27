@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 
+
 const config: Config = {
   content: [
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -13,6 +14,7 @@ const config: Config = {
       satoshi: ["Satoshi", "sans-serif"],
     },
     screens: {
+      "xs": "480px",
       "2xsm": "375px",
       xsm: "425px",
       "3xl": "2000px",

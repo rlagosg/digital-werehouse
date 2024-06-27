@@ -15,16 +15,16 @@ export const VoucherCard = ({ voucher }: Props ) => {
 
     const { 
         bank, check, checkDate, checkValue, document, beneficiary,
-        folder, isNull
+        folder, isNull, proyects, description
     } = voucher ;
 
     const { scanEntryDate, scanExitDate } = document.scanDetails;
 
   return (
-    <div className="rounded-2xl bg-white px-7.5 py-4 shadow-default dark:border-strokedark dark:bg-boxdark
+    <div className="rounded-2xl bg-white px-4 py-2 shadow-default dark:border-strokedark dark:bg-boxdark
     relative z-20 transition-all duration-700 hover:scale-105">
 
-      <div className="mt-2 flex items-end justify-between"> 
+      <div className="mt-2 block md:flex xl:block 2xl:flex items-end justify-between"> 
 
         {/* Icono & Numero */}
         <div className="flex items-center">
@@ -34,13 +34,13 @@ export const VoucherCard = ({ voucher }: Props ) => {
             </div>          
           </div>
 
-          <div className="text-title-md font-bold text-black dark:text-white ml-2">
+          <div className="text-title-xsm font-bold text-black dark:text-white ml-2">
             CK{check}
           </div>
         </div>
 
       <span
-          className={` gap-1 text-sm font-medium`}
+          className={`gap-1 flex md:block xl:flex 2xl:block text-xs font-medium`}
         >
           <div className="flex items-center ">
             { convertDateToCalendar(scanEntryDate) }
@@ -51,26 +51,55 @@ export const VoucherCard = ({ voucher }: Props ) => {
             { convertDateToCalendar(scanExitDate) }
             <FaArrowUp className="text-meta-3" size={12}/>
           </div>
-        </span>
+      </span>
         
       </div>
 
-      <span className="flex items-center gap-1 text-sm mt-2">{ beneficiary }</span> 
-
-      <div className="mt-4 flex items-end justify-between">
-        
-        {/* Rango */}
-        <div>
-          <h4 className="text-title-sm font-bold text-black dark:text-white">
-            { format(checkValue) } 
-            {/* <span className="text-sm font-medium ml-1">Lps.</span> */}
+      <div className="mt-5 items-end justify-between">
+          <h4 className="text-xs font-semibold text-black dark:text-white">
+            {beneficiary}
           </h4>
-          <span className="text-sm font-medium">Valor</span>
+
+          { /* si existe descripcion lo mostramos */
+            description != '' && (
+              <div className="mt-1">
+                  <h4 className="text-xs font-light text-black dark:text-white">
+                    {description}
+                  </h4>
+                {/* <span className="text-xs font-medium">Descripción</span> */}
+              </div>
+            )
+          }
+
+          <span className="text-xs font-medium">Beneficiario</span>
+        </div>
+      {/* <span className="flex items-center gap-1 text-xs mt-2">{ beneficiary }</span>  */}
+      
+      { /* si existen proyectos los mostramos */
+        proyects != '' && (
+          <div className="mt-4">
+            <h4 className="font-semibold text-xs text-black dark:text-white">
+              {proyects}
+            </h4>
+            <span className="text-xs font-medium">Proyecto</span>
+          </div>
+        )
+      }
+      
+
+      <div className="mt-4 flex items-end justify-between">       
+        {/* Valor */}
+        <div>
+          <h4 className="text-title-xsm font-bold text-black dark:text-white">
+            { format(checkValue) } 
+            {/* <span className="text-xs font-medium ml-1">Lps.</span> */}
+          </h4>
+          <span className="text-xs font-medium">Valor</span>
         </div>
 
         {/* Fecha */}
         <span
-          className={`flex items-center gap-1 text-sm font-medium text-meta-5`}
+          className={`flex items-center gap-1 text-xs font-medium text-meta-5`}
         >
           { convertDateToCalendar(checkDate) }
           <div className="text-cyan-600 dark:text-cyan-300">

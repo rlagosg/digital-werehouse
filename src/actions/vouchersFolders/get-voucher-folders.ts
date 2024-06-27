@@ -48,19 +48,14 @@ export const getPaginatedVoucherFolders = async ({
             include: { 
                       scanDetails: true,
                       VoucherFolder: {
-                        where: whereVoucherFolders,
-                        include: {
-
-                        }
+                        where: whereVoucherFolders, 
                       } 
-                },
+                    },
             });
 
         //console.log(JSON.stringify(folders, null, 2));
             
-        const foldersData: VoucherFolder[] = folders
-            .map(ProcessVoucherFolder)
-            .filter((folder:any): folder is VoucherFolder => folder !== null);
+        const foldersData: VoucherFolder[] = ProcessVoucherFolder(folders);
 
         if(foldersData)  isLoading = false;
 

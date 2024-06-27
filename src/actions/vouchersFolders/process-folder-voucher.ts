@@ -27,7 +27,15 @@ export interface ScanDetailsData {
     observations:  string;
 }
 
-export const ProcessVoucherFolder = ( folderVoucher : FolderData ) : VoucherFolder | null => {
+
+// Filtra y procesa la lista de carpetas, excluyendo las que son nulas
+export const ProcessVoucherFolder = (folders: FolderData[]): VoucherFolder[] => {
+    return folders
+        .map(ProcessData) // Procesa cada carpeta
+        .filter((folder): folder is VoucherFolder => folder !== null); // Filtra las que son nulas
+}
+
+const ProcessData = ( folderVoucher : FolderData ) : VoucherFolder | null => {
 
     try {
         
