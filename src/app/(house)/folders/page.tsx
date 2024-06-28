@@ -19,12 +19,13 @@ interface Props {
     endMonth?   : string;
     startRange? : string;
     endRange?   : string;
+    page?       : string;
   }
 }
 
 export default async function FoldersPage({ searchParams }:Props ) {
 
-  const { folder = '', startYear, endYear, startMonth, endMonth, startRange, endRange } = searchParams;
+  const { folder = '', startYear, endYear, startMonth, endMonth, startRange, endRange, page } = searchParams;
 
   const convertedParams = {
     folder,
@@ -34,6 +35,7 @@ export default async function FoldersPage({ searchParams }:Props ) {
     endMonth  : convertNumber(endMonth),
     startRange: convertNumber(startRange),
     endRange  : convertNumber(endRange),
+    page      : convertNumber(page)
   };
   
   const { folders, totalPages } = await getPaginatedVoucherFolders(convertedParams);

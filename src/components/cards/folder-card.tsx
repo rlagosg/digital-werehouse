@@ -21,7 +21,7 @@ export const FolderCard = ({ folder }: Props ) => {
   const levelDown = true;
 
   return (
-    <div className="rounded-2xl bg-white px-7.5 py-4 shadow-default dark:border-strokedark dark:bg-boxdark
+    <div className="rounded-2xl bg-white px-4 py-2 shadow-default dark:border-strokedark dark:bg-boxdark
     relative z-20 transition-all duration-700 hover:scale-105">
 
       <div className="mt-2 flex items-end justify-between"> 
@@ -34,7 +34,7 @@ export const FolderCard = ({ folder }: Props ) => {
             </div>          
           </div>
 
-          <div className="text-title-md font-bold text-black dark:text-white ml-2">
+          <div className="text-title-md lg:text-title-sm2 2xl:text-title-md font-bold text-black dark:text-white ml-2">
             {name}
           </div>
         </div>
@@ -59,15 +59,15 @@ export const FolderCard = ({ folder }: Props ) => {
         
         {/* Rango */}
         <div>
-          <h4 className="text-title-sm font-bold text-black dark:text-white">
+          <h4 className="text-title-sm lg:text-base 2xl:text-title-sm font-bold text-black dark:text-white">
             { firstVoucher + ' - ' + lastVoucher }
           </h4>
-          <span className="text-sm font-medium">Rango</span>
+          <span className="text-sm lg:text-xs 2xl:text-sm font-medium">Rango</span>
         </div>
 
         {/* Fecha */}
         <span
-          className={`flex items-center gap-1 text-sm font-medium text-red${
+          className={`flex items-center gap-1 text-sm lg:text-xs 2xl:text-sm font-medium text-red${
             levelUp && "text-meta-3"
           } ${levelDown && "text-meta-5"} `}
         >

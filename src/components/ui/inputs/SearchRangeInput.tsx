@@ -2,19 +2,20 @@ import { Input } from "antd";
 import { TittleInput } from "./title/TittleInput";
 
 interface Props{
-  startRange   : number | undefined
-  endRange     : number | undefined
-  setStartRange: (startRange: number) => void;
-  setEndRange  : (startRange: number) => void;
+  title?        : string;
+  startRange    : number | undefined
+  endRange      : number | undefined
+  setStartRange : (startRange: number) => void;
+  setEndRange   : (startRange: number) => void;
 }
 
-export const SearchRangeInput = ({setStartRange, setEndRange, startRange, endRange}:Props) => {
+export const SearchRangeInput = ({title = 'Rango', setStartRange, setEndRange, startRange, endRange}:Props) => {
   
   return(
       <div className="w-full">
       <form className="h-full">
         <div className="flex h-full">  
-          <TittleInput tittle="Rango"/>     
+          <TittleInput tittle={title}/>     
           <div style={{borderLeft: 'none'}} className="relative w-full text-sm text-gray-900 rounded-e-lg border border-red-300 ">
             <div className="flex h-full">
               <Input

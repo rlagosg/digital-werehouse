@@ -1,13 +1,21 @@
+import { getPaginatedVouchers } from "@/actions/vouchers/get-vouchers";
 import { Breadcrumb } from "@/components";
 import { VoucherGrid } from "@/components/vouchers/vouchers-card/VocherGrid";
-import { initialData } from '@/seed/seed';
+import { convertNumber } from "@/utils/convertNumber";
 import { Metadata } from "next";
 import { VouchersSearchInpus } from "./ui/SearchInputs";
 
-interface Props{
-    params: {
-        name: string
-    }
+interface Props {
+  params: {
+    folder      : string;
+    page?       : string;
+    take?       : string;
+    search?     : string;
+    startDate?  : string;
+    endDate?    : string;
+    startValue? : string;
+    endValue?   : string;
+  }
 }
 
 export const metadata: Metadata = {
@@ -17,9 +25,17 @@ export const metadata: Metadata = {
 
 export default async function FolderPage({ params } : Props) {
     
-    const { name } = params;
+    const { search = '', startDate, endDate, endValue, startValue, page, folder } = params;
 
-    const vouchers = initialData.vouchers.filter(voucher => voucher.folder.name === name);
+    const convertedParams = {
+      folder, search, startDate, endDate,
+      startValue : convertNumber(startValue),
+      endValue   : convertNumber(endValue),
+      page       : convertNumber(page)
+    };
+
+    //const vouchers = initialData.vouchers.filter(voucher => voucher.folder.name === folder);
+    const { vouchers } = await getPaginatedVouchers(convertedParams);
 
     const onClick  = (value: string) => {
       console.log(value);
@@ -30,7 +46,7 @@ export default async function FolderPage({ params } : Props) {
       <> 
       <div className="flex flex-col min-h-[256px] fadeIn ">
         <div className="flex-grow overflow-y-auto min-h-[765px]">
-          <Breadcrumb pageName={`Archivadores \\ ${name}`}/>
+          <Breadcrumb pageName={`Archivadores \\ ${folder}`}/>
           <VouchersSearchInpus />
           <VoucherGrid items={vouchers} />
         </div>

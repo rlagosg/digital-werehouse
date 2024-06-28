@@ -23,7 +23,7 @@ export default async function VoucherPage({ params } : Props) {
     const folder = voucher?.folder.name!;
     
     return (
-      <div className="mb-20 grid grid-cols-1 md:grid-cols-5 gap-3">        
+      <div className="mb-20 grid grid-cols-1 md:grid-cols-6 2xl:grid-cols-5 gap-3">
         { voucher && (<VoucherDetails voucher={voucher}/>) }
         
         <div className="col-span-1 md:col-span-3 flex ml-3 items-start justify-center">

@@ -15,7 +15,7 @@ export const VoucherItemCard = ({ value = '', nameItem, icon: Icon, isLoading = 
 
         <div className="relative flex flex-grow !flex-row items-center rounded-[10px] border-[1px]  shadow-xl bg-white dark:border-strokedark dark:bg-boxdark">
 
-            <div className="ml-[18px] flex h-[90px] w-auto flex-row items-center">
+            <div className="ml-[18px] flex h-[65px] w-auto flex-row items-center">
                 <div className="bg-gray  dark:bg-meta-4 rounded-full p-3 ">
                     <span className="flex items-center ">
                         {Icon && <Icon size={24}/>}

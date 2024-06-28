@@ -37,7 +37,7 @@ export interface Voucher {
     checkValue    : number;
     beneficiary   : string;
     description?  : string;
-    proyects      : string;
+    proyects?     : string;
     isNull        : boolean;
     nullDate?     : Date;
 }

@@ -11,32 +11,32 @@ import { FaArrowDown, FaArrowUp, FaMoneyCheck, FaRegFolderOpen } from "react-ico
 import { GrMoney } from 'react-icons/gr';
 import { LuCalendarDays } from 'react-icons/lu';
 import { RiBankLine } from 'react-icons/ri';
-
+import { VscCircuitBoard } from "react-icons/vsc";
 
 
 export const VoucherDetails = ({ voucher }: Props) => {
 
-    const { check, checkDate, checkValue, document, bank, folder, isNull, nullDate, beneficiary } = voucher
-    const { description, pages, scanDetails } = document
+    const { check, checkDate, checkValue, document, bank, folder, isNull, nullDate, beneficiary, description, proyects } = voucher
+    const { description:descDoc, pages, scanDetails } = document
     const { scanEntryDate, observations, scanExitDate } = scanDetails
 
     return(
     <>
-        <div className="col-span-1 md:col-span-2 px-5">
+        <div className="col-span-1 md:col-span-3 2xl:col-span-2 px-5">
 
             {/* Datos del Propietario */}
             <PrincipalTitle title='Detalles de Voucher'/>
 
             <div className="flex flex-col pt-4 mb-10">
                 
-                <div className="mt-3 grid grid-cols-2 gap-5 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-6">
+                <div className="mt-3 grid grid-cols-2 gap-5 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-2 3xl:grid-cols-6">
                     <VoucherItemCard nameItem='Cheke' value={voucher ? check.toString() : null} 
                     icon={ FaMoneyCheck  }/>                   
                     <VoucherItemCard nameItem='Fecha' value={voucher ? convertDateToMyFormat( checkDate ) : null} icon={ LuCalendarDays }/>
                 </div>
 
                 <div className="mt-5">
-                    <VoucherItemCard nameItem='Banco' value={voucher ? bank.name + ' / ' + bank.account : null} icon={RiBankLine  }/>
+                    <VoucherItemCard nameItem='Banco' value={voucher ? bank.name + ' / ' + bank.account + ' - ' + bank.internalAccount : null} icon={RiBankLine  }/>
                 </div>
 
                 <div className="mt-3 grid grid-cols-2 gap-5 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-6">
@@ -44,6 +44,14 @@ export const VoucherDetails = ({ voucher }: Props) => {
                     <VoucherItemCard nameItem='Archivador' value={voucher ? folder.name : null} icon={ FaRegFolderOpen }/>
                     {/* <VoucherItemCard nameItem='Fecha' value={voucher ? convertDateToMyFormat( checkDate ) : null} icon={ AiTwotoneFileExcel  }/> */}
                 </div>               
+
+                {
+                    proyects != '' && (
+                        <div className="mt-5">
+                            <VoucherItemCard nameItem='Proyecto' value={voucher ? proyects : null} icon={VscCircuitBoard  }/>
+                        </div>
+                    )
+                }
 
                 <div className="mt-5">
                     <VoucherItemCard nameItem='Beneficiario' value={voucher ? beneficiary : null} icon={BsPersonVcard }/>
