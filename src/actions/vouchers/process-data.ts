@@ -1,15 +1,23 @@
-import { Bank, Document, Voucher } from "@/interfaces";
+import { Bank, Document, ScanDetails, Voucher, VoucherFolder } from "@/interfaces";
 
-interface VoucherData {
-    VoucherFolder: VoucherFolder[];
+interface FolderData {
+    name:          string;
+    scanDetails:   ScanDetails;
+    description:   string;
+    year:          number;
+    VoucherFolder: VoucherFolderData[];
 }
 
-interface VoucherFolder {
+interface VoucherFolderData {
+    id:           string;
+    month:        number;
+    firstVoucher: number;
+    lastVoucher:  number;
     Voucher: VoucherData[];
 }
 
 interface VoucherData {
-    id:          string;
+    id:          string;    
     check:       number;
     folderId:    string;
     documentId:  string;
@@ -20,61 +28,55 @@ interface VoucherData {
     description: string;
     proyects:    string;
     isNull:      boolean;
-    nullDate:    Date | null;
+    nullDate:    Date | undefined;
     bank:        Bank;
     document:    Document;
 }
 
 
-export const ProcessVoucher = (vouchers: VoucherData[]): Voucher[] => {
-
-    return vouchers
-        .map(ProcessData) // Procesa cada carpeta
-        .filter((voucher): voucher is Voucher => voucher !== null); // Filtra las que son nulas
-}
-
-const ProcessData = ( voucher : VoucherData ) : Voucher | null => {
+export const ProcessFolder = ( folder : FolderData ) : Voucher[] => {
 
     try {
         
-        /* const { 
-            id,
-            folder,
-            document,
-            bank,
-            check,
-            checkDate,
-            checkValue,
-            beneficiary,
-            description,
-            proyects,
-            isNull,
-            nullDate,
-        } = voucher;
-
-        if (!folder || folder.length === 0) return null;
+        const { name, scanDetails, description, year, VoucherFolder } = folder;
+        const { id, month, firstVoucher, lastVoucher, Voucher:Vouchers } = VoucherFolder[0];
     
-
-        return {
-            id
-            folder,
-            document,
-            bank,
-            check,
-            checkDate,
-            checkValue,
-            beneficiary,
+        const voucherFolder:VoucherFolder = {
+            id,
+            scanDetails,
+            name,
             description,
-            proyects,
-            isNull,
-            nullDate
-        } */
+            year,
+            month,
+            firstVoucher,
+            lastVoucher,
+        }
 
-        return null;
+        return ProcessVouchers( voucherFolder, Vouchers )
+
+
 
     } catch (error) {
         throw new Error('Error en la conversion de los documentos: ' + error)
     }
     
     
+}
+
+const ProcessVouchers = (folder: VoucherFolder , vouchers: VoucherData[]): Voucher[] => {
+
+    return vouchers
+        .map(voucher => filter( folder, voucher )) // Procesa cada voucher
+        .filter((voucher): voucher is Voucher => voucher !== null); // Filtra las que son nulas
+}
+
+export const filter = (folder: VoucherFolder, voucher: VoucherData): Voucher | null => {
+
+    if (!voucher || folder.name.length === 0) return null;
+
+    return {
+        ...voucher,
+        folder: folder
+    }
+
 }

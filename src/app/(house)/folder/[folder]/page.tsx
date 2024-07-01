@@ -1,3 +1,4 @@
+
 import { getPaginatedVouchers } from "@/actions/vouchers/get-vouchers";
 import { Breadcrumb } from "@/components";
 import { VoucherGrid } from "@/components/vouchers/vouchers-card/VocherGrid";
