@@ -1,33 +1,53 @@
+import { Voucher } from "@/interfaces";
 import prisma from "@/lib/prisma";
+import { ProcessVoucher } from "./process-voucher";
 
-export const getVoucher = async () => {
+export const getVoucherByCk = async ( ck: number ) => {
 
-    // Obtener los folders
+ // Obtener el voucher
     try {
 
         let isLoading = true;
 
         let voucherData:any = [];
 
-        voucherData = await prisma.vouchers.findFirst({
-            include: {
-                bank: true,
-                document: {
-                    include: {
-                        scanDetails: true
-                    }
-                }
-            },
-         })
-
+        voucherData = await prisma.folders.findFirst({
+            select: { 
+                name: true,
+                scanDetails: true,
+                description: true,
+                year: true,
             
+                VoucherFolder: {
+                    select: {
+                        id: true,
+                        month: true,
+                        firstVoucher: true,
+                        lastVoucher: true,
+                        
+                        Voucher: {
+                            include: {
+                                bank: true,
+                                document: {
+                                    include: {
+                                        scanDetails: true
+                                    }
+                                }
+                            },
+
+                            where: { check: ck },
+                        }
+                    }
+                    
+                }
+            }
+        });
+
         
-
-        //console.log(JSON.stringify(vouchers, null, 2));            
-        const voucher: any = [] // ProcessVoucher(voucherData);
-
+        //console.log(JSON.stringify(voucherData, null, 2));         
+        const voucher: Voucher = ProcessVoucher(voucherData);
+        
         if(voucherData)  isLoading = false;
-
         
         return {
             voucher,

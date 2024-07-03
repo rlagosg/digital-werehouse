@@ -38,11 +38,11 @@ export const PDFViewer = ( { folder, pdfPath }: Props) => {
     <>
     <div>
       { !error && <VisorHeader pages={numPages} handleViewFullPDF={() => PDF && window.open(URL.createObjectURL(PDF), '_blank')} />}
-      <div className="flex items-center justify-center w-full h-full mt-1">
+      <div className="flex items-center justify-center w-full h-full mt-1 fadeIn">
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {PDF && (
-          <Document file={PDF} onLoadSuccess={onDocumentLoadSuccess}>
+          <Document className={'fadeIn'} file={PDF} onLoadSuccess={onDocumentLoadSuccess}>
             <Page pageNumber={1} />
           </Document>
         )}

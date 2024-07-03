@@ -1,16 +1,14 @@
-import { FolderPaginationOptions } from '@/actions';
+import { VouchersPaginationOptions } from '@/actions/vouchers/get-vouchers';
 import { create } from 'zustand';
 
-interface State extends FolderPaginationOptions {
+interface State extends VouchersPaginationOptions {
     setPage       : (page: number)       => void;
     setTake       : (take: number)       => void;
-    setFolder     : (folder: string)     => void;
-    setStartYear  : (startYear: number)  => void;
-    setEndYear    : (endYear: number)    => void;
-    setStartMonth : (startMonth: number) => void;
-    setEndMonth   : (endMonth: number)   => void;
-    setStartRange : (startRange: number) => void;
-    setEndRange   : (endRange: number)   => void;
+    setSearch     : (search: string)     => void;
+    setStartDate  : (startDate: string)  => void;
+    setEndDate    : (endDate: string)    => void;
+    setStartValue : (startValue: number) => void;
+    setEndValue   : (endValue: number)   => void;
 
     Url           : string;
     buildUrl      : (basePath: string) => string;
@@ -21,13 +19,11 @@ interface State extends FolderPaginationOptions {
 const seedState = {
     page         : 1,
     take         : 16,
-    folder       : "",
-    startYear    : 0,
-    endYear      : 0,
-    startMonth   : 0,
-    endMonth     : 0,
-    startRange   : 0,
-    endRange     : 0,
+    search       : "",
+    startDate    : "",
+    endDate      : "",
+    startValue   : 0,
+    endValue     : 0,
 
     Url          : ''
 }
@@ -38,13 +34,11 @@ export const useSaveInputsVouchers = create<State>()((set) => ({
 
     setPage       : (page)       => set({ page }),
     setTake       : (take)       => set({ take }),
-    setFolder     : (folder)     => set({ folder }),
-    setStartYear  : (startYear)  => set({ startYear }),
-    setEndYear    : (endYear)    => set({ endYear }),
-    setStartMonth : (startMonth) => set({ startMonth }),
-    setEndMonth   : (endMonth)   => set({ endMonth }),
-    setStartRange : (startRange) => set({ startRange }),
-    setEndRange   : (endRange)   => set({ endRange }),
+    setSearch     : (search)     => set({ search }),
+    setStartDate  : (startDate)  => set({ startDate }),
+    setEndDate    : (endDate)    => set({ endDate }),
+    setStartValue : (startValue) => set({ startValue }),
+    setEndValue   : (endValue)   => set({ endValue }),
 
     buildUrl: (basePath: string) => {
 
@@ -53,13 +47,11 @@ export const useSaveInputsVouchers = create<State>()((set) => ({
 
         set((state) => {
             
-            if (state.folder) params.push(`folder=${encodeURIComponent(state.folder)}`);
-            if (state.startYear  !== 0) params.push(`startYear=${state.startYear}`);
-            if (state.endYear    !== 0) params.push(`endYear=${state.endYear}`);
-            if (state.startMonth !== 0) params.push(`startMonth=${state.startMonth}`);
-            if (state.endMonth   !== 0) params.push(`endMonth=${state.endMonth}`);
-            if (state.startRange !== 0) params.push(`startRange=${state.startRange}`);
-            if (state.endRange   !== 0) params.push(`endRange=${state.endRange}`);
+            if (state.search) params.push(`search=${encodeURIComponent(state.search)}`);
+            if (state.startDate  !== "") params.push(`startDate=${state.startDate}`);
+            if (state.endDate    !== "") params.push(`endDate=${state.endDate}`);
+            if (state.startValue !== 0) params.push(`startValue=${state.startValue}`);
+            if (state.endValue   !== 0) params.push(`endValue=${state.endValue}`);
 
             url = `${basePath}?${params.join('&')}`
             return { Url: url}

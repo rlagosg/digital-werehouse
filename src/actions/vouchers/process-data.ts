@@ -1,41 +1,9 @@
-import { Bank, Document, ScanDetails, Voucher, VoucherFolder } from "@/interfaces";
+import { Voucher, VoucherFolder } from "@/interfaces";
+import { FolderData, VoucherData } from "./vouchers.data.interface";
 
-interface FolderData {
-    name:          string;
-    scanDetails:   ScanDetails;
-    description:   string;
-    year:          number;
-    VoucherFolder: VoucherFolderData[];
-}
-
-interface VoucherFolderData {
-    id:           string;
-    month:        number;
-    firstVoucher: number;
-    lastVoucher:  number;
-    Voucher: VoucherData[];
-}
-
-interface VoucherData {
-    id:          string;    
-    check:       number;
-    folderId:    string;
-    documentId:  string;
-    bankId:      string;
-    checkDate:   Date;
-    checkValue:  number;
-    beneficiary: string;
-    description: string;
-    proyects:    string;
-    isNull:      boolean;
-    nullDate:    Date | undefined;
-    bank:        Bank;
-    document:    Document;
-}
 
 
 export const ProcessFolder = ( folder : FolderData ) : Voucher[] => {
-
     try {
         
         const { name, scanDetails, description, year, VoucherFolder } = folder;
@@ -54,13 +22,9 @@ export const ProcessFolder = ( folder : FolderData ) : Voucher[] => {
 
         return ProcessVouchers( voucherFolder, Vouchers )
 
-
-
     } catch (error) {
         throw new Error('Error en la conversion de los documentos: ' + error)
     }
-    
-    
 }
 
 const ProcessVouchers = (folder: VoucherFolder , vouchers: VoucherData[]): Voucher[] => {

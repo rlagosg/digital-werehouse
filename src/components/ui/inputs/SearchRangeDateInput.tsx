@@ -1,15 +1,28 @@
+'use client'
 import { ConfigProvider, DatePicker } from 'antd';
 
 const { RangePicker } = DatePicker;
 
 import esES from 'antd/lib/locale/es_ES';
+import { Dayjs } from 'dayjs';
+import { useState } from 'react';
+interface DateRange {
+  startDate: string;
+  endDate: string;
+}
 
+export const SearchRangeDateInput = ( ) => {
 
-export const SearchDateRangeInput = ( ) => {
+  const [startDate, setstartDate] = useState("");
+  const [endDate, setendDate] = useState("");
 
-    const onchangue = () => {
-      console.log();
+  const onChange = (dates: null | (Dayjs | null)[], dateStrings: string[]) => {
+    if (dates) {      
+      console.log('From: ', dateStrings[0], ', to: ', dateStrings[1]);
+    } else {
+      console.log('Clear');
     }
+  };
 
     return (
       <div className='flex mr-5'>
@@ -23,13 +36,14 @@ export const SearchDateRangeInput = ( ) => {
         <div className="relative w-full">
             <div className="text-sm text-gray-900 rounded-e-lg border border-red-300  h-full" style={{borderLeft: 'none'}}>            
               <ConfigProvider locale={esES}>
-                <RangePicker            
+                <RangePicker  
+                  picker='year'
                   style={{ width: '100%', borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
-                  onChange={() => {}}
-                  className="custom-select h-full"              
+                  onChange={onChange}
+                  className="custom-select h-full"
                 />
               </ConfigProvider>
-            </div>            
+            </div>
         </div>
       </div>
     );
