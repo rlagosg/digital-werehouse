@@ -8,9 +8,6 @@ interface Props{
 }
 
 import { IconSearch } from '../Icons/IconSearch';
-import { SearchRangeInput } from './SearchRangeInput';
-import { SearchRangeMothInput } from './SearchRangeMonthInput';
-import { SearchRangeYearInput } from './SearchRangeYearInput';
 
 
 
@@ -68,15 +65,7 @@ export const SearchDropInput = ({ dropList }:Props) => {
 
           </div>
         </div>
-      </div>
-
-      <>
-      <div className='flex bg-re max-h-8 mb-8'>
-        <SearchRangeYearInput />
-        <SearchRangeMothInput />
-        <SearchRangeInput />
-      </div>   
-      </>
+      </div>     
     </>
   );
 };

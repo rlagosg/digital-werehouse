@@ -5,10 +5,11 @@ interface State extends VouchersPaginationOptions {
     setPage       : (page: number)       => void;
     setTake       : (take: number)       => void;
     setSearch     : (search: string)     => void;
-    setStartDate  : (startDate: string)  => void;
-    setEndDate    : (endDate: string)    => void;
     setStartValue : (startValue: number) => void;
     setEndValue   : (endValue: number)   => void;
+    setStartDate  : (startDate: string)  => void;
+    setEndDate    : (endDate: string)    => void;
+    setBank       : (bankId: string)    => void;
 
     Url           : string;
     buildUrl      : (basePath: string) => string;
@@ -24,6 +25,7 @@ const seedState = {
     endDate      : "",
     startValue   : 0,
     endValue     : 0,
+    bank         : "",
 
     Url          : ''
 }
@@ -39,6 +41,7 @@ export const useSaveInputsVouchers = create<State>()((set) => ({
     setEndDate    : (endDate)    => set({ endDate }),
     setStartValue : (startValue) => set({ startValue }),
     setEndValue   : (endValue)   => set({ endValue }),
+    setBank       : (bank)       => set({ bank }),
 
     buildUrl: (basePath: string) => {
 
@@ -48,10 +51,11 @@ export const useSaveInputsVouchers = create<State>()((set) => ({
         set((state) => {
             
             if (state.search) params.push(`search=${encodeURIComponent(state.search)}`);
+            if (state.startValue !== 0)  params.push(`startValue=${state.startValue}`);
+            if (state.endValue   !== 0)  params.push(`endValue=${state.endValue}`);
             if (state.startDate  !== "") params.push(`startDate=${state.startDate}`);
             if (state.endDate    !== "") params.push(`endDate=${state.endDate}`);
-            if (state.startValue !== 0) params.push(`startValue=${state.startValue}`);
-            if (state.endValue   !== 0) params.push(`endValue=${state.endValue}`);
+            if (state.bank       !== "") params.push(`bank=${state.bank}`);
 
             url = `${basePath}?${params.join('&')}`
             return { Url: url}

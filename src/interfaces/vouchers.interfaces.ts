@@ -24,7 +24,7 @@ export interface Bank{
     id              : string;
     name            : string;
     account         : string;
-    internalAccount : string;
+    internalAccount : string | null;
 }
 
 export interface Voucher {

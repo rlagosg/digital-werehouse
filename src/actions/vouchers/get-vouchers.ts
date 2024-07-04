@@ -12,6 +12,7 @@ export interface VouchersPaginationOptions {
     search?     : string;
     startDate?  : string;
     endDate?    : string;
+    bank?       : string;
     startValue? : number;
     endValue?   : number;
 }
@@ -23,6 +24,7 @@ export const getPaginatedVouchers = async ({
     search       = "",
     startDate    = "",
     endDate      = "",
+    bank         = "",
     startValue   = -1,
     endValue     = -1,
   }: VouchersPaginationOptions) => {
