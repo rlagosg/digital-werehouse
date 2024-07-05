@@ -86,6 +86,16 @@ export const VoucherCard = ({ voucher }: Props ) => {
         )
       }
       
+      { /* si existen proyectos los mostramos */
+        bank && (
+          <div className="mt-4">
+            <h4 className="font-semibold text-xs text-black dark:text-white">
+              {bank.name}
+            </h4>
+            <span className="text-xs font-medium">Banco</span>
+          </div>
+        )
+      }
 
       <div className="mt-4 flex items-end justify-between">       
         {/* Valor */}

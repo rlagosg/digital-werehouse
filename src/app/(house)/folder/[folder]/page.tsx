@@ -10,6 +10,9 @@ import { VouchersSearchInpus } from "./ui/SearchInputs";
 interface Props {
   params: {
     folder      : string;
+    
+  },
+  searchParams: {
     page?       : string;
     take?       : string;
     search?     : string;
@@ -26,21 +29,25 @@ export const metadata: Metadata = {
     description: "Almacen digital Alcadia Municipal de Comayagua",
   };
 
-export default async function FolderPage({ params } : Props) {
+export default async function FolderPage({ params, searchParams } : Props) {
     
-    const { search = '', startDate, endDate, endValue, startValue, page, folder, bank } = params;
+    const { folder } = params;
+    const { search = '', startDate, endDate, endValue, startValue, page, bank } = searchParams;
 
     console.log('folder:', folder);
     
-
     const convertedParams = {
-      folder, search, startDate, endDate, bank,
+      folder, search, 
+      startDate: startDate ? startDate : '', 
+      endDate: endDate ? endDate : '', 
+      bank: bank ? bank : '',
       startValue : convertNumber(startValue),
       endValue   : convertNumber(endValue),
       page       : convertNumber(page)
     };
-
+    
     console.log(convertedParams);
+    //console.log(convertedParams);
     
 
     //const vouchers = initialData.vouchers.filter(voucher => voucher.folder.name === folder);

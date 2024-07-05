@@ -38,7 +38,7 @@ export const getPaginatedVouchers = async ({
         let isLoading = true;
         
         let whereFolder = folder != "" ? { name: folder } : {}
-        const { whereVouchers } = processFilters({search, startDate, endDate, startValue, endValue,})
+        const { whereVouchers } = processFilters({search, startDate, endDate, startValue, endValue, bank})
 
         let vouchers:any = [];
 

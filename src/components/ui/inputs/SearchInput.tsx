@@ -1,6 +1,7 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation';
+import { HTMLInputTypeAttribute } from 'react';
 import { IconSearch } from '../Icons/IconSearch';
 
 interface Props {
@@ -8,9 +9,10 @@ interface Props {
   value     : string;
   onChange  : (value: string) => void;
   onSearch  : (basePath: string) => string;
+  type? : HTMLInputTypeAttribute | undefined;
 }
 
-export const SearchInput = ({textInput = 'Busca', value, onChange, onSearch}:Props) => {
+export const SearchInput = ({textInput = 'Busca', value, onChange, onSearch, type = ''}:Props) => {
 
   
   const pathname = usePathname();
@@ -30,7 +32,7 @@ export const SearchInput = ({textInput = 'Busca', value, onChange, onSearch}:Pro
             placeholder={`${textInput}`}
             onChange={(e) => onChange(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' ? onSearchTerm() : null}
-            className="no-spinners text-base text-gray-700 flex-grow outline-none px-2 focus ml-5 bg-transparent font-medium focus:outline-none xl:w-125" type="number"
+            className="no-spinners text-base text-gray-700 flex-grow outline-none px-2 focus ml-5 bg-transparent font-medium focus:outline-none xl:w-125" type={type}
             maxLength={20}
             min={0}   
           />
