@@ -1,9 +1,11 @@
 import { VoucherFolder } from "@/interfaces";
 
+import { useState } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 import { FcOpenedFolder } from "react-icons/fc";
 import { LuCalendarDays } from "react-icons/lu";
 import { converNumberToMonth, convertDateToMyFormat } from '../../utils/convertDate';
+import { DropDown } from "../ui";
 
 interface Props {
   folder: VoucherFolder;
@@ -20,11 +22,27 @@ export const FolderCard = ({ folder }: Props ) => {
   const levelUp = true;
   const levelDown = true;
 
-  return (
-    <div className="rounded-2xl bg-white px-4 py-2 shadow-default dark:border-strokedark dark:bg-boxdark
-    relative z-20 transition-all duration-700 hover:scale-105">
+  const [isHovered, setIsHovered] = useState(false);
 
-      <div className="mt-2 flex items-end justify-between"> 
+  return (
+    <>
+    
+    <div className="rounded-2xl bg-white px-4 py-2 shadow-default dark:border-strokedark dark:bg-boxdark
+    relative z-20 transition-all duration-700 hover:scale-100 "
+    onMouseEnter={() => setIsHovered(true)}
+    onMouseLeave={() => setIsHovered(false)}
+    >
+
+      {isHovered && (
+        <div
+          className="absolute top-2 right-2 z-10 fadeIn"
+          onClick={(e) => e.stopPropagation()} // Detiene la propagación del clic
+        >
+          <DropDown />
+        </div>
+      )}
+
+      <div className={`mt-2 flex items-end justify-between `}> 
 
         {/* Icono & Numero */}
         <div className="flex items-center">
@@ -40,14 +58,14 @@ export const FolderCard = ({ folder }: Props ) => {
         </div>
 
       <span
-          className={` gap-1 text-sm font-medium`}
+          className={` gap-1 text-sm font-medium `}
         >
           <div className="flex items-center ">
             { convertDateToMyFormat(scanEntryDate) }
             <FaArrowDown className="text-meta-5" size={12}/>
           </div>
 
-          <div className="flex items-center">
+          <div className={`flex items-center transition-all duration-300 ${isHovered ? 'ml-7' : 'ml-0'}`}>
             { convertDateToMyFormat(scanExitDate) }
             <FaArrowUp className="text-meta-3" size={12}/>
           </div>
@@ -80,5 +98,6 @@ export const FolderCard = ({ folder }: Props ) => {
       </div>
       
     </div>
+    </>
   );
 };

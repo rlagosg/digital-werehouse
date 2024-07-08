@@ -13,7 +13,7 @@ export const FoldersSearchInpus = () => {
     } = useSaveInputsFolders();
 
     return(
-        <>
+        <>        
             <SearchInput 
                 textInput="Busca archivador" 
                 value={folder || ''} 
