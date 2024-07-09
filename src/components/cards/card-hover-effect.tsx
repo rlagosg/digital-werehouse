@@ -12,6 +12,7 @@ export const HoverEffect = ({
   items: VoucherFolder[];
   className?: string;
 }) => {
+  
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
@@ -22,12 +23,15 @@ export const HoverEffect = ({
       )}
     >
       {items.map((item, idx) => (
-        <div className="relative flex" key={item.name}>
+        <div
+          key={item.name}
+          className="relative flex"
+          onMouseEnter={() => setHoveredIndex(idx)}
+          onMouseLeave={() => setHoveredIndex(null)}
+        >
           <Link
             href={`/folder/${item.name}`}
             className="relative group block p-2 h-full w-full"
-            onMouseEnter={() => setHoveredIndex(idx)}
-            onMouseLeave={() => setHoveredIndex(null)}
           >
             <AnimatePresence>
               {hoveredIndex === idx && (
@@ -46,9 +50,8 @@ export const HoverEffect = ({
                 />
               )}
             </AnimatePresence>
-            <FolderCard key={item.name} folder={item} />
+            <FolderCard folder={item} isHovered={hoveredIndex === idx} />
           </Link>
-          
         </div>
       ))}
     </div>

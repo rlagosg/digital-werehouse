@@ -1,6 +1,5 @@
 import { VoucherFolder } from "@/interfaces";
 
-import { useState } from "react";
 import { FaArrowDown, FaArrowUp } from "react-icons/fa6";
 import { FcOpenedFolder } from "react-icons/fc";
 import { LuCalendarDays } from "react-icons/lu";
@@ -9,9 +8,10 @@ import { DropDown } from "../ui";
 
 interface Props {
   folder: VoucherFolder;
+  isHovered: boolean;
 }
 
-export const FolderCard = ({ folder }: Props ) => {
+export const FolderCard = ({ folder, isHovered }: Props ) => {
 
     const { 
         firstVoucher, lastVoucher, month, name, year, scanDetails
@@ -22,25 +22,25 @@ export const FolderCard = ({ folder }: Props ) => {
   const levelUp = true;
   const levelDown = true;
 
-  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <>
     
     <div className="rounded-2xl bg-white px-4 py-2 shadow-default dark:border-strokedark dark:bg-boxdark
     relative z-20 transition-all duration-700 hover:scale-100 "
-    onMouseEnter={() => setIsHovered(true)}
-    onMouseLeave={() => setIsHovered(false)}
     >
 
-      {isHovered && (
-        <div
-          className="absolute top-2 right-2 z-10 fadeIn"
-          onClick={(e) => e.stopPropagation()} // Detiene la propagación del clic
-        >
-          <DropDown />
-        </div>
-      )}
+        {isHovered && (
+          <div
+            className="absolute top-2 right-2 z-10 fadeIn"
+            onClick={(e) => {
+              e.preventDefault(); // Previene la navegación
+              e.stopPropagation(); // Detiene la propagación del clic
+            }}
+          >
+            <DropDown />
+          </div>
+        )}
 
       <div className={`mt-2 flex items-end justify-between `}> 
 

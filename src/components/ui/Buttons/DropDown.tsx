@@ -38,9 +38,10 @@ export const DropDown = () => {
 
     return (
       <div>   
-        <Dropdown menu={menuProps} className='rounded-2xl bg-white shadow-default'>
+        <Dropdown menu={menuProps} className='rounded-2xl bg-white shadow-default '>
             <Button 
-                className='relative flex h-8 w-1 items-center justify-center rounded-full border-[0.5px] border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white'
+                className='relative flex h-8 w-1 items-center justify-center rounded-full border-[0.5px] 
+                border-stroke bg-gray hover:text-primary dark:border-strokedark dark:bg-meta-4 dark:text-white '
             >
                 <EllipsisOutlined style={{ fontSize: '20px'}} />
             </Button>
