@@ -1,7 +1,10 @@
 "use client";
 
 import { Sidebar } from "@/components/ui/Sidebar/Sidebar";
+import { ConfigProvider } from 'antd';
+import esES from 'antd/lib/locale/es_ES';
 import React, { useState } from "react";
+
 
 export default function DefaultLayout({
   children,
@@ -11,6 +14,7 @@ export default function DefaultLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <>
+      <ConfigProvider locale={esES}>
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
@@ -34,6 +38,7 @@ export default function DefaultLayout({
         {/* <!-- ===== Content Area End ===== --> */}
       </div>
       {/* <!-- ===== Page Wrapper End ===== --> */}
+      </ConfigProvider>
     </>
   );
 }

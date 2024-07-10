@@ -1,4 +1,5 @@
 import { Breadcrumb } from "@/components";
+import { Metadata } from "next";
 import { FolderForm } from "./ui/FolderForm";
 
 
@@ -7,6 +8,11 @@ interface Props{
       folder: string,
     }
 }
+
+export const metadata: Metadata = {
+    title: "Digital Werehouse | AMC",
+    description: "Almacen digital Alcadia Municipal de Comayagua",
+  };
 
 export default async function FolderPage({ params }:Props) {
 
