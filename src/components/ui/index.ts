@@ -14,3 +14,4 @@ export * from './pagination/Pagination';
 export * from "./Buttons";
 export * from './inputs';
 
+export * from "./FieldsForm";

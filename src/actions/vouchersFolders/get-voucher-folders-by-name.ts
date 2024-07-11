@@ -9,7 +9,7 @@ import { ProcessVoucherFolder } from "./processData";
 /**
  * Obtiene un arhivador de vouchers, por su nombre de archivador
 */
-export const getVoucherFolder = async (name: string) => {
+export const getVoucherFolderByName = async (name: string) => {
 
     try {
 

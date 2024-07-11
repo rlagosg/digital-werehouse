@@ -1,4 +1,4 @@
-import { getVoucherFolder } from "@/actions/vouchersFolders/get-voucher-folders-by-name";
+import { getVoucherFolderByName } from "@/actions/vouchersFolders/get-voucher-folders-by-name";
 import { Breadcrumb, FullScreenLoading } from "@/components";
 import { Metadata } from "next";
 import { FolderForm } from "./ui/FolderForm";
@@ -19,9 +19,9 @@ export default async function FolderPage({ params }:Props) {
 
     const { name } = params;
 
-    const title = ( name === 'new') ? 'Nuevo Archivador' : 'Editar Archivador'
+    const title = ( name === 'new') ? 'Nuevo Archivador' : `Editar Archivador ${ name }`;
 
-    const { isLoading, folder} = await getVoucherFolder(name);
+    const { isLoading, folder} = await getVoucherFolderByName(name);
 
     return(
         <>

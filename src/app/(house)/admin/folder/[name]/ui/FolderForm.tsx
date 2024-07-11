@@ -1,9 +1,10 @@
 "use client"
 
+import { DatePickerField, InputField, LabelTittle } from "@/components";
 import { VoucherFolder } from "@/interfaces";
-import { ErrorMessage } from "@hookform/error-message";
 import { DatePicker } from 'antd';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface Props{
@@ -28,6 +29,7 @@ export const FolderForm = ({ folder, isNew }: Props) => {
     const {
         handleSubmit,
         register,
+        control,
         formState: { errors },
         getValues,
         setValue,
@@ -45,38 +47,34 @@ export const FolderForm = ({ folder, isNew }: Props) => {
                 observations: folder.scanDetails?.observations || '',
             }
         });
+    
+    const [dateMoth, setDateMoth] = useState<Dayjs | null>(
+        folder.month && folder.year ? dayjs().year(folder.year).month(folder.month - 1) : null
+    );
+
+    useEffect(() => {
+        handleMothChange(dateMoth);
+    }, [])
 
     const msgRequired = 'Este campo es obligatorio';
-
 
     const onSubmit: SubmitHandler<FormInputs> = (data) => {
         console.log(data);
     }
 
-    const handleMothChange = (date: Dayjs | null, dateString: string | string[]) => {
+    const handleMothChange = (date: Dayjs | null) => {
         if (date) {
-            const year = date.year().toString();
-            const month = (date.month() + 1).toString(); // dayjs months are 0-indexed
-      
-            setValue('year', year);
-            setValue('month', month);
-          } else {
+            setValue('year', date.year().toString());
+            setValue('month', (date.month() + 1).toString());
+            setDateMoth(date);
+        } else {
             setValue('year', '');
             setValue('month', '');
-          }      
-    };
-
-    const handleDateChange = (date: Dayjs | null) => {
-        return date ? date.format( 'YYYY-MM-DD' ) : ''; 
+            setDateMoth(null)
+        }
     };
 
     const className = 'w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary'
-
-    const LabelTittle = ({name}: {name: string}) => (
-        <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-            {name}
-        </label>
-    )
 
     return(
         <>
@@ -98,15 +96,14 @@ export const FolderForm = ({ folder, isNew }: Props) => {
                             {/* Nombre / Mes */}
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                                 
-                                <div className="w-full xl:w-1/2">
-                                    <LabelTittle name={'Nombre'} />
-                                    <input
-                                    type="text"
+                                <InputField
+                                    name="name"
+                                    label="Nombre"
                                     placeholder="nombre del archivador"
-                                    className={className}
-                                    {...register("name", { required: msgRequired})} />
-                                    <ErrorMessage errors={errors} name="name" />
-                                </div>
+                                    register={register}
+                                    required="Este campo es obligatorio"
+                                    error={errors.name}
+                                />
 
                                 <div className="w-full xl:w-1/2">
                                     <LabelTittle name={'Año / Mes'} />
@@ -114,11 +111,12 @@ export const FolderForm = ({ folder, isNew }: Props) => {
                                     picker="month" 
                                     className={className}
                                     onChange={handleMothChange}
+                                    value={dateMoth}
                                     />
                                     <input type="hidden" {...register('month', { required: msgRequired })} />
                                     {errors.month && (
-                                        <p className="mt-1 text-red-500 text-base">
-                                            {errors.month.message}
+                                        <p className="mt-1 text-red-500 text-sm">
+                                            {msgRequired}
                                         </p>
                                     )}
                                 </div>
@@ -126,27 +124,25 @@ export const FolderForm = ({ folder, isNew }: Props) => {
 
                             {/* Rangos */}
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                                <div className="w-full xl:w-1/2">
-                                    <LabelTittle name='Voucher inicial' />
-                                    <input
+                                <InputField
+                                    name="firstVoucher"
+                                    label="Voucher inicial"
                                     type="number"
-                                    min={0}
                                     placeholder="Ingresa el numero del primer voucher"
-                                    className={className}
-                                    {...register("firstVoucher", { required: msgRequired})} />
-                                     <ErrorMessage errors={errors} name="firstVoucher" />
-                                </div>
+                                    register={register}
+                                    required={msgRequired}
+                                    error={errors.firstVoucher}
+                                />
 
-                                <div className="w-full xl:w-1/2">
-                                    <LabelTittle name='Voucher final' />
-                                    <input
-                                    type="text"
+                                <InputField
+                                    name="lastVoucher"
+                                    label="Voucher final"
+                                    type="number"
                                     placeholder="Ingresa el numero del ultimo voucher"
-                                    className={className}
-                                    {...register("lastVoucher", { required: msgRequired})}
-                                    />
-                                    <ErrorMessage errors={errors} name="lastVoucher" />
-                                </div>
+                                    register={register}
+                                    required={msgRequired}
+                                    error={errors.lastVoucher}
+                                />
                             </div>
                         
                             <div className="mb-6">
@@ -177,31 +173,20 @@ export const FolderForm = ({ folder, isNew }: Props) => {
                         <div className="p-6.5">
 
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
-                                <div className="w-full xl:w-1/2">
-                                    <LabelTittle name={'Fecha entrada'} />
-                                    <DatePicker 
-                                        type="date" 
-                                        className={className}
-                                        onChange={(e) => { 
-                                            setValue('scanEntryDate', handleDateChange(e), { shouldValidate: true }); 
-                                        }} 
-                                    />
-                                    <input type="hidden" {...register('scanEntryDate', { required: "La fecha de entrada es requerida" })} />
-                                    {errors.scanEntryDate && (
-                                        <p className="mt-1 text-red-500 text-sm">
-                                            {errors.scanEntryDate.message}
-                                        </p>
-                                    )}
-                                </div>
+                                
+                                <DatePickerField
+                                    name="scanEntryDate"
+                                    control={control}
+                                    label="Fecha entrada"
+                                    error={errors.scanEntryDate}
+                                    required="La fecha de entrada es requerida"
+                                />
 
-                                <div className="w-full xl:w-1/2">
-                                    <LabelTittle name={'Fecha salida'} />                                   
-                                    <DatePicker 
-                                        type="date" 
-                                        className={className}
-                                        onChange={(e)=>{ setValue('scanExitDate', handleDateChange(e), { shouldValidate: true }); }}
-                                    />
-                                </div>
+                                <DatePickerField
+                                    name="scanExitDate"
+                                    control={control}
+                                    label="Fecha salida"
+                                />
                             </div>
 
                             <div className="mb-6">
