@@ -2,14 +2,15 @@
 
 import { VoucherFolder } from "@/interfaces";
 import prisma from "@/lib/prisma";
-import { processFilters } from "./process-filters";
-import { ProcessVoucherFolder } from "./process-folder-voucher";
+import { processFilters, ProcessVoucherFolders } from "./processData";
+
+
 
 
 export interface FolderPaginationOptions {
     page?       : number;
     take?       : number;
-    folder?     : string;
+    name?     : string;
     startYear?  : number;
     endYear?    : number;
     startMonth? : number;
@@ -22,7 +23,7 @@ export interface FolderPaginationOptions {
 export const getPaginatedVoucherFolders = async ({
     page         = 1,
     take         = 16,
-    folder       = "",
+    name: folder       = "",
     startYear    = -1,
     endYear      = -1,
     startMonth   = -1,
@@ -39,7 +40,7 @@ export const getPaginatedVoucherFolders = async ({
 
         let isLoading = true;
 
-        const {whereFolders, whereVoucherFolders} = processFilters({folder, endMonth, endRange, endYear, startMonth, startRange, startYear})
+        const {whereFolders, whereVoucherFolders} = processFilters({name: folder, endMonth, endRange, endYear, startMonth, startRange, startYear})
         let folders:any = [];       
         folders = await prisma.folders.findMany({  
             where: whereFolders,
@@ -55,7 +56,7 @@ export const getPaginatedVoucherFolders = async ({
 
         //console.log(JSON.stringify(folders, null, 2));
             
-        const foldersData: VoucherFolder[] = ProcessVoucherFolder(folders);
+        const foldersData: VoucherFolder[] = ProcessVoucherFolders(folders);
 
         if(foldersData)  isLoading = false;
 

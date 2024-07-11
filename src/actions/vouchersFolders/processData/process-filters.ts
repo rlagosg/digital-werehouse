@@ -1,7 +1,8 @@
-import { FolderPaginationOptions } from './get-voucher-folders';
+import { FolderPaginationOptions } from "../get-voucher-folders";
+
 
 export const processFilters = ({
-    folder,
+    name: folder,
     startYear,
     endYear,
     startMonth,

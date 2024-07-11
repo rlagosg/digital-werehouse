@@ -6,7 +6,7 @@ import { useSaveInputsFolders } from "@/storage";
 export const FoldersSearchInpus = () => {
 
     const { 
-        setFolder,     buildUrl,    folder, 
+        setName,     buildUrl,    name, 
         setStartYear,  setEndYear,  startYear, endYear,
         setStartMonth, setEndMonth, startMonth, endMonth,
         setStartRange, setEndRange, startRange, endRange
@@ -16,8 +16,8 @@ export const FoldersSearchInpus = () => {
         <>        
             <SearchInput 
                 textInput="Busca archivador" 
-                value={folder || ''} 
-                onChange={setFolder} 
+                value={name || ''} 
+                onChange={setName} 
                 onSearch={buildUrl}
             />
 

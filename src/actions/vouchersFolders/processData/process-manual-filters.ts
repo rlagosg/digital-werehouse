@@ -1,8 +1,9 @@
 import { Prisma } from "@prisma/client";
-import { FolderPaginationOptions } from "./get-voucher-folders";
+import { FolderPaginationOptions } from "../get-voucher-folders";
+
 
 export const prorcessManualFilters = ({
-    folder,
+    name: folder,
     startYear,
     endYear,
     startMonth,

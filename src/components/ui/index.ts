@@ -1,3 +1,5 @@
+export * from "./loading/FullScreenLoading";
+
 export * from "./Icons/IconSearch";
 
 export * from "./Breadcrumbs/Breadcrumb";
@@ -11,3 +13,4 @@ export * from './pagination/Pagination';
 
 export * from "./Buttons";
 export * from './inputs';
+

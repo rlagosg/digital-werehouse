@@ -9,7 +9,7 @@ import { VouchersSearchInpus } from "./ui/SearchInputs";
 
 interface Props {
   params: {
-    folder      : string;
+    name      : string;
     
   },
   searchParams: {
@@ -31,13 +31,12 @@ export const metadata: Metadata = {
 
 export default async function FolderPage({ params, searchParams } : Props) {
     
-    const { folder } = params;
+    const { name } = params;
     const { search = '', startDate, endDate, endValue, startValue, page, bank } = searchParams;
 
-    console.log('folder:', folder);
     
     const convertedParams = {
-      folder, search, 
+      name, search, 
       startDate: startDate ? startDate : '', 
       endDate: endDate ? endDate : '', 
       bank: bank ? bank : '',
@@ -45,10 +44,7 @@ export default async function FolderPage({ params, searchParams } : Props) {
       endValue   : convertNumber(endValue),
       page       : convertNumber(page)
     };
-    
-    console.log(convertedParams);
-    //console.log(convertedParams);
-    
+      
 
     //const vouchers = initialData.vouchers.filter(voucher => voucher.folder.name === folder);
     const { vouchers } = await getPaginatedVouchers(convertedParams);
@@ -58,7 +54,7 @@ export default async function FolderPage({ params, searchParams } : Props) {
       <> 
       <div className="flex flex-col min-h-[256px] fadeIn ">
         <div className="flex-grow overflow-y-auto min-h-[765px]">
-          <Breadcrumb pageName={`Archivadores \\ ${folder}`}/>
+          <Breadcrumb pageName={`Archivadores \\ ${name}`}/>
           <VouchersSearchInpus banks={banks}/>
           <VoucherGrid items={vouchers} />
         </div>

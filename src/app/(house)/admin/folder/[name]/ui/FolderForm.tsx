@@ -4,7 +4,7 @@ import { VoucherFolder } from "@/interfaces";
 import { ErrorMessage } from "@hookform/error-message";
 import { DatePicker } from 'antd';
 import { Dayjs } from 'dayjs';
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 interface Props{
     folder: Partial<VoucherFolder>;
@@ -49,7 +49,7 @@ export const FolderForm = ({ folder, isNew }: Props) => {
     const msgRequired = 'Este campo es obligatorio';
 
 
-    const onSubmit = async( data: FormInputs) => {
+    const onSubmit: SubmitHandler<FormInputs> = (data) => {
         console.log(data);
     }
 
@@ -115,7 +115,12 @@ export const FolderForm = ({ folder, isNew }: Props) => {
                                     className={className}
                                     onChange={handleMothChange}
                                     />
-                                    <ErrorMessage errors={errors} name="month" />
+                                    <input type="hidden" {...register('month', { required: msgRequired })} />
+                                    {errors.month && (
+                                        <p className="mt-1 text-red-500 text-base">
+                                            {errors.month.message}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 
@@ -173,12 +178,15 @@ export const FolderForm = ({ folder, isNew }: Props) => {
 
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                                 <div className="w-full xl:w-1/2">
-                                    <LabelTittle name={'Fecha entrada'} />                                   
+                                    <LabelTittle name={'Fecha entrada'} />
                                     <DatePicker 
                                         type="date" 
                                         className={className}
-                                        onChange={(e)=>{ setValue('scanEntryDate', handleDateChange(e), { shouldValidate: true }); }}                                        
+                                        onChange={(e) => { 
+                                            setValue('scanEntryDate', handleDateChange(e), { shouldValidate: true }); 
+                                        }} 
                                     />
+                                    <input type="hidden" {...register('scanEntryDate', { required: "La fecha de entrada es requerida" })} />
                                     {errors.scanEntryDate && (
                                         <p className="mt-1 text-red-500 text-sm">
                                             {errors.scanEntryDate.message}

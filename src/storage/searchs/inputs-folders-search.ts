@@ -4,7 +4,7 @@ import { create } from 'zustand';
 interface State extends FolderPaginationOptions {
     setPage       : (page: number)       => void;
     setTake       : (take: number)       => void;
-    setFolder     : (folder: string)     => void;
+    setName       : (name: string)     => void;
     setStartYear  : (startYear: number)  => void;
     setEndYear    : (endYear: number)    => void;
     setStartMonth : (startMonth: number) => void;
@@ -21,7 +21,7 @@ interface State extends FolderPaginationOptions {
 const seedState = {
     page         : 1,
     take         : 16,
-    folder       : "",
+    name         : "",
     startYear    : 0,
     endYear      : 0,
     startMonth   : 0,
@@ -38,7 +38,7 @@ export const useSaveInputsFolders = create<State>()((set) => ({
 
     setPage       : (page)       => set({ page }),
     setTake       : (take)       => set({ take }),
-    setFolder     : (folder)     => set({ folder }),
+    setName       : (name)       => set({ name }),
     setStartYear  : (startYear)  => set({ startYear }),
     setEndYear    : (endYear)    => set({ endYear }),
     setStartMonth : (startMonth) => set({ startMonth }),
@@ -53,7 +53,7 @@ export const useSaveInputsFolders = create<State>()((set) => ({
 
         set((state) => {
             
-            if (state.folder) params.push(`folder=${encodeURIComponent(state.folder)}`);
+            if (state.name) params.push(`name=${encodeURIComponent(state.name)}`);
             if (state.startYear  !== 0) params.push(`startYear=${state.startYear}`);
             if (state.endYear    !== 0) params.push(`endYear=${state.endYear}`);
             if (state.startMonth !== 0) params.push(`startMonth=${state.startMonth}`);

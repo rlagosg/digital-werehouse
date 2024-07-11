@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 interface Props {
   searchParams: {
-    folder?     : string;
+    name?     : string;
     startYear?  : string;
     endYear?    : string;
     startMonth? : string;
@@ -25,10 +25,10 @@ interface Props {
 
 export default async function FoldersPage({ searchParams }:Props ) {
 
-  const { folder = '', startYear, endYear, startMonth, endMonth, startRange, endRange, page } = searchParams;
+  const { name = '', startYear, endYear, startMonth, endMonth, startRange, endRange, page } = searchParams;
 
   const convertedParams = {
-    folder,
+    name,
     startYear : convertNumber(startYear),
     endYear   : convertNumber(endYear),
     startMonth: convertNumber(startMonth),

@@ -8,7 +8,7 @@ import { processFilters } from "./process-filters";
 export interface VouchersPaginationOptions {
     page?       : number;
     take?       : number;
-    folder?     : string;
+    name?     : string;
     search?     : string;
     startDate?  : string;
     endDate?    : string;
@@ -20,7 +20,7 @@ export interface VouchersPaginationOptions {
 export const getPaginatedVouchers = async ({
     page         = 1,
     take         = 16,
-    folder       = "",
+    name         = "",
     search       = "",
     startDate    = "",
     endDate      = "",
@@ -37,7 +37,7 @@ export const getPaginatedVouchers = async ({
 
         let isLoading = true;
         
-        let whereFolder = folder != "" ? { name: folder } : {}
+        let whereFolder = name != "" ? { name } : {}
         const { whereVouchers } = processFilters({search, startDate, endDate, startValue, endValue, bank})
 
         let vouchers:any = [];
