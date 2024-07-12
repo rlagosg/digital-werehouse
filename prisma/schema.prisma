@@ -16,7 +16,7 @@ datasource db {
 model ScanDetails {
   id             String @id @default(uuid())
   scanEntryDate  DateTime
-  scanExitDate   DateTime
+  scanExitDate   DateTime?
   observations   String
 
   Folder   Folders[]

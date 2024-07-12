@@ -45,6 +45,6 @@ export interface Voucher {
 export interface ScanDetails {
     id            : string;
     scanEntryDate : Date;
-    scanExitDate  : Date;
+    scanExitDate? : Date | null;
     observations  : string;
 }

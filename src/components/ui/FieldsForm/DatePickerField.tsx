@@ -1,6 +1,5 @@
-import { DatePicker } from 'antd';
-import dayjs, { Dayjs } from 'dayjs';
-import { Control, Controller, FieldError } from 'react-hook-form';
+import { Dayjs } from 'dayjs';
+import { Control, FieldError } from 'react-hook-form';
 
 interface Props {
   name: string;
@@ -17,7 +16,7 @@ export const DatePickerField = ({ name, control, defaultValue, label, error, req
       <label className="mb-3 block text-sm font-medium text-black dark:text-white">
         {label}
       </label>
-      <Controller
+      {/* <Controller
         name={name}
         control={control}
         defaultValue={defaultValue}
@@ -30,7 +29,7 @@ export const DatePickerField = ({ name, control, defaultValue, label, error, req
             onChange={(date) => field.onChange(date ? date.format('YYYY-MM-DD') : '')}
           />
         )}
-      />
+      /> */}
       {error && (
         <p className="mt-1 text-red-500 text-sm">
           {error.message}

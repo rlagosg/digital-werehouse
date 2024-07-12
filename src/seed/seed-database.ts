@@ -74,7 +74,8 @@ async function main() {
             ...rest,
             bankId: dbBank.id,
             folderId: dbVoucherFolder.id,
-            documentId: dbDocument.id
+            documentId: dbDocument.id,
+            proyects: ''
           }
         })       
         
