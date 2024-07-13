@@ -3,18 +3,37 @@
 import { DeleteOutlined, EditOutlined, EllipsisOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Dropdown, message } from 'antd';
-import React from 'react';
+import { useRouter } from 'next/navigation';
 
-export const DropDown = () => {
+interface Props{
+  url         : string;
+  onDelete?() : () => void;
+}
 
-    const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        message.info('Click on left button.');
-        console.log('click left button', e);
+export const DropDown = ({ url, onDelete }:Props) => {
+
+      const router = useRouter();
+
+      const handleEditClick = () => {
+          router.push(url); 
       };
-      
+
+      const handleDeleteClick = () => {
+        message.info('Delete clicked.');
+        console.log('Delete clicked');
+      };
+
       const handleMenuClick: MenuProps['onClick'] = (e) => {
-        message.info('Click on menu item.');
-        console.log('click', e);
+        switch (e.key) {
+          case '1':
+            handleEditClick();
+            break;
+          case '2':
+            handleDeleteClick();
+            break;
+          default:
+            break;
+        }
       };
       
       const items: MenuProps['items'] = [

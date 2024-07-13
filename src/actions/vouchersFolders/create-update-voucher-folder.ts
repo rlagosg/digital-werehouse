@@ -1,3 +1,5 @@
+'use server'
+
 import { VoucherFolder } from '@/interfaces';
 import prisma from '@/lib/prisma';
 import { convertStringCalendarToDate } from '@/utils';

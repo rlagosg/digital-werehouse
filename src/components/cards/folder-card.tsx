@@ -38,7 +38,7 @@ export const FolderCard = ({ folder, isHovered }: Props ) => {
               e.stopPropagation(); // Detiene la propagación del clic
             }}
           >
-            <DropDown />
+            <DropDown url={`/admin/folder/${ folder.name }`}/>
           </div>
         )}
 
@@ -66,7 +66,7 @@ export const FolderCard = ({ folder, isHovered }: Props ) => {
           </div>
 
           <div className={`flex items-center transition-all duration-300 ${isHovered ? 'ml-7' : 'ml-0'}`}>
-            { convertDateToMyFormat(scanExitDate) }
+            { scanExitDate ? convertDateToMyFormat(scanExitDate) : 'procesando' }
             <FaArrowUp className="text-meta-3" size={12}/>
           </div>
         </span>
