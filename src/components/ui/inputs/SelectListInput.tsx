@@ -1,13 +1,13 @@
 'use client'
 
-import { SimpleItem } from '@/interfaces';
+import { ItemList } from '@/interfaces';
 import { ConfigProvider, Select } from 'antd';
 import esES from 'antd/lib/locale/es_ES';
 
 interface Props {
     title? : string;
     placeholder? : string;
-    list      : SimpleItem[]
+    list      : ItemList[]
     value     : string;
     onChange  : (value: string) => void;
 }

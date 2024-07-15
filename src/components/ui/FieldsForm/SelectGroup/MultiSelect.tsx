@@ -1,0 +1,51 @@
+'use client'
+
+import { useModeTheme } from '@/storage';
+import type { SelectProps } from 'antd';
+import { Select, Space } from 'antd';
+ // Ajusta la ruta al hook de tu tema
+
+interface Props {
+  id: string;
+  initialSelected: string; // Cadena separada por comas de valores inicialmente seleccionados
+}
+
+export const MultiSelect = ({ id, initialSelected }: Props) => {
+  const { isDarck } = useModeTheme();
+
+  const options: SelectProps['options'] = [];
+
+  for (let i = 1; i < 1000; i++) {
+    options.push({
+      label: i,
+      value: i,
+    });
+  }
+
+  const handleChange = (value: string[]) => {
+    console.log(`Seleccionado: ${value}`);
+  };
+
+  return (
+    <div className="relative z-50">
+      <div className="flex flex-col items-center">
+        <Space style={{ width: '100%', height: '30%' }} direction="vertical">
+          <Select
+            mode="multiple"
+            allowClear
+            style={{
+              width: '100%',
+              height: '30%',
+              backgroundColor: isDarck ? '#333' : 'transparent',
+              color: isDarck ? '#fff' : '#000',
+            }}
+            placeholder="Selecciona los proyectos"
+            defaultValue={[]}
+            onChange={handleChange}
+            options={options}
+          />
+        </Space>
+      </div>
+    </div>
+  );
+};

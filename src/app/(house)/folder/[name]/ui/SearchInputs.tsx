@@ -1,13 +1,11 @@
 'use client'
 
 import { SearchInput, SearchRangeDateInput, SearchRangeInput, SelectListInput } from "@/components";
+import { ItemList } from "@/interfaces";
 import { useSaveInputsVouchers } from "@/storage";
 
 interface Props{
-    banks: {
-        value: string;
-        label: string;
-    }[]
+    banks: ItemList[]
 }
 
 export const VouchersSearchInpus = ({ banks }:Props) => {

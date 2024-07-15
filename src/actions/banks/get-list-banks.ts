@@ -1,4 +1,4 @@
-import { SimpleItem } from "@/interfaces";
+import { ItemList } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 
@@ -12,7 +12,7 @@ export const getBanks = async () => {
             }
         });
         
-        const banks:SimpleItem[] = banksData.map( (bank) => ({
+        const banks:ItemList[] = banksData.map( (bank) => ({
             value: bank.id,
             label: bank.name + ' / ' + bank.account + ' - ' + bank.internalAccount
         }))

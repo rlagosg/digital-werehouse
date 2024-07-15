@@ -1,4 +1,5 @@
 
+import { DropDown } from "@/components/ui";
 import { Voucher } from "@/interfaces";
 import { format } from "@/utils";
 
@@ -9,9 +10,10 @@ import { LuCalendarDays } from "react-icons/lu";
 
 interface Props {
   voucher: Voucher;
+  isHovered: boolean;
 }
 
-export const VoucherCard = ({ voucher }: Props ) => {
+export const VoucherCard = ({ voucher, isHovered }: Props ) => {
 
     const { 
         bank, check, checkDate, checkValue, document, beneficiary,
@@ -23,6 +25,18 @@ export const VoucherCard = ({ voucher }: Props ) => {
   return (
     <div className="rounded-2xl bg-white px-4 py-2 shadow-default dark:border-strokedark dark:bg-boxdark
     relative z-20 transition-all duration-700 hover:scale-105">
+
+      {isHovered && (
+          <div
+            className="absolute top-2 right-2 z-10 fadeIn"
+            onClick={(e) => {
+              e.preventDefault(); // Previene la navegación
+              e.stopPropagation(); // Detiene la propagación del clic
+            }}
+          >
+            <DropDown url={`/admin/voucher/${ voucher.check }`}/>
+          </div>
+        )}
 
       <div className="mt-2 block md:flex xl:block 2xl:flex items-end justify-between"> 
 
@@ -47,8 +61,8 @@ export const VoucherCard = ({ voucher }: Props ) => {
             <FaArrowDown className="text-meta-5" size={12}/>
           </div>
 
-          <div className="flex items-center">
-            { convertDateToCalendar(scanExitDate) }
+          <div className={`flex items-center transition-all duration-300 ${isHovered ? 'ml-7' : 'ml-0'}`}>
+            { scanExitDate ? convertDateToCalendar(scanExitDate) : 'procesando' }
             <FaArrowUp className="text-meta-3" size={12}/>
           </div>
       </span>

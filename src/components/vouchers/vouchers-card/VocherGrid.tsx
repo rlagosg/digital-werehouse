@@ -48,7 +48,7 @@ export const VoucherGrid = ({
               />
             )}
           </AnimatePresence>
-          <VoucherCard key={ item.check } voucher={item } />
+          <VoucherCard key={ item.check } voucher={item } isHovered={hoveredIndex === idx} />
         </Link>
       ))}
     </div>

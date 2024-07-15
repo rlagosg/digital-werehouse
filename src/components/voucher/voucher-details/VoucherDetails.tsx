@@ -71,7 +71,7 @@ export const VoucherDetails = ({ voucher }: Props) => {
             <div className="flex flex-col pt-4 mb-10">
                 <div className="mt-3 grid grid-cols-2 gap-5 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 3xl:grid-cols-6">
                     <VoucherItemCard nameItem='Fecha de Entrada' value={voucher ? convertDateToMyFormat( scanEntryDate ) : null} icon={FaArrowDown}/>
-                    <VoucherItemCard nameItem='Fecha de Salida' value={voucher ? convertDateToMyFormat( scanExitDate ) : null} icon={FaArrowUp}/>
+                    <VoucherItemCard nameItem='Fecha de Salida' value={scanExitDate ? convertDateToMyFormat( scanExitDate ) : null} icon={FaArrowUp}/>
                 </div>
             </div>
 
