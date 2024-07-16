@@ -1,3 +1,6 @@
+
+export * from "./SelectGroup/SelectList";
+
 export * from "./SelectGroup/MultiSelect";
 
 export * from "./SelectGroup/SelectGroup";

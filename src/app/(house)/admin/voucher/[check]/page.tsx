@@ -1,4 +1,5 @@
 import { getBanks } from "@/actions/banks/get-list-banks";
+import { getVoucherByCk } from "@/actions/vouchers/get-voucher-by-ck";
 import { Breadcrumb, FullScreenLoading } from "@/components";
 import { Metadata } from "next";
 import { VoucherForm } from "./ui/VoucherForm";
@@ -20,9 +21,10 @@ export default async function FolderPage({ params }:Props) {
 
     const title = ( check === 'new') ? 'Nuevo Voucher' : `Editar Voucher ${ check }`;
     const { banks } =  await getBanks();
-    //const { isLoading, folder} = await getVoucherFolderByName(name);
+    const { isLoading, voucher} = await getVoucherByCk(Number(check));
 
-    let isLoading = false
+    console.log(voucher);
+    
 
     return(
         <>
@@ -34,7 +36,7 @@ export default async function FolderPage({ params }:Props) {
                 (
                     <>
                         <Breadcrumb pageName={title} />
-                        <VoucherForm folder={{}} isNew={false} banks={banks}/>
+                        <VoucherForm voucher={voucher ?? {}} isNew={false} banks={banks}/>
                     </>
                 )
             }

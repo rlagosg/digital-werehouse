@@ -1,38 +1,41 @@
 "use client"
 
-import { createUpdateVoucherFolder } from "@/actions/vouchersFolders/create-update-voucher-folder";
-import { InputField, LabelTittle, MultiSelect, SelectGroup } from "@/components";
-import { ItemList, VoucherFolder } from "@/interfaces";
-import { DatePicker } from 'antd';
+import { InputField, LabelTittle, MultiSelect, SelectList } from "@/components";
+import { ItemList, Voucher } from "@/interfaces";
+import { DatePicker, InputNumber } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 
 interface Props{
-    folder : Partial<VoucherFolder>;
+    voucher : Partial<Voucher>;
     banks  : ItemList[];
     isNew  : boolean;
 }
 
 interface FormInputs {
-    name            : string;
-    description     : string;
-    year            : string;
-    month           : string;
-    idVoucherFolder : string;
-    firstVoucher    : string;
-    lastVoucher     : string;
-    idScanDetails   : string;
-    scanEntryDate   : string;
-    scanExitDate    : string;
-    observations    : string;
+    check         : string;
+    checkDate     : string;
+    bankId        : string;
+    checkValue    : string;
+    beneficiary   : string;
+    description?  : string;
+    proyects?     : string;
+    idScanDetails : string;
+    scanEntryDate : string;
+    scanExitDate  : string;
+    observations  : string;
+    isNull        : boolean;
+    nullDate?     : string;
 }
 
-export const VoucherForm = ({ folder, isNew, banks }: Props) => {
+export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
 
     const router = useRouter();
+
+    const converString = ( value : any ) => value ? value.toString() : "";
 
     const {
         handleSubmit,
@@ -43,26 +46,23 @@ export const VoucherForm = ({ folder, isNew, banks }: Props) => {
         watch,
     } = useForm<FormInputs>({
             defaultValues: {
-                name: folder.name,
-                description: folder.description,
-                year: folder.year?.toString() || '',
-                month: folder.year?.toString() || '',
-                firstVoucher: folder.firstVoucher?.toString() || '',
-                lastVoucher: folder.lastVoucher?.toString() || '',
-                idScanDetails: folder.scanDetails?.id || '',
-                scanEntryDate: folder.scanDetails?.scanEntryDate?.toString() || '',
-                scanExitDate: folder.scanDetails?.scanExitDate?.toString() || '',
-                observations: folder.scanDetails?.observations || '',
+                check: converString(voucher.check),
+                checkDate: converString(voucher.checkDate),
+                bankId: converString(voucher.bank?.id),
+                checkValue: converString(voucher.checkValue),
+                beneficiary: converString(voucher.beneficiary),
+                description: converString(voucher.description),
+                proyects: converString(voucher.proyects),
+                idScanDetails: converString(voucher.document?.id),
+                scanEntryDate: converString(voucher.document?.scanDetails.scanEntryDate),
+                scanExitDate:  converString(voucher.document?.scanDetails.scanExitDate),
+                observations:  converString(voucher.document?.scanDetails.observations),
+                isNull: false,
+                nullDate: converString(voucher.nullDate),
             }
         });
     
-    const [dateMoth, setDateMoth] = useState<Dayjs | null>(
-        folder.month && folder.year ? dayjs().year(folder.year).month(folder.month - 1) : null
-    );
 
-    useEffect(() => {
-        handleMothChange(dateMoth);
-    }, [])
 
     const msgRequired = 'Este campo es obligatorio';
 
@@ -70,45 +70,24 @@ export const VoucherForm = ({ folder, isNew, banks }: Props) => {
         
         const formData = new FormData();
 
-        if ( folder.id ){
+        /* if ( folder.id ){
             formData.append("id", folder.id);
-        }
+        } */
 
-        formData.append('name'          , data.name);
-        formData.append('description'   , data.description);
-        formData.append('year'          , data.year);
-        formData.append('month'         , data.month);
-        formData.append('firstVoucher'  , data.firstVoucher);
-        formData.append('lastVoucher'   , data.lastVoucher);
-        formData.append('idScanDetails' , data.idScanDetails);
-        formData.append('scanEntryDate' , data.scanEntryDate);
-        formData.append('scanExitDate'  , data.scanExitDate);
-        formData.append('observations'  , data.observations);
-
-        const { ok } = await createUpdateVoucherFolder( formData );
-        console.log(ok);        
+        //const { ok } = await createUpdateVoucherFolder( formData );
+        console.log({data});        
         //router.replace(`/admin/folder/${ updateFolder?.name }`)      
 
     }
 
-    const handleMothChange = (date: Dayjs | null) => {
-        if (date) {
-            setValue('year', date.year().toString());
-            setValue('month', (date.month() + 1).toString());
-            setDateMoth(date);
-        } else {
-            setValue('year', '');
-            setValue('month', '');
-            setDateMoth(null)
-        }
-    };
-
     const className = 'w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm'
 
 
-    const [dateEntry, setDateEntry] = useState<Dayjs | null>(folder.scanDetails?.scanEntryDate ?  dayjs(folder.scanDetails?.scanEntryDate) : null);
+    const [dateEntry, setDateEntry] = useState<Dayjs | null>(voucher.document?.scanDetails?.scanEntryDate ?  dayjs(voucher.document?.scanDetails?.scanEntryDate) : null);
 
-    const [dateExit, setDateExit] = useState<Dayjs | null>(folder.scanDetails?.scanExitDate ? dayjs(folder.scanDetails?.scanExitDate) : null);
+    const [dateExit, setDateExit] = useState<Dayjs | null>(voucher.document?.scanDetails?.scanExitDate ? dayjs(voucher.document?.scanDetails?.scanExitDate) : null);
+
+    const [dateCk, setDateCk] = useState<Dayjs | null>(voucher.checkDate ? dayjs(voucher.checkDate) : null);
 
     const handleDateChange = (date: Dayjs | null) => {
         return date ? date.format( 'YYYY-MM-DD' ) : ''; 
@@ -140,7 +119,7 @@ export const VoucherForm = ({ folder, isNew, banks }: Props) => {
                                     placeholder="numero de cheke"
                                     register={register}
                                     required="Este campo es obligatorio"
-                                    error={errors.name}
+                                    error={errors.check}
                                 />
 
                                 <div className="w-full xl:w-1/2">                                
@@ -148,7 +127,7 @@ export const VoucherForm = ({ folder, isNew, banks }: Props) => {
                                     <DatePicker 
                                         type="date" 
                                         className={className}
-                                        value={dateExit}
+                                        value={dateCk}
                                         onChange={(e)=>{ setValue('scanExitDate', handleDateChange(e), { shouldValidate: true }); 
                                         setDateExit(e)
                                     }}
@@ -158,24 +137,44 @@ export const VoucherForm = ({ folder, isNew, banks }: Props) => {
 
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row"> 
 
-                                <div className="w-full xl:w-1/2"> 
-                                    <SelectGroup title="Banco" placeholder="Selecciona un banco" list={banks}/>
-                                </div>
-
-                                <InputField
-                                    name="value"
-                                    label="Valor"
-                                    type="number"
-                                    placeholder="Ingresa el valor del cheque"
-                                    register={register}
-                                    required={msgRequired}
-                                    error={errors.firstVoucher}
+                                <SelectList
+                                    value={voucher.bank?.id || ''}
+                                    onChange={()=>{}}
+                                    title="Banco" 
+                                    placeholder="Selecciona un banco" 
+                                    list={banks}
+                                    className="text-9xl"
                                 />
+
+                                <div className="w-full xl:w-1/2">
+                                    <LabelTittle name={'Valor de Cheke'} />
+
+                                    <div className="relative w-full">
+                                        <InputNumber<number>
+                                        defaultValue={voucher.checkValue || 0}
+                                        placeholder={'Ingresa el valor del cheque'}
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value) => value?.replace(/\$\s?|(,*)/g, '') as unknown as number}
+                                        min={0}
+                                        prefix={'L'}
+                                        className={ className + ' flex items-center'}
+                                        style={{ width: '100%', height: '45px', display: 'flex', alignItems: 'center' }}
+                                        />
+                                    
+                                    </div>
+                                    <input type="hidden" {...register('checkValue', { required: msgRequired })} />
+                                    {errors.checkValue && (
+                                        <p className="mt-1 text-red-500 text-sm">
+                                        {msgRequired}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
+
 
                             <div className="mb-4.5">
                                 <LabelTittle name={'Proyecto'} /> 
-                                <MultiSelect id="MultiSelect" initialSelected="1" />
+                                <MultiSelect id="MultiSelect" initialSelected={voucher.proyects || ''} />
                             </div>
 
                             <div className="mb-4.5">

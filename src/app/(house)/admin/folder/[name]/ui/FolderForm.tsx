@@ -83,9 +83,8 @@ export const FolderForm = ({ folder, isNew }: Props) => {
         formData.append('scanExitDate'  , data.scanExitDate);
         formData.append('observations'  , data.observations);
 
-        const { ok } = await createUpdateVoucherFolder( formData );
-        console.log(ok);        
-        //router.replace(`/admin/folder/${ updateFolder?.name }`)      
+        const { ok, folder:updateFolder } = await createUpdateVoucherFolder( formData );      
+        if(ok) router.replace(`/admin/folder/${ updateFolder?.name }`) 
 
     }
 

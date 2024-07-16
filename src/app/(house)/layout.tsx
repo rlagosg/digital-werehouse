@@ -1,6 +1,7 @@
 "use client";
 
 import { Sidebar } from "@/components/ui/Sidebar/Sidebar";
+import { useModeTheme } from "@/storage";
 import { ConfigProvider } from 'antd';
 import esES from 'antd/lib/locale/es_ES';
 import React, { useState } from "react";
@@ -11,10 +12,14 @@ export default function DefaultLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+  const { isDarck, themeDarck, themeLight } = useModeTheme();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <>
-      <ConfigProvider locale={esES}>
+      <ConfigProvider locale={esES} theme={{
+        token: isDarck ? themeDarck : themeLight
+      }}>
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
