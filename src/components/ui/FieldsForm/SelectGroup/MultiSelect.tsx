@@ -7,10 +7,9 @@ import { Select, Space } from 'antd';
 interface Props {
   id: string;
   initialSelected: string; // Cadena separada por comas de valores inicialmente seleccionados
-  height?      : number;
 }
 
-export const MultiSelect = ({ id, initialSelected, height = 45 }: Props) => {
+export const MultiSelect = ({ id, initialSelected }: Props) => {
   
   const options: SelectProps['options'] = [];
 
@@ -33,7 +32,7 @@ export const MultiSelect = ({ id, initialSelected, height = 45 }: Props) => {
             mode="multiple"
             allowClear
             style={{
-              width: '100%', height
+              width: '100%',
             }}
             placeholder="Selecciona los proyectos"
             defaultValue={ initialSelected.length === 0 ? [] : initialSelected.split(',') }

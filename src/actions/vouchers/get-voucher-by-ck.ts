@@ -7,8 +7,15 @@ export const getVoucherByCk = async ( ck: number ) => {
  // Obtener el voucher
     try {
 
+        
         let isLoading = true;
+        
+        if (isNaN(Number(ck))) return {
+            isLoading: false,
+            voucher: {},
+        }
 
+        
         let voucherData:any = [];
 
         voucherData = await prisma.folders.findFirst({

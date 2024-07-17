@@ -31,6 +31,8 @@ interface FormInputs {
     nullDate?     : string;
 }
 
+type DateAnt = Dayjs | null
+
 export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
 
     const router = useRouter();
@@ -58,7 +60,6 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                 scanExitDate:  converString(voucher.document?.scanDetails.scanExitDate),
                 observations:  converString(voucher.document?.scanDetails.observations),
                 isNull: false,
-                nullDate: converString(voucher.nullDate),
             }
         });
     
@@ -82,14 +83,16 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
 
     const className = 'w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm'
 
+    const convertDates = ( date : Date | undefined | null) => date ?  dayjs(date) : null
 
-    const [dateEntry, setDateEntry] = useState<Dayjs | null>(voucher.document?.scanDetails?.scanEntryDate ?  dayjs(voucher.document?.scanDetails?.scanEntryDate) : null);
 
-    const [dateExit, setDateExit] = useState<Dayjs | null>(voucher.document?.scanDetails?.scanExitDate ? dayjs(voucher.document?.scanDetails?.scanExitDate) : null);
+    const [dateEntry, setDateEntry] = useState<DateAnt>(convertDates(voucher.document?.scanDetails?.scanEntryDate));
 
-    const [dateCk, setDateCk] = useState<Dayjs | null>(voucher.checkDate ? dayjs(voucher.checkDate) : null);
+    const [dateExit, setDateExit] = useState<DateAnt>(convertDates(voucher.document?.scanDetails?.scanExitDate));
 
-    const handleDateChange = (date: Dayjs | null) => {
+    const [dateCk, setDateCk] = useState<DateAnt>(convertDates(voucher.checkDate));
+
+    const handleDateChange = (date: DateAnt) => {
         return date ? date.format( 'YYYY-MM-DD' ) : ''; 
     };
 
@@ -118,6 +121,7 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                                     label="Cheke"
                                     placeholder="numero de cheke"
                                     register={register}
+                                    type="number"
                                     required="Este campo es obligatorio"
                                     error={errors.check}
                                 />
@@ -131,7 +135,7 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                                         onChange={(e)=>{ setValue('scanExitDate', handleDateChange(e), { shouldValidate: true }); 
                                         setDateExit(e)
                                     }}
-                                    />                                
+                                    />
                                 </div>
                             </div>
 
