@@ -21,10 +21,7 @@ export default async function FolderPage({ params }:Props) {
 
     const title = ( check === 'new') ? 'Nuevo Voucher' : `Editar Voucher ${ check }`;
     const { banks } =  await getBanks();
-    const { isLoading, voucher} = await getVoucherByCk(Number(check));
-
-    console.log(voucher);
-    
+    const { isLoading, voucher} = await getVoucherByCk(Number(check));   
 
     return(
         <>

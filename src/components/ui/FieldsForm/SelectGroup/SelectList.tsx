@@ -2,7 +2,6 @@
 
 import { ItemList } from '@/interfaces';
 import { Select } from 'antd';
-import { LabelTittle } from '../LabelTittle';
 
 interface Props {
     title?       : string;
@@ -17,8 +16,7 @@ interface Props {
 export const SelectList = ({ list, title = 'Lista', placeholder = 'Selecciona', value, onChange, height = 44, className }:Props) => {
 
     return(      
-        <div className='w-full xl:w-1/2'>
-            <LabelTittle name={title} />
+        
             <div className="relative w-full">
                 <Select
                     showSearch
@@ -31,6 +29,6 @@ export const SelectList = ({ list, title = 'Lista', placeholder = 'Selecciona', 
                     className={className}
                 />
             </div>
-      </div>
+      
     )
 }

@@ -7,6 +7,8 @@ import dayjs, { Dayjs } from 'dayjs';
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { InputPDF } from "./InputPDF";
+
 
 
 interface Props{
@@ -29,6 +31,7 @@ interface FormInputs {
     observations  : string;
     isNull        : boolean;
     nullDate?     : string;
+    pdf?          : File;
 }
 
 type DateAnt = Dayjs | null
@@ -65,7 +68,7 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
     
 
 
-    const msgRequired = 'Este campo es obligatorio';
+    const required = 'Este campo es obligatorio';
 
     const onSubmit: SubmitHandler<FormInputs> = async (data) => {
         
@@ -85,15 +88,22 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
 
     const convertDates = ( date : Date | undefined | null) => date ?  dayjs(date) : null
 
-
     const [dateEntry, setDateEntry] = useState<DateAnt>(convertDates(voucher.document?.scanDetails?.scanEntryDate));
-
     const [dateExit, setDateExit] = useState<DateAnt>(convertDates(voucher.document?.scanDetails?.scanExitDate));
-
     const [dateCk, setDateCk] = useState<DateAnt>(convertDates(voucher.checkDate));
+
+
+    const onChangeProyecs = (value: string[]) => {
+        const listaOrdenada = value.map(Number).sort((a, b) => a - b).toString();        
+        setValue('proyects', listaOrdenada);
+    };
 
     const handleDateChange = (date: DateAnt) => {
         return date ? date.format( 'YYYY-MM-DD' ) : ''; 
+    };
+
+    const handleSavePDF = (file: File) => {
+        setValue('pdf', file);
     };
 
     return(
@@ -127,28 +137,44 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                                 />
 
                                 <div className="w-full xl:w-1/2">                                
-                                    <LabelTittle name={'Fecha de cheke'} />                                   
+                                    <LabelTittle name={'Fecha de Cheke'} />                                   
                                     <DatePicker 
+                                        name="checkDate"
                                         type="date" 
                                         className={className}
-                                        value={dateCk}
-                                        onChange={(e)=>{ setValue('scanExitDate', handleDateChange(e), { shouldValidate: true }); 
-                                        setDateExit(e)
+                                        value={dateCk}                                        
+                                        onChange={(e)=>{ setValue('checkDate', handleDateChange(e), { shouldValidate: true }); 
+                                        setDateCk(e)
                                     }}
                                     />
+                                     <input type="hidden" {...register('checkDate', { required: "La fecha del cheke es requerida" })} />
+                                    {errors.checkDate && (
+                                        <p className="mt-1 text-red-500 text-sm">
+                                            {errors.checkDate.message}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
 
                             <div className="mb-4.5 flex flex-col gap-6 xl:flex-row"> 
 
-                                <SelectList
-                                    value={voucher.bank?.id || ''}
-                                    onChange={()=>{}}
-                                    title="Banco" 
-                                    placeholder="Selecciona un banco" 
-                                    list={banks}
-                                    className="text-9xl"
-                                />
+                                <div className='w-full xl:w-1/2'>
+                                    <LabelTittle name='Banco'/>
+                                    <SelectList
+                                        value={getValues('bankId') || ''}
+                                        onChange={(e)=> { setValue('bankId', e || '', { shouldValidate: true })}}
+                                        title="Banco" 
+                                        placeholder="Selecciona un banco" 
+                                        list={banks}
+                                        className="text-9xl"
+                                    />
+                                    <input type="hidden" {...register('bankId', { required })} />
+                                    {errors.bankId && (
+                                        <p className="mt-1 text-red-500 text-sm">
+                                        {required}
+                                        </p>
+                                    )}
+                                </div>
 
                                 <div className="w-full xl:w-1/2">
                                     <LabelTittle name={'Valor de Cheke'} />
@@ -163,13 +189,14 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                                         prefix={'L'}
                                         className={ className + ' flex items-center'}
                                         style={{ width: '100%', height: '45px', display: 'flex', alignItems: 'center' }}
+                                        onChange={(e)=> { setValue('checkValue', e?.toString() || '', { shouldValidate: true })}}
                                         />
                                     
                                     </div>
-                                    <input type="hidden" {...register('checkValue', { required: msgRequired })} />
+                                    <input type="hidden" {...register('checkValue', { required })} />
                                     {errors.checkValue && (
                                         <p className="mt-1 text-red-500 text-sm">
-                                        {msgRequired}
+                                        {required}
                                         </p>
                                     )}
                                 </div>
@@ -178,23 +205,29 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
 
                             <div className="mb-4.5">
                                 <LabelTittle name={'Proyecto'} /> 
-                                <MultiSelect id="MultiSelect" initialSelected={voucher.proyects || ''} />
+                                <MultiSelect id="MultiSelect" initialSelected={voucher.proyects || ''} onChange={onChangeProyecs}/>
                             </div>
 
-                            <div className="mb-4.5">
+                            <div className="mb-2.5">
                                 <LabelTittle name={'Beneficiario'} /> 
                                 <input
                                     type="text"
                                     placeholder="Ingresa el nombre del beneficiario"
-                                    className={className}
+                                    className={className}                                    
+                                    {...register("beneficiary")}
                                 />
+                                {errors.beneficiary && (
+                                        <p className="mt-1 text-red-500 text-sm">
+                                        {required}
+                                        </p>
+                                    )}
                             </div>
                             
                         
                             <div className="mb-6">
                                 <LabelTittle name='Descripción'/>
                                 <textarea
-                                    rows={6}
+                                    rows={5}
                                     placeholder="Descripcion del archivador"
                                     className={className}
                                     {...register("description")}
@@ -207,6 +240,7 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
 
                 {/* Segunda mitad Digitalización*/}
                 <div className="flex flex-col gap-9">
+
                     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
                         
                         <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -214,11 +248,10 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                                 Datos de Digitalización
                             </h3>
                         </div>
-
                 
-                        <div className="p-6.5">
+                        <div className="p-6">
 
-                            <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
+                            <div className="mb-4 flex flex-col gap-6 xl:flex-row">
                                 
                                 <div className="w-full xl:w-1/2">
                                     <LabelTittle name={'Fecha entrada'} />
@@ -250,7 +283,7 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                                 </div>
                             </div>
 
-                            <div className="mb-6">
+                            <div className="mb-5.5">
                                 <LabelTittle name={'Observaciones'} />
                                 <textarea
                                     rows={6}
@@ -262,6 +295,9 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                             
                         </div>
                     </div>
+
+                    <InputPDF onSavePDF={handleSavePDF}/>
+
                 </div>
             </div> 
 

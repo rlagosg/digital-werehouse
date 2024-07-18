@@ -7,9 +7,10 @@ import { Select, Space } from 'antd';
 interface Props {
   id: string;
   initialSelected: string; // Cadena separada por comas de valores inicialmente seleccionados
+  onChange: (value: string[]) => void
 }
 
-export const MultiSelect = ({ id, initialSelected }: Props) => {
+export const MultiSelect = ({ id, initialSelected, onChange }: Props) => {
   
   const options: SelectProps['options'] = [];
 
@@ -36,7 +37,7 @@ export const MultiSelect = ({ id, initialSelected }: Props) => {
             }}
             placeholder="Selecciona los proyectos"
             defaultValue={ initialSelected.length === 0 ? [] : initialSelected.split(',') }
-            onChange={handleChange}
+            onChange={onChange}
             options={options}
           />
         </Space>
