@@ -1,27 +1,44 @@
-import { useRef, useState } from "react";
+import { Document } from "@/interfaces";
+import { useEffect, useRef, useState } from "react";
+import { UseFormRegister, UseFormSetValue } from "react-hook-form";
+import { FormVoucherInputs } from "./VoucherForm";
 
 interface Props {
-    onSavePDF: (file: File) => void;
+    document  : Document | null | undefined;
+    name      : string;
+    register  : UseFormRegister<FormVoucherInputs>;
+    setValue  : UseFormSetValue<FormVoucherInputs>;
+    required? : string;
+    error?    : any;
 }
 
-export const InputPDF = ({ onSavePDF }:Props) => {
+export const InputPDF = ({ document, name, register, setValue,required, error }:Props) => {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const [namePDF, setNamePDF] = useState<string | undefined>(document?.pdfPath);
+
+    useEffect(() => {
+        setNamePDF(document?.pdfPath);
+    }, [document]);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
             setSelectedFile(file);
-            onSavePDF(file); // Llamar a la función de guardado
+        } else if (selectedFile) {
+            // Si no se seleccionó un nuevo archivo y ya hay uno seleccionado, restablece el valor del input
+            event.target.value = '';
         }
     };
 
     const handleDelete = () => {
         setSelectedFile(null);
+        setNamePDF(undefined);
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
         }
+        setValue("pdf", '', { shouldValidate: true });
     };
 
     const handleClick = () => {
@@ -53,21 +70,31 @@ export const InputPDF = ({ onSavePDF }:Props) => {
                         className="w-full cursor-pointer rounded-lg border-[1.5px] border-stroke bg-transparent outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary flex items-center"
                         onClick={handleClick}
                     >
-                        <div className={` w-44 items-center py-2.5 px-4 text-black text-sm text-center border border-stroke rounded-s-lg bg-sky-50 hover:bg-sky-100 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-zinc-500 dark:hover:bg-zinc-600 dark:focus:ring-gray-700 dark:text-white dark:border-form-strokedark`}>
-                            {selectedFile ? 'Archivo seleccionado' : 'Selecciona un archivo'}
+                        <div className="w-44 items-center py-2.5 px-4 text-black text-sm text-center border border-stroke rounded-s-lg bg-sky-50 hover:bg-sky-100 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-zinc-500 dark:hover:bg-zinc-600 dark:focus:ring-gray-700 dark:text-white dark:border-form-strokedark">
+                            {selectedFile || namePDF ? 'Archivo seleccionado' : 'Selecciona un archivo'}
                         </div>
-                        <div className={`flex-grow file:px-5 file:py-3 ml-5 text-black ${selectedFile ? 'dark:text-white text-sky-600' : 'text-bodydark dark:text-zinc-300'}`}>
-                            {selectedFile ? selectedFile.name : 'Selecciona un documento'}
+                        <div className={`flex-grow file:px-5 file:py-3 ml-5 text-black ${selectedFile || namePDF ? 'dark:text-white text-sky-600' : 'text-bodydark dark:text-zinc-300'}`}>
+                            {selectedFile?.name || namePDF || 'Selecciona un documento'}
                         </div>
                     </div>
-                </div>
-                <div className="flex justify-end gap-4.5 h-full">
-                    <button
-                        className="flex justify-center rounded bg-red px-4 py-1 font-medium text-gray hover:bg-opacity-90"
-                        onClick={handleDelete}
-                    >
-                        Eliminar
-                    </button>
+
+                    {/* Error */}
+                    <input type="hidden" {...register('pdf', { required })} />
+                    {error && (
+                        <p className="mt-3 text-red-500 text-sm">
+                            {error.message}
+                        </p>
+                    )}
+
+                    {/* Boton eliminar */}
+                    <div className="flex justify-end gap-4.5 h-full mt-3">
+                        <button
+                            className="flex justify-center rounded bg-red px-4 py-1 font-medium text-gray hover:bg-opacity-90"
+                            onClick={handleDelete}
+                        >
+                            Eliminar
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

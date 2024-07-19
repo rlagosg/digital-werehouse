@@ -9,15 +9,13 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { InputPDF } from "./InputPDF";
 
-
-
 interface Props{
     voucher : Partial<Voucher>;
     banks  : ItemList[];
     isNew  : boolean;
 }
 
-interface FormInputs {
+export interface FormVoucherInputs {
     check         : string;
     checkDate     : string;
     bankId        : string;
@@ -31,7 +29,7 @@ interface FormInputs {
     observations  : string;
     isNull        : boolean;
     nullDate?     : string;
-    pdf?          : File;
+    pdf          : File | string;
 }
 
 type DateAnt = Dayjs | null
@@ -49,7 +47,7 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
         getValues,
         setValue,
         watch,
-    } = useForm<FormInputs>({
+    } = useForm<FormVoucherInputs>({
             defaultValues: {
                 check: converString(voucher.check),
                 checkDate: converString(voucher.checkDate),
@@ -62,7 +60,8 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                 scanEntryDate: converString(voucher.document?.scanDetails.scanEntryDate),
                 scanExitDate:  converString(voucher.document?.scanDetails.scanExitDate),
                 observations:  converString(voucher.document?.scanDetails.observations),
-                isNull: false,
+                isNull: false,    
+                pdf: converString(voucher.document?.pdfPath)
             }
         });
     
@@ -70,7 +69,7 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
 
     const required = 'Este campo es obligatorio';
 
-    const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    const onSubmit: SubmitHandler<FormVoucherInputs> = async (data) => {
         
         const formData = new FormData();
 
@@ -286,7 +285,7 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                             <div className="mb-5.5">
                                 <LabelTittle name={'Observaciones'} />
                                 <textarea
-                                    rows={6}
+                                    rows={4}
                                     placeholder="Escribe tus observaciones"
                                     className={className}
                                     {...register("observations")}
@@ -296,7 +295,14 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
                         </div>
                     </div>
 
-                    <InputPDF onSavePDF={handleSavePDF}/>
+                    <InputPDF
+                        document={voucher.document}
+                        name="pdf"
+                        setValue={setValue}
+                        register={register}
+                        required="Este campo es obligatorio"
+                        error={errors.pdf}
+                    />
 
                 </div>
             </div> 
