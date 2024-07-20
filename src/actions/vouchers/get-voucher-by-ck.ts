@@ -1,6 +1,7 @@
 import { Voucher } from "@/interfaces";
 import prisma from "@/lib/prisma";
-import { ProcessVoucher } from "./process-voucher";
+import { ProcessVoucher } from "./processData";
+
 
 export const getVoucherByCk = async ( ck: number ) => {
 

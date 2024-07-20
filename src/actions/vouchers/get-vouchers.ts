@@ -2,8 +2,8 @@
 
 import { Voucher } from "@/interfaces";
 import prisma from "@/lib/prisma";
-import { ProcessFolder } from "./process-data";
 import { processFilters } from "./process-filters";
+import { ProcessFolder } from "./processData/process-data";
 
 export interface VouchersPaginationOptions {
     page?       : number;

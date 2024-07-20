@@ -1,5 +1,5 @@
 import { Voucher, VoucherFolder } from "@/interfaces";
-import { FolderData, VoucherData } from "./vouchers.data.interface";
+import { FolderData, VoucherData } from "../vouchers.data.interface";
 
 
 

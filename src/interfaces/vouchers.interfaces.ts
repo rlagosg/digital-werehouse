@@ -14,10 +14,8 @@ export interface VoucherFolder {
 export interface Document{
     id            : string;
     scanDetails   : ScanDetails;
-    description   : string;
     pages         : number;
     pdfPath       : string;
-    documentType  : FoldersTypes;
 }
 
 export interface Bank{

@@ -1,6 +1,5 @@
 import { convertStringCalendarToDate } from "@/utils";
-import { VouchersPaginationOptions } from "./get-vouchers";
-
+import { VouchersPaginationOptions } from "../get-vouchers";
 
 export const processFilters = ({
     search,
@@ -20,7 +19,7 @@ export const processFilters = ({
     // Construir el objeto where dinámicamente para VoucherFolders
     const whereVouchers: any = {};
     const dateStartDate = startDate ? convertStringCalendarToDate(startDate) : null;
-    const dateEndDate = endDate ? convertStringCalendarToDate(endDate) : null;
+    const dateEndDate   = endDate ? convertStringCalendarToDate(endDate) : null;
     
     // Filtro por valores de cheque
     if (startValue !== -1 && endValue !== -1) {
@@ -65,7 +64,7 @@ export const processFilters = ({
         whereVouchers.OR = [           
             { beneficiary: { contains: search, mode: 'insensitive' } },
             { description: { contains: search, mode: 'insensitive' } },
-            { proyects: { contains: search, mode: 'insensitive' } },
+            { proyects   : { contains: search, mode: 'insensitive' } },
         ];
 
         if (isSearchNumber) {

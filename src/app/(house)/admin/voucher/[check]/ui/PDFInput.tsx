@@ -1,18 +1,18 @@
 import { Document } from "@/interfaces";
 import { useEffect, useRef, useState } from "react";
 import { UseFormRegister, UseFormSetValue } from "react-hook-form";
-import { FormVoucherInputs } from "./VoucherForm";
 
 interface Props {
+    //onSavePDF : (pdf: File) => void;
     document  : Document | null | undefined;
     name      : string;
-    register  : UseFormRegister<FormVoucherInputs>;
-    setValue  : UseFormSetValue<FormVoucherInputs>;
+    register  : UseFormRegister<any>;
+    setValue  : UseFormSetValue<any>;
     required? : string;
     error?    : any;
 }
 
-export const InputPDF = ({ document, name, register, setValue,required, error }:Props) => {
+export const PDFInput = ({ document, name, register, setValue,required, error }:Props) => {
 
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -26,8 +26,8 @@ export const InputPDF = ({ document, name, register, setValue,required, error }:
         const file = event.target.files?.[0];
         if (file) {
             setSelectedFile(file);
+            setValue(name, file, { shouldValidate: true }); // Actualiza el valor del campo en el formulario
         } else if (selectedFile) {
-            // Si no se seleccionó un nuevo archivo y ya hay uno seleccionado, restablece el valor del input
             event.target.value = '';
         }
     };
@@ -38,7 +38,7 @@ export const InputPDF = ({ document, name, register, setValue,required, error }:
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
         }
-        setValue("pdf", '', { shouldValidate: true });
+        setValue(name, '', { shouldValidate: true }); // Elimina el valor del campo en el formulario
     };
 
     const handleClick = () => {
@@ -54,7 +54,7 @@ export const InputPDF = ({ document, name, register, setValue,required, error }:
                     Documento PDF
                 </h3>
             </div>
-            <div className="flex flex-col gap-5.5 p-6.5">
+            <div className="flex flex-col gap-5.5 px-6.5 pt-6.5 pb-4">
                 <div>
                     <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                         Adjuntar archivo
@@ -79,7 +79,7 @@ export const InputPDF = ({ document, name, register, setValue,required, error }:
                     </div>
 
                     {/* Error */}
-                    <input type="hidden" {...register('pdf', { required })} />
+                    <input type="hidden" {...register(name, { required })} />
                     {error && (
                         <p className="mt-3 text-red-500 text-sm">
                             {error.message}
@@ -87,7 +87,7 @@ export const InputPDF = ({ document, name, register, setValue,required, error }:
                     )}
 
                     {/* Boton eliminar */}
-                    <div className="flex justify-end gap-4.5 h-full mt-3">
+                    <div className="flex justify-end gap-4.5 h-full mt-5.5">
                         <button
                             className="flex justify-center rounded bg-red px-4 py-1 font-medium text-gray hover:bg-opacity-90"
                             onClick={handleDelete}

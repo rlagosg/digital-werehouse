@@ -21,34 +21,26 @@ const desc = 'Quis proident nulla magna et minim excepteur aliqua voluptate offi
 const seedDocuments: Document[] = [
     {
         id: uuidv4(),
-        description: desc,
         pages: 2,
         pdfPath: 'CK66407.pdf',
-        documentType: 'voucher',
         scanDetails: seedScanDetails[0],
     },
     {
         id: uuidv4(),
-        description: desc,
         pages: 27,
         pdfPath: 'CK66423.pdf',
-        documentType: 'voucher',
         scanDetails: seedScanDetails[0],
     },
     {
         id: uuidv4(),
-        description: desc,
         pages: 157,
         pdfPath: 'CK66432.pdf',
-        documentType: 'voucher',
         scanDetails: seedScanDetails[0],
     },
     {
         id: uuidv4(),
-        description: desc,
         pages: 383,
         pdfPath: 'CK66433.pdf',
-        documentType: 'voucher',
         scanDetails: seedScanDetails[0],
     },
 ]

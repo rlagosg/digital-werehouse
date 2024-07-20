@@ -61,10 +61,8 @@ async function main() {
         const dbDocument = await prisma.documents.create({
           data: {
             pages: document.pages,
-            pdfPath: document.pdfPath,
-            description: document.description,
+            pdfPath: document.pdfPath,            
             scanDetailsId: dbScanDetail.id,
-            documentType: 'voucher',            
           }
         })
 

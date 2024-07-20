@@ -160,7 +160,7 @@ export const createUpdateVoucherFolder = async ( formData: FormData ) :  Promise
             if (error.code === 'P2002' && Array.isArray(error.meta?.target) && error.meta.target.includes('name')) {
                 return {
                     ok: false,
-                    message: 'Ya existe un propietario con esta Identidad.',
+                    message: 'Ya existe un folder con este Nombre.',
                     folder: null
                 };
             }

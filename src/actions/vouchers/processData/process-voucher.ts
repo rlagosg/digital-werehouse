@@ -1,5 +1,6 @@
 import { Voucher, VoucherFolder } from "@/interfaces";
-import { FolderData } from "./vouchers.data.interface";
+import { FolderData } from "../vouchers.data.interface";
+
 
 export const ProcessVoucher = ( folderData : FolderData ) : Voucher => {
 

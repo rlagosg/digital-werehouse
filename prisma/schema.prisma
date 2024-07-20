@@ -51,10 +51,8 @@ model Documents {
   id            String @id @default(uuid())
   scanDetails   ScanDetails @relation(fields: [scanDetailsId], references: [id])
   scanDetailsId String
-  description   String?
   pages         Int
   pdfPath       String
-  documentType  FoldersTypes
 
   Voucher Vouchers[]
 }
