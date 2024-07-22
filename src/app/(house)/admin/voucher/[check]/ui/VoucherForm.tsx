@@ -1,7 +1,7 @@
 "use client"
 
 import { createUpdateVoucher } from "@/actions/vouchers/create-update-voucher";
-import { ItemList, Voucher } from "@/interfaces";
+import { ItemList, Voucher, VoucherFolder } from "@/interfaces";
 import { Dayjs } from 'dayjs';
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -9,11 +9,16 @@ import { PDFInput } from "./PDFInput";
 import { ScanInputs } from "./ScanInputs";
 import { VoucherInputs } from "./VoucherInputs";
 
+import { message, notification } from 'antd';
+import { useEffect } from "react";
+
 
 interface Props{
-    voucher : Partial<Voucher>;
-    banks  : ItemList[];
-    isNew  : boolean;
+    voucher       : Partial<Voucher>;
+    banks         : ItemList[];
+    isNew         : boolean;
+    folderSearch? : VoucherFolder | null | undefined;
+    returnBack?   : boolean;
 }
 
 export interface FormVoucherInputs {
@@ -26,6 +31,8 @@ export interface FormVoucherInputs {
     proyects?     : string;
     idDocument    : string;
     idScanDetails : string;
+    idFolder      : string;
+    folderName    : string;
     scanEntryDate : string;
     scanExitDate  : string;
     observations  : string;
@@ -36,10 +43,14 @@ export interface FormVoucherInputs {
 
 type DateAnt = Dayjs | null
 
-export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
+export const VoucherForm = ({ voucher, isNew, banks, returnBack, folderSearch }: Props) => {
+
 
     const router = useRouter();
 
+    useEffect(() => {
+        if (returnBack) router.back(); // Redirige a la página anterior
+      }, [returnBack]);
 
     const converString = ( value : any ) => value ? value.toString() : "";
 
@@ -53,6 +64,8 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
         proyects: converString(voucher.proyects),
         idDocument: converString(voucher.document?.id),
         idScanDetails: converString(voucher.document?.scanDetails.id),
+        idFolder: converString(voucher.folder?.id) === '' ? folderSearch?.id! : '' ,
+        folderName: converString(voucher.folder?.name),
         scanEntryDate: converString(voucher.document?.scanDetails.scanEntryDate),
         scanExitDate:  converString(voucher.document?.scanDetails.scanExitDate),
         observations:  converString(voucher.document?.scanDetails.observations),
@@ -74,46 +87,79 @@ export const VoucherForm = ({ voucher, isNew, banks }: Props) => {
         });
     
 
+        console.log({dataVoucher});
+        
+
 
     const required = 'Este campo es obligatorio';
 
     const onSubmit: SubmitHandler<FormVoucherInputs> = async (data) => {
         
+        message.loading({ content: 'Guardando...', duration: 0 });
+
         const formData = new FormData();
+        const { pdf, ...voucherToSave } = data;
 
         if ( voucher.id ){
             formData.append("id", voucher.id);
         }
         
-        formData.append('check',         data.check);
-        formData.append('checkDate',     data.checkDate);
-        formData.append('bankId',        data.bankId);
-        formData.append('checkValue',    data.checkValue);
-        formData.append('beneficiary',   data.beneficiary);
-        formData.append('description',   converString(data.description));
-        formData.append('proyects',      converString(data.proyects));
-        formData.append('idDocument',    data.idDocument);
-        formData.append('idScanDetails', data.idScanDetails);
-        formData.append('scanEntryDate', data.scanEntryDate);
-        formData.append('scanExitDate',  data.scanExitDate);
-        formData.append('observations',  data.observations);
-        formData.append('isNull',        String(data.isNull));
-        
+        formData.append('check',         voucherToSave.check);
+        formData.append('checkDate',     voucherToSave.checkDate);
+        formData.append('bankId',        voucherToSave.bankId);
+        formData.append('checkValue',    voucherToSave.checkValue);
+        formData.append('beneficiary',   voucherToSave.beneficiary);
+        formData.append('description',   converString(voucherToSave.description));
+        formData.append('proyects',      converString(voucherToSave.proyects));
+        formData.append('idDocument',    voucherToSave.idDocument);
+        formData.append('idScanDetails', voucherToSave.idScanDetails);
+        formData.append('idFolder',      voucherToSave.idFolder);
+        formData.append('folderName',    voucherToSave.folderName);
+        formData.append('scanEntryDate', voucherToSave.scanEntryDate);
+        formData.append('scanExitDate',  voucherToSave.scanExitDate);
+        formData.append('observations',  voucherToSave.observations);
+        formData.append('isNull',        String(voucherToSave.isNull));
 
-        const { ok, message  } = await createUpdateVoucher( formData );
-        console.log(message);
-            
-        //router.replace(`/admin/folder/${ updateFolder?.name }`)      
+        if (pdf && pdf instanceof File) {
+            formData.append('pdf', data.pdf);
+        }
+
+        const { ok, message: responseMessage, voucher:voucherSave  } = await createUpdateVoucher( formData );
+                   
+        message.destroy(); // Eliminar el mensaje de carga
+        if (ok) {
+            notification.success({
+                message: 'Éxito',
+                description: responseMessage,
+                duration: 5,
+                showProgress: true,
+            });
+
+            if (voucherSave) {
+                router.replace(`/admin/voucher/${voucherSave.check}`);
+                setValue('pdf', converString(voucher.check));
+            }
+        } else {
+            notification.error({
+                message: 'Error',
+                description: responseMessage,
+                duration: 5,
+                showProgress: true,
+            });
+
+            console.log('Error: ', responseMessage);
+        }
 
     }
 
-    const className = 'w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm'
+    const className = 'w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary text-sm'  
 
     return(
         <>
         <form onSubmit={ handleSubmit(onSubmit) } action="#">
             <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
                 
+                                
                 {/* <!-- Archivador Form --> */}
                 <div className="flex flex-col gap-9">
                     <VoucherInputs

@@ -39,7 +39,13 @@ export const getVoucherFolderByName = async (name: string) => {
      
         
     } catch (error) {
-        throw new Error('No se pudo cargar el archivador: ' + error)
+
+        console.log('No se pudo encontrar el archivador:');
+                
+        return {
+            folder: null,
+            isLoading: false
+        };
     }
 }
 

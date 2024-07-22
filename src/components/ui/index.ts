@@ -1,3 +1,8 @@
+export * from "./Notifications/Manuelito";
+
+export * from "./Notifications/successNotification";
+
+
 export * from "./loading/FullScreenLoading";
 
 export * from "./Icons/IconSearch";
