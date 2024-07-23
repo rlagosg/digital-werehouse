@@ -1,15 +1,60 @@
-import { Voucher, VoucherFolder } from "@/interfaces";
-import { FolderData } from "../vouchers.data.interface";
+import { Document, ScanDetails, Voucher, VoucherFolder } from "@/interfaces";
+
+export interface VoucherData {
+    id:          string;
+    check:       number;
+    folderId:    string;
+    documentId:  string;
+    bankId:      string;
+    checkDate:   Date;
+    checkValue:  number;
+    beneficiary: string;
+    description: string;
+    proyects:    string;
+    isNull:      boolean;
+    nullDate:    Date | null | undefined;
+    bank:        Bank;
+    document:    Document;
+    folder:      VoucherDataFolder;
+}
+
+export interface Bank {
+    id:              string;
+    name:            string;
+    account:         string;
+    internalAccount : string | null;
+}
+
+export interface MyDocument extends Document{
+    scanDetailsId: string;
+}
+
+export interface VoucherDataFolder {
+    id:           string;
+    month:        number;
+    firstVoucher: number;
+    lastVoucher:  number;
+    folder:       Folder;
+}
+
+export interface Folder {
+    name:        string;
+    scanDetails: ScanDetails;
+    description: string;
+    year:        number;
+}
 
 
-export const ProcessVoucher = ( folderData : FolderData ) : Voucher => {
+export const ProcessVoucher = ( voucherData : VoucherData ) : Voucher => {
 
     try {
  
-        const { name, scanDetails, description, year, VoucherFolder } = folderData;
-        const { id, month, firstVoucher, lastVoucher, Voucher } = VoucherFolder[0];
-
-        const folder:VoucherFolder = {
+        const { folder:voucherFolder, bankId, documentId, folderId, ...rest } = voucherData;
+               
+        const { id, firstVoucher, lastVoucher, month, folder } = voucherFolder;
+        const { name, scanDetails, description, year } = folder;
+        
+        const tempFolder:VoucherFolder = {
             id,
             scanDetails,
             name,
@@ -20,14 +65,15 @@ export const ProcessVoucher = ( folderData : FolderData ) : Voucher => {
             lastVoucher,
         }
 
-        const voucher = Voucher[0];
 
         return {
-            ...voucher,
-            folder
+            ...rest,
+            folder: tempFolder
+
         };
 
     } catch (error) {
+        console.log('Error en la conversion de los documentos: ' + error);        
         throw new Error('Error en la conversion de los documentos: ' + error)
     }
 }

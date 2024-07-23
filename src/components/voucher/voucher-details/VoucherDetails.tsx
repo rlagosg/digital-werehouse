@@ -17,7 +17,7 @@ import { VscCircuitBoard } from "react-icons/vsc";
 export const VoucherDetails = ({ voucher }: Props) => {
 
     const { check, checkDate, checkValue, document, bank, folder, isNull, nullDate, beneficiary, description, proyects } = voucher
-    const { description:descDoc, pages, scanDetails } = document
+    const { pages, scanDetails } = document
     const { scanEntryDate, observations, scanExitDate } = scanDetails
 
     return(

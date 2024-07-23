@@ -1,7 +1,7 @@
 "use client"
 
 import { createUpdateVoucher } from "@/actions/vouchers/create-update-voucher";
-import { ItemList, Voucher, VoucherFolder } from "@/interfaces";
+import { ItemList, Voucher } from "@/interfaces";
 import { Dayjs } from 'dayjs';
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -17,7 +17,6 @@ interface Props{
     voucher       : Partial<Voucher>;
     banks         : ItemList[];
     isNew         : boolean;
-    folderSearch? : VoucherFolder | null | undefined;
     returnBack?   : boolean;
 }
 
@@ -43,8 +42,7 @@ export interface FormVoucherInputs {
 
 type DateAnt = Dayjs | null
 
-export const VoucherForm = ({ voucher, isNew, banks, returnBack, folderSearch }: Props) => {
-
+export const VoucherForm = ({ voucher, isNew, banks, returnBack }: Props) => {
 
     const router = useRouter();
 
@@ -64,14 +62,14 @@ export const VoucherForm = ({ voucher, isNew, banks, returnBack, folderSearch }:
         proyects: converString(voucher.proyects),
         idDocument: converString(voucher.document?.id),
         idScanDetails: converString(voucher.document?.scanDetails.id),
-        idFolder: converString(voucher.folder?.id) === '' ? folderSearch?.id! : '' ,
+        idFolder: converString(voucher.folder?.id) ,
         folderName: converString(voucher.folder?.name),
         scanEntryDate: converString(voucher.document?.scanDetails.scanEntryDate),
         scanExitDate:  converString(voucher.document?.scanDetails.scanExitDate),
         observations:  converString(voucher.document?.scanDetails.observations),
         isNull: false,    
         pdf: converString(voucher.document?.pdfPath)
-    }
+    }    
 
     const {
         handleSubmit,
@@ -84,11 +82,7 @@ export const VoucherForm = ({ voucher, isNew, banks, returnBack, folderSearch }:
             defaultValues: {
                 ...dataVoucher
             }
-        });
-    
-
-        console.log({dataVoucher});
-        
+        });        
 
 
     const required = 'Este campo es obligatorio';
@@ -96,6 +90,8 @@ export const VoucherForm = ({ voucher, isNew, banks, returnBack, folderSearch }:
     const onSubmit: SubmitHandler<FormVoucherInputs> = async (data) => {
         
         message.loading({ content: 'Guardando...', duration: 0 });
+        console.log({data});
+        
 
         const formData = new FormData();
         const { pdf, ...voucherToSave } = data;

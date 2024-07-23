@@ -2,6 +2,7 @@ import { getBanks } from "@/actions/banks/get-list-banks";
 import { getVoucherByCk } from "@/actions/vouchers/get-voucher-by-ck";
 import { getVoucherFolderByName } from "@/actions/vouchersFolders/get-voucher-folders-by-name";
 import { Breadcrumb, FullScreenLoading } from "@/components";
+import { Voucher } from "@/interfaces";
 import { Metadata } from "next";
 import { VoucherForm } from "./ui/VoucherForm";
 
@@ -28,22 +29,20 @@ export default async function FolderPage({ params, searchParams }:Props) {
 
     const { banks } =  await getBanks();
     const { isLoading, voucher} = await getVoucherByCk(Number(check));
-    let folderSearch; 
     
-    let returnBack;
+    /* Validacion de creacion de voucher */
+    let returnBack = false;
+    let voucherToUpdate: Partial<Voucher> = { ...voucher };
 
     if (check === 'new') {
-    if (!folder) {
-        returnBack = true;
-        } else if( folder ){
+        if (!folder) {
+            returnBack = true;
+        } else {
             const { folder: findFolder } = await getVoucherFolderByName(folder);
-            folderSearch = findFolder;
-            if (!findFolder) {
-                returnBack = true;
-            }
+            voucherToUpdate = findFolder ? { ...voucher, folder: findFolder } : voucherToUpdate;
         }
     }
-
+  
     return(
         <>
         <div className="fadeIn">
@@ -55,11 +54,10 @@ export default async function FolderPage({ params, searchParams }:Props) {
                     <>
                         <Breadcrumb pageName={title} />
                         <VoucherForm 
-                            voucher={voucher ?? {}} 
+                            voucher={voucherToUpdate ?? {}} 
                             isNew={false} 
                             banks={banks} 
-                            returnBack= { returnBack } 
-                            folderSearch={folderSearch}
+                            returnBack= { returnBack }
                         />
                     </>
                 )

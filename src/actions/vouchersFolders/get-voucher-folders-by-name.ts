@@ -4,12 +4,15 @@ import { VoucherFolder } from "@/interfaces";
 import prisma from "@/lib/prisma";
 import { ProcessVoucherFolder } from "./processData";
 
-
+interface Resp {
+    folder: VoucherFolder | null
+    isLoading: boolean
+}
 
 /**
  * Obtiene un arhivador de vouchers, por su nombre de archivador
 */
-export const getVoucherFolderByName = async (name: string) => {
+export const getVoucherFolderByName = async (name: string) : Promise<Resp> => {
 
     try {
 

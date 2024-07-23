@@ -37,7 +37,7 @@ export interface Voucher {
     description?  : string;
     proyects?     : string;
     isNull        : boolean;
-    nullDate?     : Date;
+    nullDate?     : Date | null;
 }
 
 export interface ScanDetails {

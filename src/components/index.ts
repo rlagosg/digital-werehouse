@@ -1,3 +1,5 @@
+export * from "./PDFVisor/PDFNotFound";
+
 export * from "./Dashboard/FolderGrid";
 
 export * from "./PDFVisor/PDFViewer";
